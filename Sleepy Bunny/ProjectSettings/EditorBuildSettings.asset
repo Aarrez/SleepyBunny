@@ -12,5 +12,7 @@ EditorBuildSettings:
     path: Assets/Levels/Level1.unity
     guid: 6428dfbdb067a3d478d2105d099212d1
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: a3eba4dd8f83d644898a2bd24e89f61f,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 5043b4c781a7c274e84bec37442deabe,
       type: 2}

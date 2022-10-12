@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewThirdPerson : MonoBehaviour
+public class NewThirdPerson : InputScript
 
 {
     //refrence scripts
@@ -11,6 +11,7 @@ public class NewThirdPerson : MonoBehaviour
     private animation refscript;
     private GameMaster gm;
     private OtherGrab og;
+    private InputScript scriptInput;
 
     public float speed = 1f;
 
@@ -22,6 +23,9 @@ public class NewThirdPerson : MonoBehaviour
     private bool canClimb;
 
     public float punchforce = 4f;
+
+    //Move Vector
+    private Vector3 Movement;
 
     //Falling
     public Vector3 Velocity;
@@ -53,15 +57,33 @@ public class NewThirdPerson : MonoBehaviour
 
     public bool respawn = false;
 
-    public void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(0, -10F, 0);
         refscript = GetComponent<animation>();
         rc = GetComponent<Raycasts>();
 
+        DoMove += M_Movement;
+    }
+
+    public void Start()
+    {
+        Physics.gravity = new Vector3(0, -10F, 0);
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         transform.position = gm.lastCheckPointPos;
+    }
+
+    private void FixedUpdate()
+    {
+        rc.Grounded();
+
+        if (!wasFalling && isFalling)
+            fallStart = transform.position.y;
+        if (!wasGrounded && rc.grounded)
+            TakeDamage();
+
+        wasGrounded = rc.grounded;
+        wasFalling = isFalling;
     }
 
     // Update is called once per frame
@@ -148,6 +170,12 @@ public class NewThirdPerson : MonoBehaviour
         FallDamage();
     }
 
+    //MoveCtx
+    private void M_Movement()
+    {
+        Movement = MoveCtx().ReadValue<Vector3>();
+    }
+
     //Jump Force
     public void ApplyJumpUpforce()
     {
@@ -191,19 +219,6 @@ public class NewThirdPerson : MonoBehaviour
 
     void FallDamage()
     {
-    }
-
-    private void FixedUpdate()
-    {
-        rc.Grounded();
-
-        if (!wasFalling && isFalling)
-            fallStart = transform.position.y;
-        if (!wasGrounded && rc.grounded)
-            TakeDamage();
-
-        wasGrounded = rc.grounded;
-        wasFalling = isFalling;
     }
 
     private bool isFalling
