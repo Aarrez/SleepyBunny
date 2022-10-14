@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewThirdPerson : InputScript
+public class OldThirdPerson : InputScript
 
 {
     //refrence scripts
@@ -63,7 +63,7 @@ public class NewThirdPerson : InputScript
         refscript = GetComponent<animation>();
         rc = GetComponent<Raycasts>();
 
-        DoMove += M_Movement;
+        doMove += M_Movement;
     }
 
     public void Start()
@@ -173,7 +173,7 @@ public class NewThirdPerson : InputScript
     //MoveCtx
     private void M_Movement()
     {
-        Movement = MoveCtx().ReadValue<Vector3>();
+        Movement = moveCtx().ReadValue<Vector3>();
     }
 
     //Jump Force

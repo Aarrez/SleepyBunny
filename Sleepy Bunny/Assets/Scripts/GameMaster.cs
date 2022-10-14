@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
-
     public EventsScript ev;
     private static GameMaster instance;
     public Vector3 lastCheckPointPos;
@@ -29,16 +28,18 @@ public class GameMaster : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
-
+    private void Start()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
-
 
     public void EndGame()
     {

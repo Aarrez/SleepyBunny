@@ -4,36 +4,57 @@ using UnityEngine.InputSystem;
 
 public class InputScript : MonoBehaviour
 {
-    private ControllAction.PlayerActions playerInput;
+    private ControllAction thePlayerInput;
 
-    public static event Action DoMove;
+    private InputAction move, mouse;
 
-    public static Func<InputAction.CallbackContext> MoveCtx;
+    public static event Action doMove, doMouse;
+
+    public static Func<InputAction.CallbackContext> moveCtx, mouseCtx;
 
     private void Awake()
     {
-        playerInput = new ControllAction.PlayerActions();
-
-        playerInput.Movement.performed += ctx =>
-        {
-            MoveCtx = delegate () { return ctx; };
-            DoMove?.Invoke();
-        };
-
-        playerInput.Movement.canceled += ctx =>
-        {
-            MoveCtx = delegate () { return ctx; };
-            DoMove?.Invoke();
-        };
+        thePlayerInput = new ControllAction();
+        move = thePlayerInput.Player.Movement;
+        mouse = thePlayerInput.Player.MouseInput;
     }
 
     private void OnEnable()
     {
-        playerInput.Enable();
+        #region Movement Input
+
+        move.performed += ctx =>
+        {
+            moveCtx = delegate () { return ctx; };
+            doMove?.Invoke();
+            Debug.Log(move.WasPerformedThisFrame());
+        };
+
+        move.canceled += ctx =>
+        {
+            moveCtx = delegate () { return ctx; };
+            doMove?.Invoke();
+        };
+
+        #endregion Movement Input
+
+        #region Mouse Input
+
+        mouse.performed += ctx =>
+        {
+            mouseCtx = delegate () { return ctx; };
+            doMouse?.Invoke();
+        };
+
+        #endregion Mouse Input
+
+        move.Enable();
+        mouse.Enable();
     }
 
     private void OnDisable()
     {
-        playerInput.Disable();
+        move.Disable();
+        mouse.Disable();
     }
 }

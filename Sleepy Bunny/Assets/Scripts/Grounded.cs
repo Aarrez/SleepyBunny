@@ -6,8 +6,9 @@ public class Grounded : MonoBehaviour
 {
     //RefrenceScripts
 
-    NewThirdPerson newThirdPerson;
+    private TheThirdPerson newThirdPerson;
     public bool isGrounded;
+
     public void Start()
     {
         //nfp = GetComponent<NewThirdPerson>();

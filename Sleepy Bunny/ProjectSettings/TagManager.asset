@@ -9,6 +9,8 @@ TagManager:
   - Climb
   - GM
   - Move_Object
+  - CCPoint
+  - Bones
   layers:
   - Default
   - TransparentFX
