@@ -13,19 +13,21 @@ public class TheThirdPerson : MonoBehaviour
     #region Varibales
 
     private GameObject playerAmature;
-
-    //refrence scripts
     public Raycasts rc;
+    private Rigidbody rb;
+
+    #region refrence scripts
 
     private animation refscript;
     private GameMaster gm;
     private OtherGrab og;
 
+    #endregion refrence scripts
+
     public float speed = 1f;
 
     public float JumpHeight = 10f;
 
-    private Rigidbody rb;
     public float rotationSpeed = .1f;
     public float sprintSpeed = 2f;
     private bool canClimb;
@@ -48,12 +50,15 @@ public class TheThirdPerson : MonoBehaviour
     private bool wasGrounded;
     private bool wasFalling;
 
-    //Climbing Stuff
+    #region Climbing Stuff
+
     public float climbSpeed = 5f;
 
     public float sticktowall = 1f;
     public float range = 2f;
     public float distanceToGround = 1.1f;
+
+    #endregion Climbing Stuff
 
     //Possition in World
 
@@ -91,7 +96,7 @@ public class TheThirdPerson : MonoBehaviour
 
     public void Start()
     {
-        Physics.gravity = new Vector3(0, -10F, 0);
+        Physics.gravity = new Vector3(0, -9.82F, 0);
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         transform.position = gm.lastCheckPointPos;
 
@@ -138,6 +143,16 @@ public class TheThirdPerson : MonoBehaviour
         rb.MovePosition(transform.position + movementDirection * speed * Time.fixedDeltaTime);
     }
 
+    private void M_ChMoveDirectionOfCamera()
+    {
+        Vector3 camDirection = Camera.main.transform.TransformDirection(movement);
+        movementDirection = new Vector3(camDirection.x, 0f, camDirection.z);
+    }
+
+    private void M_CharacterJump()
+    {
+    }
+
     private void FixedUpdate()
     {
         rc.Grounded();
@@ -158,8 +173,7 @@ public class TheThirdPerson : MonoBehaviour
     {
         //Movement and rotation
         M_CharacterMove();
-
-        movementDirection = Camera.main.transform.TransformDirection(movement);
+        M_ChMoveDirectionOfCamera();
 
         #region Climbing & Push & Forece Checkpoint
 
@@ -183,8 +197,6 @@ public class TheThirdPerson : MonoBehaviour
         //{ Respawn(); }
 
         #endregion Climbing & Push & Forece Checkpoint
-
-        FallDamage();
     }
 
     //MoveCtx
@@ -208,7 +220,7 @@ public class TheThirdPerson : MonoBehaviour
     }
 
     //Taking Damage
-    void TakeDamage()
+    private void TakeDamage()
     {
         float fallLength = fallStart - transform.position.y;
 
@@ -226,12 +238,6 @@ public class TheThirdPerson : MonoBehaviour
             Respawn();
             Sizzle.Play();
         }
-    }
-
-    //Fall Damage
-
-    void FallDamage()
-    {
     }
 
     private bool isFalling
