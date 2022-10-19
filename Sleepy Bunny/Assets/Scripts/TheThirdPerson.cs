@@ -129,21 +129,28 @@ public class TheThirdPerson : MonoBehaviour
         movementDirection = Camera.main.transform.TransformDirection(movement);
     }
 
-    private void M_CharacterRotate()
+    private void M_PRotate()
     {
         if (movement == Vector3.zero) return;
 
         rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(movementDirection, Vector3.up), rotationSpeed);
     }
 
-    private void M_CharacterMove()
+    private void M_PMoveMP()
     {
         if (movement == Vector3.zero) { return; }
 
         rb.MovePosition(transform.position + movementDirection * speed * Time.fixedDeltaTime);
     }
 
-    private void M_ChMoveDirectionOfCamera()
+    private void M_PMoveV()
+    {
+        if (movement == Vector3.zero) return;
+
+        rb.velocity = movement * speed * Time.fixedDeltaTime;
+    }
+
+    private void M_PMoveDirectionOfCamera()
     {
         Vector3 camDirection = Camera.main.transform.TransformDirection(movement);
         movementDirection = new Vector3(camDirection.x, 0f, camDirection.z);
@@ -156,8 +163,9 @@ public class TheThirdPerson : MonoBehaviour
     private void FixedUpdate()
     {
         rc.Grounded();
-        M_CharacterRotate();
-        M_CharacterRotate();
+        M_PRotate();
+        M_PMoveDirectionOfCamera();
+        M_PMoveMP();
 
         if (!wasFalling && isFalling)
             fallStart = transform.position.y;
@@ -172,8 +180,7 @@ public class TheThirdPerson : MonoBehaviour
     void Update()
     {
         //Movement and rotation
-        M_CharacterMove();
-        M_ChMoveDirectionOfCamera();
+        M_PMoveDirectionOfCamera();
 
         #region Climbing & Push & Forece Checkpoint
 
