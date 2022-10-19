@@ -211,7 +211,7 @@ public class TheThirdPerson : MonoBehaviour
     //Jump Force
     public void ApplyJumpUpforce()
     {
-        rb.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * JumpHeight, ForceMode.Force);
     }
 
     //Punch Force

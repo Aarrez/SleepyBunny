@@ -552,7 +552,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39023610}
-  m_LocalRotation: {x: 0.38268346, y: -0.00000006308486, z: 0.00000002620936, w: 0.92387956}
+  m_LocalRotation: {x: 0.48508593, y: 0.00071849424, z: -0.00039856473, w: 0.8744661}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12978,11 +12978,11 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_BindingMode: 4
-  m_SplineCurvature: 1
+  m_SplineCurvature: 0
   m_Orbits:
-  - m_Height: 0.75
-    m_Radius: 0.75
-  - m_Height: 0.15
+  - m_Height: 1
+    m_Radius: 0.5
+  - m_Height: 0.22
     m_Radius: 0.75
   - m_Height: 0
     m_Radius: 0.75
@@ -12999,7 +12999,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729286306}
   m_LocalRotation: {x: -0, y: 0.00000005110632, z: -7.275957e-11, w: 1}
-  m_LocalPosition: {x: -3.82, y: 12.454, z: -5.65}
+  m_LocalPosition: {x: -3.82, y: 12.704, z: -5.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19078,8 +19078,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
-  m_LocalRotation: {x: 0.38268346, y: 0.00000001589662, z: -0.0000000065845946, w: 0.92387956}
-  m_LocalPosition: {x: -3.82, y: 12.454, z: -5.65}
+  m_LocalRotation: {x: 0.48508593, y: 0.0007185389, z: -0.0003985896, w: 0.8744661}
+  m_LocalPosition: {x: -3.82, y: 12.704, z: -5.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25911,7 +25911,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088085319}
-  m_LocalRotation: {x: 0.38268346, y: -0.00000003129162, z: 0.00000001304017, w: 0.92387956}
+  m_LocalRotation: {x: 0.48508593, y: 0.00071849424, z: -0.00039856473, w: 0.8744661}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39599,7 +39599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.75, z: -0.75}
+  m_FollowOffset: {x: 0, y: 1, z: -0.5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -39664,7 +39664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 0.2, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
@@ -40600,7 +40600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.75, z: -0.75}
+  m_FollowOffset: {x: 0, y: 1, z: -0.5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -40665,7 +40665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 0.2, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
@@ -40890,7 +40890,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904858811}
-  m_LocalRotation: {x: 0.38268346, y: -0.00000003129162, z: 0.00000001304017, w: 0.92387956}
+  m_LocalRotation: {x: 0.48508593, y: 0.00071853877, z: -0.00039858944, w: 0.8744661}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -52451,7 +52451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.75, z: -0.75}
+  m_FollowOffset: {x: 0, y: 1, z: -0.5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -52516,7 +52516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 0.2, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
@@ -79416,6 +79416,11 @@ PrefabInstance:
         type: 3}
       propertyPath: speed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5859667142052098501, guid: 9f00cee04ae9ec44d815b6f6f76d4aaf,
+        type: 3}
+      propertyPath: JumpHeight
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5859667142052098522, guid: 9f00cee04ae9ec44d815b6f6f76d4aaf,
         type: 3}
