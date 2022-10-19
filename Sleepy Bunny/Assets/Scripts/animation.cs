@@ -32,6 +32,7 @@ public class animation : MonoBehaviour
 
     private GameMaster gm;
     private Vector3 playerOrigin;
+    public Animator anim;
 
     private bool isFalling
     {
@@ -45,49 +46,70 @@ public class animation : MonoBehaviour
         transform.position = gm.lastCheckPointPos;
     }
 
-    public Animator anim;
-
-    public void Update()
+    private void OnEnable()
     {
-        if (Input.GetAxisRaw("Vertical") == 0f || Input.GetAxisRaw("Horizontal") == 0f)
+        InputScript.doMove += M_AnimMoveIdle;
+        InputScript.doJump += M_AnimJump;
+        InputScript.doGrab += M_AnimGrab;
+    }
+
+    private void OnDisable()
+    {
+        InputScript.doMove -= M_AnimMoveIdle;
+        InputScript.doJump -= M_AnimJump;
+        InputScript.doGrab -= M_AnimGrab;
+    }
+
+    private void M_AnimMoveIdle()
+    {
+        if (InputScript.moveCtx().ReadValue<Vector2>() == Vector2.zero)
         {
             anim.SetBool("jump", false);
             anim.SetBool("idle", true);
             anim.SetBool("walk", false);
             anim.SetBool("push", false);
         }
-        if (Input.GetAxisRaw("Vertical") != 0f || Input.GetAxisRaw("Horizontal") != 0f)
+        else
         {
             anim.SetBool("walk", true);
             anim.SetBool("jump", false);
             anim.SetBool("idle", false);
             anim.SetBool("push", false);
         }
+    }
 
-        if (rc.grounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            anim.SetBool("walk", false);
-            anim.SetBool("jump", true);
-            anim.SetBool("idle", false);
-            anim.SetBool("push", false);
-        }
+    private void M_AnimJump()
+    {
+        if (!rc.grounded) return;
 
-        if (rc.pushOrPull && Input.GetKey(KeyCode.E))
-        {
-            anim.SetBool("walk", false);
-            anim.SetBool("jump", false);
-            anim.SetBool("idle", false);
-            anim.SetBool("push", true);
-            isPulling = true;
-        }
+        anim.SetBool("walk", false);
+        anim.SetBool("jump", true);
+        anim.SetBool("idle", false);
+        anim.SetBool("push", false);
 
-        if (rc.pushOrPull && Input.GetKey(KeyCode.Space))
-        {
-            anim.SetBool("walk", false);
-            anim.SetBool("jump", true);
-            anim.SetBool("idle", false);
-            anim.SetBool("push", false);
-        }
+        if (rc.pushOrPull)
+            isPulling = false;
+    }
+
+    private void M_AnimGrab()
+    {
+        if (!rc.pushOrPull) return;
+        anim.SetBool("walk", false);
+        anim.SetBool("jump", false);
+        anim.SetBool("idle", false);
+        anim.SetBool("push", true);
+        isPulling = true;
+    }
+
+    public void Update()
+    {
+        //if (rc.pushOrPull && Input.GetKey(KeyCode.Space))
+        //{
+        //    anim.SetBool("walk", false);
+        //    anim.SetBool("jump", true);
+        //    anim.SetBool("idle", false);
+        //    anim.SetBool("push", false);
+        //}
     }
 
     //IEnumerator Respawn()

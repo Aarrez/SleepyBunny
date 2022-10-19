@@ -124,7 +124,8 @@ public class TheThirdPerson : MonoBehaviour
         #endregion deprecated sprint code
 
         //Gets the input
-        movement = InputScript.moveCtx().ReadValue<Vector3>();
+        Vector2 tempV2 = InputScript.moveCtx().ReadValue<Vector2>();
+        movement = new Vector3(tempV2.x, 0f, tempV2.y);
 
         movementDirection = Camera.main.transform.TransformDirection(movement);
     }
@@ -206,8 +207,6 @@ public class TheThirdPerson : MonoBehaviour
         #endregion Climbing & Push & Forece Checkpoint
     }
 
-    //MoveCtx
-
     //Jump Force
     public void ApplyJumpUpforce()
     {
@@ -217,7 +216,7 @@ public class TheThirdPerson : MonoBehaviour
     //Punch Force
     public void PunchForce()
     {
-        rb.AddForce(Vector3.forward * punchforce, ForceMode.Impulse);
+        rb.AddForce(Vector3.forward * punchforce, ForceMode.Force);
     }
 
     //Respaawn

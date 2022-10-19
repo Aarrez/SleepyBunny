@@ -5,29 +5,34 @@ using UnityEngine.SceneManagement;
 
 public class pauseMenu : MonoBehaviour
 {
-    splashMenu sp;
-    static bool gameIsPaused = false;
+    private splashMenu sp;
+    private static bool gameIsPaused = false;
     public GameObject pauseMenuUI;
 
-
-
-    void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
+        InputScript.doPause += m_PauseGame;
+    }
 
+    private void OnDisable()
+    {
+        InputScript.doPause -= m_PauseGame;
+    }
+
+    private void m_PauseGame()
+    {
+        Debug.Log("happening");
+        if (gameIsPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
         }
     }
 
-   public void Resume()
+    public void Resume()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
@@ -39,7 +44,6 @@ public class pauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
-
     }
 
     public void QuitingButton()
@@ -47,11 +51,9 @@ public class pauseMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("You Quit!");
     }
-   
 
     public void LoadMenue()
     {
         SceneManager.LoadScene("UI Scene");
     }
 }
-

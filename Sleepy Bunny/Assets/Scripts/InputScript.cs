@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+using UnityEditor.Networking.PlayerConnection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,31 +8,31 @@ public class InputScript : MonoBehaviour
 {
     private ControllAction thePlayerInput;
 
-    private InputAction move, mouse;
+    private ControllAction.CustomPlayerActions cPlayer;
+    private ControllAction.CustomUIActions cUI;
 
-    public static event Action doMove, doMouse;
+    public static event Action doMove, doJump, doGrab, doPause;
 
-    public static Func<InputAction.CallbackContext> moveCtx, mouseCtx;
+    public static Func<InputAction.CallbackContext> moveCtx, grabCtx, pauseCtx;
 
     private void Awake()
     {
         thePlayerInput = new ControllAction();
-        move = thePlayerInput.Player.Movement;
-        mouse = thePlayerInput.Player.MouseInput;
+        cPlayer = thePlayerInput.CustomPlayer;
+        cUI = thePlayerInput.CustomUI;
     }
 
     private void OnEnable()
     {
         #region Movement Input
 
-        move.performed += ctx =>
+        cPlayer.Movement.performed += ctx =>
         {
             moveCtx = delegate () { return ctx; };
             doMove?.Invoke();
-            Debug.Log(move.WasPerformedThisFrame());
         };
 
-        move.canceled += ctx =>
+        cPlayer.Movement.canceled += ctx =>
         {
             moveCtx = delegate () { return ctx; };
             doMove?.Invoke();
@@ -38,23 +40,42 @@ public class InputScript : MonoBehaviour
 
         #endregion Movement Input
 
-        #region Mouse Input
+        #region Jump Input
 
-        mouse.performed += ctx =>
+        cPlayer.Jump.performed += ctx => doJump?.Invoke();
+
+        #endregion Jump Input
+
+        #region Grab Input
+
+        cPlayer.Grab.performed += ctx =>
         {
-            mouseCtx = delegate () { return ctx; };
-            doMouse?.Invoke();
+            grabCtx = delegate () { return ctx; };
+            doGrab?.Invoke();
         };
 
-        #endregion Mouse Input
+        cPlayer.Grab.canceled += ctx =>
+        {
+            doGrab.Invoke();
+        };
 
-        move.Enable();
-        mouse.Enable();
+        #endregion Grab Input
+
+        #region Pause Input
+
+        cUI.Pause.started += ctx =>
+        {
+            pauseCtx = delegate () { return ctx; };
+            doPause?.Invoke();
+        };
+
+        #endregion Pause Input
+
+        thePlayerInput.Enable();
     }
 
     private void OnDisable()
     {
-        move.Disable();
-        mouse.Disable();
+        thePlayerInput.Disable();
     }
 }
