@@ -6,12 +6,13 @@ public class Checkpoints : MonoBehaviour
 {
     private GameMaster gm;
     public animation am;
-  public void Start()
+
+    public void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         am = GameObject.FindGameObjectWithTag("Player").GetComponent<animation>();
-
     }
+
     //public void OnTriggerEnter(Collider other)
     //{
     //    if(other.CompareTag("Player"))
@@ -35,8 +36,5 @@ public class Checkpoints : MonoBehaviour
             gm.lastCheckPointPos = transform.position;
             Debug.Log("CheckPoint!");
         }
-  
-        
     }
-
 }

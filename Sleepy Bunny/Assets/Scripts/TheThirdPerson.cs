@@ -1,12 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
-using UnityEngine.Video;
 
 public class TheThirdPerson : MonoBehaviour
 {
@@ -84,11 +77,13 @@ public class TheThirdPerson : MonoBehaviour
         playerAmature = GameObject.FindGameObjectWithTag("Bones");
     }
 
+    //Invokes when object is enabled
     private void OnEnable()
     {
         InputScript.doMove += M_Movement;
     }
 
+    //Invokes when object is disable
     private void OnDisable()
     {
         InputScript.doMove -= M_Movement;
@@ -130,6 +125,7 @@ public class TheThirdPerson : MonoBehaviour
         movementDirection = Camera.main.transform.TransformDirection(movement);
     }
 
+    //Uses Ridgid body to rotate the player
     private void M_PRotate()
     {
         if (movement == Vector3.zero) return;
@@ -137,6 +133,7 @@ public class TheThirdPerson : MonoBehaviour
         rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(movementDirection, Vector3.up), rotationSpeed);
     }
 
+    //Move the player through MovePosition
     private void M_PMoveMP()
     {
         if (movement == Vector3.zero) { return; }
@@ -144,6 +141,7 @@ public class TheThirdPerson : MonoBehaviour
         rb.MovePosition(transform.position + movementDirection * speed * Time.fixedDeltaTime);
     }
 
+    //Move the player though Velocity
     private void M_PMoveV()
     {
         if (movement == Vector3.zero) return;
@@ -151,14 +149,11 @@ public class TheThirdPerson : MonoBehaviour
         rb.velocity = movement * speed * Time.fixedDeltaTime;
     }
 
+    //Gets the direction of the camera in world space
     private void M_PMoveDirectionOfCamera()
     {
         Vector3 camDirection = Camera.main.transform.TransformDirection(movement);
         movementDirection = new Vector3(camDirection.x, 0f, camDirection.z);
-    }
-
-    private void M_CharacterJump()
-    {
     }
 
     private void FixedUpdate()
