@@ -2,23 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class animation : MonoBehaviour
+public class animation : Raycasts
 {
     private TheThirdPerson nfp;
-    [SerializeField] private Raycasts rc;
 
     //public groundedcollider isGroundedScript;
     public bool isGrounded;
 
     public bool pickMeUp;
     public bool isPulling;
-
-    private bool wasGrounded;
-    private bool wasFalling;
-    private float startOfFall;
-
-    private Vector3 enterHeight;
-    private Vector3 exitHeight;
 
     public float fallHeight;
 
@@ -31,18 +23,19 @@ public class animation : MonoBehaviour
     public bool canKillOnTouch;
 
     private GameMaster gm;
-    private Vector3 playerOrigin;
     public Animator anim;
+
+    public override void Start()
+    {
+        base.Start();
+
+        M_SpawnAtCheckpoint(startAtCheckpoint);
+    }
 
     private bool isFalling
     {
         get
-        { return (!rc.grounded && RidgedBody.velocity.y < 0); }
-    }
-
-    public void Start()
-    {
-        M_SpawnAtCheckpoint(startAtCheckpoint);
+        { return (!grounded && RidgedBody.velocity.y < 0); }
     }
 
     private void OnEnable()
@@ -86,44 +79,32 @@ public class animation : MonoBehaviour
 
     private void M_AnimJump()
     {
-        if (!rc.grounded) return;
+        if (!grounded && InputScript.jumpCtx().performed)
+        {
+            anim.SetBool("walk", false);
+            anim.SetBool("jump", true);
+            anim.SetBool("idle", false);
+            anim.SetBool("push", false);
+        }
+        else if (InputScript.jumpCtx().canceled)
+        {
+            anim.SetBool("walk", false);
+            anim.SetBool("jump", false);
+            anim.SetBool("idle", true);
+            anim.SetBool("push", false);
+        }
 
-        anim.SetBool("walk", false);
-        anim.SetBool("jump", true);
-        anim.SetBool("idle", false);
-        anim.SetBool("push", false);
-
-        if (rc.pushOrPull)
+        if (pushOrPull)
             isPulling = false;
     }
 
     private void M_AnimGrab()
     {
-        if (!rc.pushOrPull) return;
+        if (!pushOrPull) return;
         anim.SetBool("walk", false);
         anim.SetBool("jump", false);
         anim.SetBool("idle", false);
         anim.SetBool("push", true);
         isPulling = true;
     }
-
-    public void Update()
-    {
-        //if (rc.pushOrPull && Input.GetKey(KeyCode.Space))
-        //{
-        //    anim.SetBool("walk", false);
-        //    anim.SetBool("jump", true);
-        //    anim.SetBool("idle", false);
-        //    anim.SetBool("push", false);
-        //}
-    }
-
-    //IEnumerator Respawn()
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-    //    transform.position = SpawnPoint;
-    //    IsAlive = false;
-    //    yield return new WaitForSeconds(1);
-    //    Debug.Log("Respawn");
-    //}
 }

@@ -95,8 +95,8 @@ public class TheThirdPerson : MonoBehaviour
     public void Start()
     {
         Physics.gravity = new Vector3(0, -9.82F, 0);
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-        transform.position = gm.lastCheckPointPos;
+        //gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
+        //transform.position = gm.lastCheckPointPos;
 
         playerOrigin = transform.position;
     }
@@ -104,23 +104,6 @@ public class TheThirdPerson : MonoBehaviour
     //Gets input and sets rotation on button press
     private void M_Movement()
     {
-        //Basic Movement
-
-        //Sprint
-
-        #region deprecated sprint code
-
-        /*if (Input.GetKey(KeyCode.LeftShift))
-        {
-            speed = sprintSpeed;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            speed = 0.5f;
-        }*/
-
-        #endregion deprecated sprint code
-
         //Gets the input
         Vector2 tempV2 = InputScript.moveCtx().ReadValue<Vector2>();
         movement = new Vector3(tempV2.x, 0f, tempV2.y);

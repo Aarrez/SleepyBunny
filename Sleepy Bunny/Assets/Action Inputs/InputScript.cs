@@ -13,7 +13,7 @@ public class InputScript : MonoBehaviour
 
     public static event Action doMove, doJump, doGrab, doPause;
 
-    public static Func<InputAction.CallbackContext> moveCtx, grabCtx, pauseCtx;
+    public static Func<InputAction.CallbackContext> moveCtx, grabCtx, pauseCtx, jumpCtx;
 
     private void Awake()
     {
@@ -42,7 +42,17 @@ public class InputScript : MonoBehaviour
 
         #region Jump Input
 
-        cPlayer.Jump.performed += ctx => doJump?.Invoke();
+        cPlayer.Jump.performed += ctx =>
+        {
+            jumpCtx = delegate () { return ctx; };
+            doJump?.Invoke();
+        };
+
+        cPlayer.Jump.canceled += ctx =>
+        {
+            jumpCtx = delegate () { return ctx; };
+            doJump?.Invoke();
+        };
 
         #endregion Jump Input
 

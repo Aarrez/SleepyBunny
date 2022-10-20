@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Raycasts : MonoBehaviour
@@ -23,7 +21,7 @@ public class Raycasts : MonoBehaviour
     [Range(0, 1)] public float range;
     [Range(0, 5)] public float groundedDistance;
 
-    public void Start()
+    public virtual void Start()
     {
         alive = true;
     }

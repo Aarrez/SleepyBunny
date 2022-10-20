@@ -43,7 +43,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Grab"",
@@ -88,7 +88,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""48431c20-055d-4e50-a9dd-f85b84e0cd4e"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XboxController"",
