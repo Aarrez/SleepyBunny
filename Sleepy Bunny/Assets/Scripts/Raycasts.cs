@@ -30,6 +30,17 @@ public class Raycasts : MonoBehaviour
 
     private isSoft sft;
     private killOnTouch kot;
+    private OtherGrab target;
+
+    private void OnEnable()
+    {
+        InputScript.doGrab += PickUp;
+    }
+
+    private void OnDisable()
+    {
+        InputScript.doGrab -= PickUp;
+    }
 
     //Grounded Check
     public void Grounded()
@@ -81,12 +92,11 @@ public class Raycasts : MonoBehaviour
         }
     }
 
-    private OtherGrab target;
-
     public void PickUp()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (InputScript.grabCtx().ReadValue<float>() > 0.01)
         {
+            Debug.Log("grabb");
             RaycastHit hit;
             Vector3 eyeCast = transform.position + new Vector3(0, rayCastHeight);
 
@@ -94,16 +104,25 @@ public class Raycasts : MonoBehaviour
             if (Physics.Raycast(eyeCast, transform.forward, out hit, range))
             {
                 target = hit.transform.GetComponent<OtherGrab>();
-                Debug.Log(target.name);
+
                 if (target != null)
                 {
                     target.PickUp();
                 }
             }
         }
-        if (Input.GetKeyUp(KeyCode.E))
+
+        if (InputScript.grabCtx().ReadValue<float>() < 0.01)
         {
-            target.LetGo();
+            Debug.Log("Let go");
+            try
+            {
+                target.LetGo();
+            }
+            catch (System.Exception)
+            {
+                Debug.Log("No hit");
+            }
         }
     }
 
@@ -113,6 +132,5 @@ public class Raycasts : MonoBehaviour
     {
         Grounded();
         Climbing();
-        PickUp();
     }
 }

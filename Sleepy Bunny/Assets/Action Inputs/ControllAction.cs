@@ -52,7 +52,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Crouch"",
@@ -239,7 +239,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""015a06b5-70ce-49bf-9fcb-2778fcb08c99"",
                     ""expectedControlType"": ""Button"",
-                    ""processors"": ""Normalize(max=1)"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 }
@@ -248,7 +248,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""37046476-b612-4f87-8e3d-1ca5c82e9e60"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""path"": ""<XInputController>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XboxController"",

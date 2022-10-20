@@ -38,15 +38,11 @@ public class InputScript : MonoBehaviour
             doMove?.Invoke();
         };
 
-        cPlayer.Movement.Enable();
-
         #endregion Movement Input
 
         #region Jump Input
 
         cPlayer.Jump.performed += ctx => doJump?.Invoke();
-
-        cPlayer.Jump.Disable();
 
         #endregion Jump Input
 
@@ -61,31 +57,28 @@ public class InputScript : MonoBehaviour
         cPlayer.Grab.canceled += ctx =>
         {
             grabCtx = delegate () { return ctx; };
-            doGrab.Invoke();
+            doGrab?.Invoke();
         };
-
-        cPlayer.Grab.Enable();
 
         #endregion Grab Input
 
         #region Pause Input
 
-        cUI.Pause.started += ctx =>
+        cUI.Pause.performed += ctx =>
         {
             pauseCtx = delegate () { return ctx; };
             doPause?.Invoke();
         };
 
-        cUI.Pause.Enable();
-
         #endregion Pause Input
+
+        cPlayer.Enable();
+        cUI.Enable();
     }
 
     private void OnDisable()
     {
-        cPlayer.Movement.Disable();
-        cPlayer.Jump.Disable();
-        cPlayer.Grab.Disable();
-        cUI.Pause.Disable();
+        cPlayer.Disable();
+        cUI.Disable();
     }
 }

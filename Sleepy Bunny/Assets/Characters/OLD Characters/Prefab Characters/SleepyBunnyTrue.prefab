@@ -3675,9 +3675,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: XboxController
+  m_DefaultActionMap: CustomPlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &1547854623875078741
@@ -3705,8 +3705,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rc: {fileID: 1547854623875078727}
-  speed: 1.5
-  JumpHeight: 3.5
+  speed: 1
+  JumpHeight: 170
   rotationSpeed: 5
   sprintSpeed: 2
   punchforce: 4

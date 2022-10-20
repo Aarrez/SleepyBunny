@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TheThirdPerson : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class TheThirdPerson : MonoBehaviour
     private GameObject playerAmature;
     public Raycasts rc;
     private Rigidbody rb;
+    private PlayerInput playerInput;
 
     #region refrence scripts
 
@@ -75,6 +77,7 @@ public class TheThirdPerson : MonoBehaviour
         refscript = GetComponent<animation>();
         rc = GetComponent<Raycasts>();
         playerAmature = GameObject.FindGameObjectWithTag("Bones");
+        playerInput = GetComponent<PlayerInput>();
     }
 
     //Invokes when object is enabled

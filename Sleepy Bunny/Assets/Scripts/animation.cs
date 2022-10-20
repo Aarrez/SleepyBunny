@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class animation : MonoBehaviour
-
 {
     private TheThirdPerson nfp;
     [SerializeField] private Raycasts rc;
@@ -25,6 +24,7 @@ public class animation : MonoBehaviour
 
     public Rigidbody RidgedBody;
     public bool isAlive = true;
+    [SerializeField] private bool startAtCheckpoint;
     public double _decelerationTolerance = 0;
 
     //public Vector3 SpawnPoint;
@@ -42,8 +42,7 @@ public class animation : MonoBehaviour
 
     public void Start()
     {
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-        transform.position = gm.lastCheckPointPos;
+        M_SpawnAtCheckpoint(startAtCheckpoint);
     }
 
     private void OnEnable()
@@ -58,6 +57,13 @@ public class animation : MonoBehaviour
         InputScript.doMove -= M_AnimMoveIdle;
         InputScript.doJump -= M_AnimJump;
         InputScript.doGrab -= M_AnimGrab;
+    }
+
+    private void M_SpawnAtCheckpoint(bool start)
+    {
+        if (start == false) return;
+        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
+        transform.position = gm.lastCheckPointPos;
     }
 
     private void M_AnimMoveIdle()
