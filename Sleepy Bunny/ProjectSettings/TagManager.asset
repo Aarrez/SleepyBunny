@@ -11,15 +11,16 @@ TagManager:
   - Move_Object
   - CCPoint
   - Bones
+  - Tether
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - Prop No Cam Collition
-  - Prop Cam Collition
+  - No Cam Collition
+  - Cam Collition
   - 
   - 
   - 

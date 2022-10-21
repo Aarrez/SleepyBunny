@@ -5,12 +5,12 @@ using UnityEngine;
 public class Checkpoints : MonoBehaviour
 {
     private GameMaster gm;
-    public animation am;
+    public PlayerAnimatonManager am;
 
     public void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-        am = GameObject.FindGameObjectWithTag("Player").GetComponent<animation>();
+        am = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimatonManager>();
     }
 
     public void OnTriggerStay(Collider collision)

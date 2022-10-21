@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ public class OldThirdPerson : InputScript
     //refrence scripts
     public Raycasts rc;
 
-    private animation refscript;
+    private PlayerAnimatonManager refscript;
     private GameMaster gm;
     private OtherGrab og;
     private InputScript scriptInput;
@@ -60,7 +60,7 @@ public class OldThirdPerson : InputScript
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        refscript = GetComponent<animation>();
+        refscript = GetComponent<PlayerAnimatonManager>();
         rc = GetComponent<Raycasts>();
 
         doMove += M_Movement;
@@ -75,8 +75,6 @@ public class OldThirdPerson : InputScript
 
     private void FixedUpdate()
     {
-        rc.Grounded();
-
         if (!wasFalling && isFalling)
             fallStart = transform.position.y;
         if (!wasGrounded && rc.grounded)
@@ -224,3 +222,4 @@ public class OldThirdPerson : InputScript
     private bool isFalling
     { get { return (!rc.grounded && rb.velocity.y < 0); } }
 }
+*/

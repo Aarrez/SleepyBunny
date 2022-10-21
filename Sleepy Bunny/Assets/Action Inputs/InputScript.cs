@@ -42,17 +42,7 @@ public class InputScript : MonoBehaviour
 
         #region Jump Input
 
-        cPlayer.Jump.performed += ctx =>
-        {
-            jumpCtx = delegate () { return ctx; };
-            doJump?.Invoke();
-        };
-
-        cPlayer.Jump.canceled += ctx =>
-        {
-            jumpCtx = delegate () { return ctx; };
-            doJump?.Invoke();
-        };
+        cPlayer.Jump.performed += ctx => doJump?.Invoke();
 
         #endregion Jump Input
 

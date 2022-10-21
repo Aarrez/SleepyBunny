@@ -1,31 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Grounded : MonoBehaviour
+public class Grounded : Raycasts
 {
-    //RefrenceScripts
+    public static event Action touchedGround;
 
-    private TheThirdPerson newThirdPerson;
-    public bool isGrounded;
+    public static Func<float> airTime;
 
-    public void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        //nfp = GetComponent<NewThirdPerson>();
+        if (!other.CompareTag("Ground")) return;
+        touchedGround?.Invoke();
+        grounded = true;
+        Debug.Log("touch grass");
     }
 
-    // Start is called before the first frame update
-    public void OnCollisionEnter(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("Grounded");
-            isGrounded = true;
-        }
-        else
-        {
-            Debug.Log("Not Grounded");
-            isGrounded = false;
-        }
+        if (!other.CompareTag("Ground")) return;
+        Debug.Log("no touch grass");
+        grounded = false;
     }
 }

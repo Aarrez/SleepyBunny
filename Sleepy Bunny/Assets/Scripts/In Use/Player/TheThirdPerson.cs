@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,16 +7,15 @@ public class TheThirdPerson : MonoBehaviour
 {
     #region Varibales
 
+    private GameObject GrabObject;
     private GameObject playerAmature;
-    public Raycasts rc;
     private Rigidbody rb;
-    private PlayerInput playerInput;
+
+    [SerializeField] private AnimationCurve animCurve;
 
     #region refrence scripts
 
-    private animation refscript;
     private GameMaster gm;
-    private OtherGrab og;
 
     #endregion refrence scripts
 
@@ -24,8 +24,6 @@ public class TheThirdPerson : MonoBehaviour
     public float JumpHeight = 10f;
 
     public float rotationSpeed = .1f;
-    public float sprintSpeed = 2f;
-    private bool canClimb;
 
     public float punchforce = 4f;
 
@@ -34,18 +32,12 @@ public class TheThirdPerson : MonoBehaviour
 
     private Vector3 movementDirection = Vector3.zero;
 
-    private Quaternion rotateTo;
-
     //Falling
     public Vector3 Velocity;
 
-    [Range(0, 10)] public float fallDistance;
-    private float fallStart;
-    private float fallEnd;
-    private bool wasGrounded;
-    private bool wasFalling;
-
     #region Climbing Stuff
+
+    private bool climbing = false;
 
     public float climbSpeed = 5f;
 
@@ -54,10 +46,6 @@ public class TheThirdPerson : MonoBehaviour
     public float distanceToGround = 1.1f;
 
     #endregion Climbing Stuff
-
-    //Possition in World
-
-    private Vector3 playerOrigin;
 
     // Damage stuff
     public float DamageAmount;
@@ -74,10 +62,7 @@ public class TheThirdPerson : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        refscript = GetComponent<animation>();
-        rc = GetComponent<Raycasts>();
         playerAmature = GameObject.FindGameObjectWithTag("Bones");
-        playerInput = GetComponent<PlayerInput>();
     }
 
     //Invokes when object is enabled
@@ -97,8 +82,6 @@ public class TheThirdPerson : MonoBehaviour
         Physics.gravity = new Vector3(0, -9.82F, 0);
         //gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         //transform.position = gm.lastCheckPointPos;
-
-        playerOrigin = transform.position;
     }
 
     //Gets input and sets rotation on button press
@@ -106,7 +89,14 @@ public class TheThirdPerson : MonoBehaviour
     {
         //Gets the input
         Vector2 tempV2 = InputScript.moveCtx().ReadValue<Vector2>();
-        movement = new Vector3(tempV2.x, 0f, tempV2.y);
+        if (!climbing)
+        {
+            movement = new Vector3(tempV2.x, 0f, tempV2.y);
+        }
+        else
+        {
+            movement = new Vector3(0f, tempV2.x, tempV2.y);
+        }
 
         movementDirection = Camera.main.transform.TransformDirection(movement);
     }
@@ -144,18 +134,9 @@ public class TheThirdPerson : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rc.Grounded();
         M_PRotate();
         M_PMoveDirectionOfCamera();
         M_PMoveMP();
-
-        if (!wasFalling && isFalling)
-            fallStart = transform.position.y;
-        if (!wasGrounded && rc.grounded)
-            TakeDamage();
-
-        wasGrounded = rc.grounded;
-        wasFalling = isFalling;
     }
 
     // Update is called once per frame
@@ -189,7 +170,7 @@ public class TheThirdPerson : MonoBehaviour
     }
 
     //Jump Force
-    public void ApplyJumpUpforce()
+    public void M_ApplyJumpUpforce()
     {
         rb.AddForce(Vector3.up * JumpHeight, ForceMode.Force);
     }
@@ -205,28 +186,4 @@ public class TheThirdPerson : MonoBehaviour
     {
         transform.position = gm.lastCheckPointPos;
     }
-
-    //Taking Damage
-    private void TakeDamage()
-    {
-        float fallLength = fallStart - transform.position.y;
-
-        if (!rc.soft && fallLength > fallDistance)
-
-        {
-            health = AmountOfHealth - DamageAmount;
-            PainNoise.Play();
-            Respawn();
-        }
-
-        if (rc.grounded && rc.canKill)
-        {
-            PainNoise.Play();
-            Respawn();
-            Sizzle.Play();
-        }
-    }
-
-    private bool isFalling
-    { get { return (!rc.grounded && rb.velocity.y < 0); } }
 }
