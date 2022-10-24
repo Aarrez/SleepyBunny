@@ -1,9 +1,13 @@
 using System;
 using UnityEngine;
 
-public class Grounded : Raycasts
+public class Grounded : PlayerRaycast
 {
     public static event Action touchedGround;
+
+    private float totalTimeInAir, time;
+
+    private bool timeCollected = true;
 
     public static Func<float> airTime;
 
@@ -11,14 +15,29 @@ public class Grounded : Raycasts
     {
         if (!other.CompareTag("Ground")) return;
         touchedGround?.Invoke();
+        Debug.Log(totalTimeInAir);
         grounded = true;
-        Debug.Log("touch grass");
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Ground")) return;
-        Debug.Log("no touch grass");
         grounded = false;
+        Debug.Log("no touch grass");
+    }
+
+    private void FixedUpdate()
+    {
+        if (!grounded)
+        {
+            time += Time.fixedDeltaTime;
+            timeCollected = false;
+        }
+        else if (!timeCollected && grounded)
+        {
+            totalTimeInAir = time;
+            time = 0f;
+            timeCollected = true;
+        }
     }
 }

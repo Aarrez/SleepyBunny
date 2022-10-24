@@ -2,23 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Checkpoints : MonoBehaviour
+[CreateAssetMenu(fileName = "CheckPoint", menuName = "Create Checkpoint", order = 1)]
+public class Checkpoints : ScriptableObject
 {
-    private GameMaster gm;
-    public PlayerAnimatonManager am;
+    private bool isActive;
 
-    public void Start()
-    {
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-        am = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimatonManager>();
-    }
-
-    public void OnTriggerStay(Collider collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            gm.lastCheckPointPos = transform.position;
-            Debug.Log("CheckPoint!");
-        }
-    }
+    public Vector3 position;
 }
