@@ -8,11 +8,6 @@ public class OtherGrab : MonoBehaviour
     public Transform holdParent;
     [SerializeField] private PlayerRaycast rc;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     public void PickUp()
     {
         //Debug.Log("can pick up");
@@ -28,9 +23,5 @@ public class OtherGrab : MonoBehaviour
         weight.useGravity = true;
         weight.transform.parent = null;
         weight.isKinematic = false;
-    }
-
-    void Update()
-    {
     }
 }

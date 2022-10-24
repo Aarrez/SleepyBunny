@@ -6,6 +6,8 @@ public class PlayerRaycast : MonoBehaviour
     private Rigidbody grabObject;
     private HingeJoint tether;
 
+    internal BoxCollider climbBox;
+
     //Player Bool List
     internal bool grounded;
 
@@ -37,6 +39,7 @@ public class PlayerRaycast : MonoBehaviour
         {
             if (hit.transform.gameObject.CompareTag("Climb"))
             {
+                climbBox = hit.transform.GetComponent<BoxCollider>();
                 climbing = true;
             }
         }

@@ -1157,16 +1157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe59cfddc86b084bb8c035e2d8ed09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grounded: 0
-  falling: 0
-  alive: 0
-  climb: 0
-  pushOrPull: 0
-  soft: 0
-  canKill: 0
-  rayCastHeight: 0
-  range: 0
-  groundedDistance: 0
 --- !u!1 &5030876667185168192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,8 +1281,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.000028871, y: 0.00086098793, z: -0.0049175657}
-    m_Extent: {x: 0.008046765, y: 0.007490595, z: 0.006625943}
+    m_Center: {x: -0.0011998967, y: 0.0008894785, z: -0.0045523997}
+    m_Extent: {x: 0.007079277, y: 0.0076137455, z: 0.006260777}
   m_DirtyAABB: 0
 --- !u!183 &5701876921059667131
 Cloth:
@@ -3687,16 +3677,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5930e957034f547b94c29a1876089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grounded: 0
-  falling: 0
-  alive: 0
-  climb: 0
-  pushOrPull: 0
-  soft: 0
-  canKill: 0
-  rayCastHeight: 0
-  range: 0
-  groundedDistance: 0
   startAtCheckpoint: 0
   anim: {fileID: 5859667142052098503}
   RidgedBody: {fileID: 5859667142052098522}
@@ -3719,16 +3699,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a6ff98e486d7a4fa7e2ef6835869eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grounded: 0
-  falling: 0
-  alive: 0
-  climb: 0
-  pushOrPull: 0
-  soft: 0
-  canKill: 0
-  rayCastHeight: 0.1
-  range: 0.123
-  groundedDistance: 0.014
 --- !u!114 &5859667142052098501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3741,26 +3711,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc482ac829d93c54eac3e2b66afd947b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rc: {fileID: 1547854623875078727}
-  animCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   speed: 1
   JumpHeight: 170
   rotationSpeed: 10
-  sprintSpeed: 2
   punchforce: 4
   Velocity: {x: 0, y: 0, z: 0}
-  fallDistance: 1.05
   climbSpeed: 2
-  sticktowall: 0
-  range: 1.25
-  distanceToGround: 4
   DamageAmount: 0
-  AmountOfHealth: 100
   health: 100
   PainNoise: {fileID: 1547854623875078733}
   Sizzle: {fileID: 1523604837}
