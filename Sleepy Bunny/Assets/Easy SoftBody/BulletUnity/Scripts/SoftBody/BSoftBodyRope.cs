@@ -2,6 +2,7 @@
 using System.Collections;
 using BulletSharp.SoftBody;
 using System;
+
 //using BulletSharp;
 using System.Collections.Generic;
 
@@ -14,15 +15,16 @@ namespace BulletUnity
         public class RopeSettings
         {
             public int numPointsInRope = 10;
+
             [Tooltip("Rope start position in world position")]
             public Vector3 startPoint;
+
             [Tooltip("Rope end position in world position")]
             public Vector3 endPoint;
 
             public float width = .25f;
             public Color startColor = Color.white;
             public Color endColor = Color.white;
-
         }
 
         public RopeSettings meshSettings = new RopeSettings();
@@ -30,10 +32,11 @@ namespace BulletUnity
         [Tooltip("Rope anchors, if any")]
         public RopeAnchor[] ropeAnchors;
 
-        int lrVertexCount = 0;
+        private int lrVertexCount = 0;
 
-        LineRenderer _lr;
-        LineRenderer lr
+        private LineRenderer _lr;
+
+        private LineRenderer lr
         {
             get { return _lr = _lr ?? GetComponent<LineRenderer>(); }
         }
@@ -73,16 +76,15 @@ namespace BulletUnity
 
             foreach (RopeAnchor anchor in ropeAnchors)
             {
-                //anchorNode point 0 to 1, rounds to node # 
+                //anchorNode point 0 to 1, rounds to node #
                 int node = (int)Mathf.Floor(Mathf.Lerp(0, m_BSoftBody.Nodes.Count - 1, anchor.anchorNodePoint));
 
                 if (anchor.body != null)
-                    m_BSoftBody.AppendAnchor(node, (BulletSharp.RigidBody) anchor.body.GetCollisionObject());
+                    m_BSoftBody.AppendAnchor(node, (BulletSharp.RigidBody)anchor.body.GetCollisionObject());
                 else
                 {
                     m_BSoftBody.SetMass(node, 0);  //setting node mass to 0 fixes it in space apparently
                 }
-
             }
 
             //TODO: lr, Doesnt always work in editor
@@ -90,15 +92,17 @@ namespace BulletUnity
 
             lr.useWorldSpace = false;
 
-            lr.SetVertexCount(verts.Length);
-            lr.SetWidth(meshSettings.width, meshSettings.width);
-            lr.SetColors(meshSettings.startColor, meshSettings.endColor);
+            lr.positionCount = verts.Length;
+            lr.startWidth = meshSettings.width;
+            lr.endWidth = meshSettings.width;
+            lr.startColor = meshSettings.startColor;
+            lr.endColor = meshSettings.endColor;
 
             //Set SB position to GO position
             //m_BSoftBody.Rotate(transform.rotation.ToBullet());
             //m_BSoftBody.Translate(transform.position.ToBullet());
             //m_BSoftBody.Scale(transform.localScale.ToBullet());
-            
+
             UpdateMesh();
             return true;
         }
@@ -119,7 +123,6 @@ namespace BulletUnity
 
             UnityEngine.Material material = new UnityEngine.Material(Shader.Find("LineRenderFix"));
 
-          
             bRope.lr.sharedMaterial = material;
 
             bRope.SoftBodySettings.ResetToSoftBodyPresets(SBSettingsPresets.Rope);
@@ -130,7 +133,7 @@ namespace BulletUnity
         }
 
         /// <summary>
-        /// Update Rope line renderer at runtime, called from Update 
+        /// Update Rope line renderer at runtime, called from Update
         /// </summary>
         public override void UpdateMesh()
         {
@@ -146,9 +149,11 @@ namespace BulletUnity
             if (lrVertexCount != verts.Length)
             {
                 lrVertexCount = verts.Length;
-                lr.SetVertexCount(lrVertexCount);
-                lr.SetWidth(meshSettings.width, meshSettings.width);
-                lr.SetColors(meshSettings.startColor, meshSettings.endColor);
+                lr.positionCount = lrVertexCount;
+                lr.startWidth = meshSettings.width;
+                lr.endWidth = meshSettings.width;
+                lr.startColor = meshSettings.startColor;
+                lr.endColor = meshSettings.endColor;
             }
             for (int i = 0; i < verts.Length; i++)
             {
@@ -157,9 +162,6 @@ namespace BulletUnity
 
             //transform.SetTransformationFromBulletMatrix(m_BSoftBody.WorldTransform);  //Set SoftBody position, No motionstate
         }
-
-
-
     }
 
     [Serializable]
@@ -172,7 +174,5 @@ namespace BulletUnity
         [Range(0, 1)]
         [Tooltip("Anchor point location calulated from total rope lenghth.  Anchor point inserted at ((startPoint - endPoint) * anchorNodePoint; (0 to 1) (0 to 100%)")]
         public float anchorNodePoint;
-
     }
-
 }

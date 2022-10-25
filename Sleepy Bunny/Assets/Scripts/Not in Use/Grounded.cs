@@ -15,7 +15,7 @@ public class Grounded : PlayerRaycast
     {
         if (!other.CompareTag("Ground")) return;
         touchedGround?.Invoke();
-        Debug.Log(totalTimeInAir);
+
         grounded = true;
     }
 
@@ -23,7 +23,6 @@ public class Grounded : PlayerRaycast
     {
         if (!other.CompareTag("Ground")) return;
         grounded = false;
-        Debug.Log("no touch grass");
     }
 
     private void FixedUpdate()

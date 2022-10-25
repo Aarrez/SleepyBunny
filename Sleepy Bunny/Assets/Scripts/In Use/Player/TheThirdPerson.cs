@@ -91,10 +91,10 @@ public class TheThirdPerson : PlayerRaycast
             movement = new Vector3(tempV2.x, tempV2.y, 0f);
             float distance = Vector3.Distance(transform.position, climbBox.ClosestPoint(transform.position));
             Debug.Log(distance);
-            if (distance < .5f)
+            if (distance > .1f)
             {
                 climbing = false;
-                rb.useGravity = false;
+                rb.useGravity = true;
             }
         }
 

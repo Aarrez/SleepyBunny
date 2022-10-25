@@ -5,24 +5,25 @@ using BulletSharp;
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class BallThrowTest : MonoBehaviour
 {
     public enum BallStatus
     {
-
     }
+
     public BPhysicsWorld bulletWorld;
     public BRigidBody ballRigidbody;
     public Vector3 ballThrowImpulse;
     public int numberOfSimulationSteps;
     public GameObject ballGhostPrefab;
-    bool simulationStarted = false;
+    private bool simulationStarted = false;
     public int startFrame = 0;
-    float fixedTimeStep = 1f / 60f;
-    int maxSubsteps = 3;
-    List<Vector3> ballPositionsRealtime = new List<Vector3>();
-    List<Vector3> ballPositionsOfflineSim = new List<Vector3>();
+
+    //float fixedTimeStep = 1f / 60f;
+    //int maxSubsteps = 3;
+    private List<Vector3> ballPositionsRealtime = new List<Vector3>();
+
+    private List<Vector3> ballPositionsOfflineSim = new List<Vector3>();
 
     // Use this for initialization
     void Awake()
@@ -44,11 +45,11 @@ public class BallThrowTest : MonoBehaviour
             startFrame = BPhysicsWorld.Get().frameCount;
 
             //first simulation ==============================
-            ballPositionsOfflineSim = OfflineBallSimulation.SimulateBall(ballRigidbody, ballThrowImpulse, numberOfSimulationSteps,false);
+            ballPositionsOfflineSim = OfflineBallSimulation.SimulateBall(ballRigidbody, ballThrowImpulse, numberOfSimulationSteps, false);
 
             //Second simulation =====================
             ballRigidbody.AddImpulse(ballThrowImpulse);
-            
+
             for (int i = 0; i < ballPositionsOfflineSim.Count; i++)
             {
                 Instantiate<GameObject>(ballGhostPrefab).transform.position = ballPositionsOfflineSim[i];

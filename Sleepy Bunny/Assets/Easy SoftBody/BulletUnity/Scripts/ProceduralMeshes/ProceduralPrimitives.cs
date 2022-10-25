@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+
 //using System.IO;
 //using System.Runtime.InteropServices;
 //using BulletSharp;
@@ -10,21 +11,20 @@ using BulletUnity;
 
 //http://wiki.unity3d.com/index.php/ProceduralPrimitives
 
-
 namespace BulletUnity
 {
     /// <summary>
-    /// Class to generate procedural Unity Meshes 
+    /// Class to generate procedural Unity Meshes
     /// </summary>
     public static class ProceduralPrimitives
     {
-
         public static Mesh CreateMeshPlane(float length = 1f, float width = 1f, int resX = 10, int resZ = 10)
         {
             Mesh mesh = new Mesh();
             mesh.name = "PPPlane";
 
-            #region Vertices		
+            #region Vertices
+
             Vector3[] vertices = new Vector3[resX * resZ];
             for (int z = 0; z < resZ; z++)
             {
@@ -37,15 +37,19 @@ namespace BulletUnity
                     vertices[x + z * resX] = new Vector3(xPos, 0f, zPos);
                 }
             }
-            #endregion
+
+            #endregion Vertices
 
             #region Normales
+
             Vector3[] normales = new Vector3[vertices.Length];
             for (int n = 0; n < normales.Length; n++)
                 normales[n] = Vector3.up;
-            #endregion
 
-            #region UVs		
+            #endregion Normales
+
+            #region UVs
+
             Vector2[] uvs = new Vector2[vertices.Length];
             for (int v = 0; v < resZ; v++)
             {
@@ -54,9 +58,11 @@ namespace BulletUnity
                     uvs[u + v * resX] = new Vector2((float)u / (resX - 1), (float)v / (resZ - 1));
                 }
             }
-            #endregion
+
+            #endregion UVs
 
             #region Triangles
+
             int nbFaces = (resX - 1) * (resZ - 1);
             int[] triangles = new int[nbFaces * 6];
             int t = 0;
@@ -73,14 +79,14 @@ namespace BulletUnity
                 triangles[t++] = i + resX + 1;
                 triangles[t++] = i + 1;
             }
-            #endregion
+
+            #endregion Triangles
 
             mesh.vertices = vertices;
             mesh.normals = normales;
             mesh.uv = uvs;
             mesh.triangles = triangles;
             return mesh;
-
         }
 
         public static Mesh CreateMeshCube(float sides)
@@ -88,7 +94,6 @@ namespace BulletUnity
             Mesh mesh = CreateMeshBox(sides, sides, sides);
             mesh.name = "PPCube";
             return mesh;
-
         }
 
         public static Mesh CreateMeshBox(float length = 1f, float width = 1f, float height = 1f)
@@ -97,6 +102,7 @@ namespace BulletUnity
             mesh.name = "PPBox";
 
             #region Vertices
+
             Vector3 p0 = new Vector3(-length * .5f, -width * .5f, height * .5f);
             Vector3 p1 = new Vector3(length * .5f, -width * .5f, height * .5f);
             Vector3 p2 = new Vector3(length * .5f, -width * .5f, -height * .5f);
@@ -111,25 +117,27 @@ namespace BulletUnity
             {
 	// Bottom
 	p0, p1, p2, p3,
- 
+
 	// Left
 	p7, p4, p0, p3,
- 
+
 	// Front
 	p4, p5, p1, p0,
- 
+
 	// Back
 	p6, p7, p3, p2,
- 
+
 	// Right
 	p5, p6, p2, p1,
- 
+
 	// Top
 	p7, p6, p5, p4
             };
-            #endregion
+
+            #endregion Vertices
 
             #region Normales
+
             Vector3 up = Vector3.up;
             Vector3 down = Vector3.down;
             Vector3 front = Vector3.forward;
@@ -141,25 +149,27 @@ namespace BulletUnity
             {
 	// Bottom
 	down, down, down, down,
- 
+
 	// Left
 	left, left, left, left,
- 
+
 	// Front
 	front, front, front, front,
- 
+
 	// Back
 	back, back, back, back,
- 
+
 	// Right
 	right, right, right, right,
- 
+
 	// Top
 	up, up, up, up
             };
-            #endregion
+
+            #endregion Normales
 
             #region UVs
+
             Vector2 _00 = new Vector2(0f, 0f);
             Vector2 _10 = new Vector2(1f, 0f);
             Vector2 _01 = new Vector2(0f, 1f);
@@ -169,53 +179,55 @@ namespace BulletUnity
             {
 	// Bottom
 	_11, _01, _00, _10,
- 
+
 	// Left
 	_11, _01, _00, _10,
- 
+
 	// Front
 	_11, _01, _00, _10,
- 
+
 	// Back
 	_11, _01, _00, _10,
- 
+
 	// Right
 	_11, _01, _00, _10,
- 
+
 	// Top
 	_11, _01, _00, _10,
             };
-            #endregion
+
+            #endregion UVs
 
             #region Triangles
+
             int[] triangles = new int[]
             {
 	// Bottom
 	3, 1, 0,
-    3, 2, 1,			
- 
+    3, 2, 1,
+
 	// Left
 	3 + 4 * 1, 1 + 4 * 1, 0 + 4 * 1,
     3 + 4 * 1, 2 + 4 * 1, 1 + 4 * 1,
- 
+
 	// Front
 	3 + 4 * 2, 1 + 4 * 2, 0 + 4 * 2,
     3 + 4 * 2, 2 + 4 * 2, 1 + 4 * 2,
- 
+
 	// Back
 	3 + 4 * 3, 1 + 4 * 3, 0 + 4 * 3,
     3 + 4 * 3, 2 + 4 * 3, 1 + 4 * 3,
- 
+
 	// Right
 	3 + 4 * 4, 1 + 4 * 4, 0 + 4 * 4,
     3 + 4 * 4, 2 + 4 * 4, 1 + 4 * 4,
- 
+
 	// Top
 	3 + 4 * 5, 1 + 4 * 5, 0 + 4 * 5,
     3 + 4 * 5, 2 + 4 * 5, 1 + 4 * 5,
-
             };
-            #endregion
+
+            #endregion Triangles
 
             mesh.vertices = vertices;
             mesh.normals = normales;
@@ -238,7 +250,6 @@ namespace BulletUnity
             Mesh mesh = CreateMeshCone(height, radius, radius, nbSides);
             mesh.name = "PPCylinder";
             return mesh;
-
         }
 
         public static Mesh CreateMeshPyramid(float height = 1f, float baseSize = 1f)
@@ -258,10 +269,8 @@ namespace BulletUnity
             return mesh;
         }
 
-        public static void CreateMeshCapsule(Mesh mesh, float height = 1, float bottomRadius = 1f, float topRadius = 0f, int nbSides = 18, int axis=1)
+        public static void CreateMeshCapsule(Mesh mesh, float height = 1, float bottomRadius = 1f, float topRadius = 0f, int nbSides = 18, int axis = 1)
         {
-
-
             int nbHeightSeg = 1; // Not implemented yet
             int nbVerticesCap = nbSides + 1;
 
@@ -302,8 +311,8 @@ namespace BulletUnity
             }
             vertices[vert] = vertices[nbSides * 2 + 2];
             vertices[vert + 1] = vertices[nbSides * 2 + 3];
-            #endregion
 
+            #endregion Vertices
 
             //Apply offset to vertices to shift pivot to center (Bullet default)
 
@@ -315,7 +324,6 @@ namespace BulletUnity
                 vertices[ii] += offset;
                 //offset
             }
-
 
             #region Normales
 
@@ -351,13 +359,15 @@ namespace BulletUnity
             }
             normales[vert] = normales[nbSides * 2 + 2];
             normales[vert + 1] = normales[nbSides * 2 + 3];
-            #endregion
+
+            #endregion Normales
 
             Quaternion q = Quaternion.identity;
             if (axis == 0)
             {
                 q = Quaternion.AngleAxis(90, UnityEngine.Vector3.forward);
-            } else if (axis == 2)
+            }
+            else if (axis == 2)
             {
                 q = Quaternion.AngleAxis(90, UnityEngine.Vector3.right);
             }
@@ -374,6 +384,7 @@ namespace BulletUnity
             }
 
             #region UVs
+
             Vector2[] uvs = new Vector2[vertices.Length];
 
             // Bottom cap
@@ -407,9 +418,11 @@ namespace BulletUnity
             }
             uvs[u] = new Vector2(1f, 1f);
             uvs[u + 1] = new Vector2(1f, 0f);
-            #endregion
+
+            #endregion UVs
 
             #region Triangles
+
             int nbTriangles = nbSides + nbSides + nbSides * 2;
             int[] triangles = new int[nbTriangles * 3 + 3];
 
@@ -463,7 +476,8 @@ namespace BulletUnity
                 tri++;
                 i += 3;
             }
-            #endregion
+
+            #endregion Triangles
 
             mesh.vertices = vertices;
             mesh.normals = normales;
@@ -473,8 +487,6 @@ namespace BulletUnity
 
         public static void CreateMeshCone(Mesh mesh, float height = 1, float bottomRadius = 1f, float topRadius = 0f, int nbSides = 18)
         {
-
-
             int nbHeightSeg = 1; // Not implemented yet
             int nbVerticesCap = nbSides + 1;
 
@@ -515,8 +527,8 @@ namespace BulletUnity
             }
             vertices[vert] = vertices[nbSides * 2 + 2];
             vertices[vert + 1] = vertices[nbSides * 2 + 3];
-            #endregion
 
+            #endregion Vertices
 
             //Apply offset to vertices to shift pivot to center (Bullet default)
 
@@ -528,7 +540,6 @@ namespace BulletUnity
                 vertices[ii] += offset;
                 //offset
             }
-
 
             #region Normales
 
@@ -564,9 +575,11 @@ namespace BulletUnity
             }
             normales[vert] = normales[nbSides * 2 + 2];
             normales[vert + 1] = normales[nbSides * 2 + 3];
-            #endregion
+
+            #endregion Normales
 
             #region UVs
+
             Vector2[] uvs = new Vector2[vertices.Length];
 
             // Bottom cap
@@ -600,9 +613,11 @@ namespace BulletUnity
             }
             uvs[u] = new Vector2(1f, 1f);
             uvs[u + 1] = new Vector2(1f, 0f);
-            #endregion
+
+            #endregion UVs
 
             #region Triangles
+
             int nbTriangles = nbSides + nbSides + nbSides * 2;
             int[] triangles = new int[nbTriangles * 3 + 3];
 
@@ -656,7 +671,8 @@ namespace BulletUnity
                 tri++;
                 i += 3;
             }
-            #endregion
+
+            #endregion Triangles
 
             mesh.vertices = vertices;
             mesh.normals = normales;
@@ -673,6 +689,7 @@ namespace BulletUnity
 
             int nbVerticesCap = nbSides * 2 + 2;
             int nbVerticesSides = nbSides * 2 + 2;
+
             #region Vertices
 
             // bottom + top + sides
@@ -737,7 +754,8 @@ namespace BulletUnity
                 vertices[vert + 1] = new Vector3(cos * (bottomRadius1 - bottomRadius2 * .5f), 0, sin * (bottomRadius1 - bottomRadius2 * .5f));
                 vert += 2;
             }
-            #endregion
+
+            #endregion Vertices
 
             #region Normales
 
@@ -782,9 +800,11 @@ namespace BulletUnity
                 normales[vert + 1] = normales[vert];
                 vert += 2;
             }
-            #endregion
+
+            #endregion Normales
 
             #region UVs
+
             Vector2[] uvs = new Vector2[vertices.Length];
 
             vert = 0;
@@ -823,9 +843,11 @@ namespace BulletUnity
                 uvs[vert++] = new Vector2(t, 0f);
                 uvs[vert++] = new Vector2(t, 1f);
             }
-            #endregion
+
+            #endregion UVs
 
             #region Triangles
+
             int nbFace = nbSides * 4;
             int nbTriangles = nbFace * 2;
             int nbIndexes = nbTriangles * 3;
@@ -884,7 +906,6 @@ namespace BulletUnity
                 sideCounter++;
             }
 
-
             // Sides (in)
             while (sideCounter < nbSides * 4)
             {
@@ -901,7 +922,8 @@ namespace BulletUnity
 
                 sideCounter++;
             }
-            #endregion
+
+            #endregion Triangles
 
             mesh.vertices = vertices;
             mesh.normals = normales;
@@ -915,7 +937,8 @@ namespace BulletUnity
             Mesh mesh = new Mesh();
             mesh.name = "PPTorus";
 
-            #region Vertices		
+            #region Vertices
+
             Vector3[] vertices = new Vector3[(nbRadSeg + 1) * (nbSides + 1)];
             float _2pi = Mathf.PI * 2f;
             for (int seg = 0; seg <= nbRadSeg; seg++)
@@ -936,9 +959,11 @@ namespace BulletUnity
                     vertices[side + seg * (nbSides + 1)] = r1 + r2;
                 }
             }
-            #endregion
 
-            #region Normales		
+            #endregion Vertices
+
+            #region Normales
+
             Vector3[] normales = new Vector3[vertices.Length];
             for (int seg = 0; seg <= nbRadSeg; seg++)
             {
@@ -952,16 +977,20 @@ namespace BulletUnity
                     normales[side + seg * (nbSides + 1)] = (vertices[side + seg * (nbSides + 1)] - r1).normalized;
                 }
             }
-            #endregion
+
+            #endregion Normales
 
             #region UVs
+
             Vector2[] uvs = new Vector2[vertices.Length];
             for (int seg = 0; seg <= nbRadSeg; seg++)
                 for (int side = 0; side <= nbSides; side++)
                     uvs[side + seg * (nbSides + 1)] = new Vector2((float)seg / nbRadSeg, (float)side / nbSides);
-            #endregion
+
+            #endregion UVs
 
             #region Triangles
+
             int nbFaces = vertices.Length;
             int nbTriangles = nbFaces * 2;
             int nbIndexes = nbTriangles * 3;
@@ -987,7 +1016,8 @@ namespace BulletUnity
                     }
                 }
             }
-            #endregion
+
+            #endregion Triangles
 
             mesh.vertices = vertices;
             mesh.normals = normales;
@@ -997,7 +1027,7 @@ namespace BulletUnity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="radius"></param>
         /// <param name="nbLong">number of longitude lines</param>
@@ -1010,6 +1040,7 @@ namespace BulletUnity
             mesh.Clear();
 
             #region Vertices
+
             Vector3[] vertices = new Vector3[(nbLong + 1) * nbLat + 2];
             float _pi = Mathf.PI;
             float _2pi = _pi * 2f;
@@ -1031,24 +1062,30 @@ namespace BulletUnity
                 }
             }
             vertices[vertices.Length - 1] = Vector3.up * -radius;
-            #endregion
 
-            #region Normales		
+            #endregion Vertices
+
+            #region Normales
+
             Vector3[] normales = new Vector3[vertices.Length];
             for (int n = 0; n < vertices.Length; n++)
                 normales[n] = vertices[n].normalized;
-            #endregion
+
+            #endregion Normales
 
             #region UVs
+
             Vector2[] uvs = new Vector2[vertices.Length];
             uvs[0] = Vector2.up;
             uvs[uvs.Length - 1] = Vector2.zero;
             for (int lat = 0; lat < nbLat; lat++)
                 for (int lon = 0; lon <= nbLong; lon++)
                     uvs[lon + lat * (nbLong + 1) + 1] = new Vector2((float)lon / nbLong, 1f - (float)(lat + 1) / (nbLat + 1));
-            #endregion
+
+            #endregion UVs
 
             #region Triangles
+
             int nbFaces = vertices.Length;
             int nbTriangles = nbFaces * 2;
             int nbIndexes = nbTriangles * 3;
@@ -1088,7 +1125,8 @@ namespace BulletUnity
                 triangles[i++] = vertices.Length - (lon + 2) - 1;
                 triangles[i++] = vertices.Length - (lon + 1) - 1;
             }
-            #endregion
+
+            #endregion Triangles
 
             mesh.vertices = vertices;
             mesh.normals = normales;
@@ -1102,7 +1140,6 @@ namespace BulletUnity
         //Note: Don't forget to include System.Collections.Generic. And there is no UV yet, not sure how to go about it actually.
         public Mesh CreateMeshIcoSphere()
         {
-           
             return IcoSphere.Create();
         }
 
@@ -1189,7 +1226,6 @@ namespace BulletUnity
                 vertList.Add(new Vector3(-t, 0f, -1f).normalized * radius);
                 vertList.Add(new Vector3(-t, 0f, 1f).normalized * radius);
 
-
                 // create 20 triangles of the icosahedron
                 List<TriangleIndices> faces = new List<TriangleIndices>();
 
@@ -1200,7 +1236,7 @@ namespace BulletUnity
                 faces.Add(new TriangleIndices(0, 7, 10));
                 faces.Add(new TriangleIndices(0, 10, 11));
 
-                // 5 adjacent faces 
+                // 5 adjacent faces
                 faces.Add(new TriangleIndices(1, 5, 9));
                 faces.Add(new TriangleIndices(5, 11, 4));
                 faces.Add(new TriangleIndices(11, 10, 2));
@@ -1214,13 +1250,12 @@ namespace BulletUnity
                 faces.Add(new TriangleIndices(3, 6, 8));
                 faces.Add(new TriangleIndices(3, 8, 9));
 
-                // 5 adjacent faces 
+                // 5 adjacent faces
                 faces.Add(new TriangleIndices(4, 9, 5));
                 faces.Add(new TriangleIndices(2, 4, 11));
                 faces.Add(new TriangleIndices(6, 2, 10));
                 faces.Add(new TriangleIndices(8, 6, 7));
                 faces.Add(new TriangleIndices(9, 8, 1));
-
 
                 // refine triangles
                 for (int i = 0; i < recursionLevel; i++)
@@ -1256,7 +1291,6 @@ namespace BulletUnity
                 Vector3[] normales = new Vector3[vertList.Count];
                 for (int i = 0; i < normales.Length; i++)
                     normales[i] = vertList[i].normalized;
-
 
                 mesh.normals = normales;
 
@@ -1314,7 +1348,7 @@ namespace BulletUnity
 
                 // Accept new vertex!
                 newVerts.Add(vert);
-                if (mesh.uv.Length > 0)  //some meshes dont have 
+                if (mesh.uv.Length > 0)  //some meshes dont have
                     newUVs.Add(mesh.uv[k]);
 
                 skipToNext:;
@@ -1340,7 +1374,6 @@ namespace BulletUnity
             mesh.vertices = newVerts.ToArray();
             mesh.uv = newUVs.ToArray();
         }
-
 
         /// <summary>
         /// Add back face triangles to this mesh. Test me
@@ -1390,22 +1423,18 @@ namespace BulletUnity
             mesh.triangles = newTris; // assign triangles last!
         }
 
-
-
-
-
         /// <summary>
         /// After mesh is created, process it based on selected options
         /// </summary>
-        public static void ApplyMeshPostProcessing(this Mesh mesh,
-                bool autoWeldVertices = false,
+        public static void ApplyMeshPostProcessing(
+         this Mesh mesh,
+         bool autoWeldVertices = false,
          float autoWeldThreshold = 0.001f,
          bool addBackFaceTriangles = false,
          bool recalculateNormals = false,
          bool recalculateBounds = true,
          bool optimize = true)
         {
-
             if (autoWeldVertices)
                 mesh.AutoWeldVertices(autoWeldThreshold);
 
@@ -1419,8 +1448,7 @@ namespace BulletUnity
                 mesh.RecalculateBounds();
 
             if (optimize)
-                ;
-
+                mesh.Optimize();
         }
     }
 }

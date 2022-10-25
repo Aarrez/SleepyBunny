@@ -6,6 +6,7 @@ public class doorOpen : MonoBehaviour
 {
     public GameObject ObjectYouWishtoMove;
     public Animator objectToMove;
+
     private bool holdDoorHandle = false;
     public GameObject player;
 
