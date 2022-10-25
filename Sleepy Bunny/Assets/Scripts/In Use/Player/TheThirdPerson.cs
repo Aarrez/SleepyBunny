@@ -3,15 +3,11 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TheThirdPerson : MonoBehaviour
+public class TheThirdPerson : PlayerRaycast
 {
     #region Varibales
 
-    private GameObject GrabObject;
-    private GameObject playerAmature;
     private Rigidbody rb;
-
-    [SerializeField] private AnimationCurve animCurve;
 
     #region refrence scripts
 
@@ -37,20 +33,14 @@ public class TheThirdPerson : MonoBehaviour
 
     #region Climbing Stuff
 
-    private bool climbing = false;
-
-    public float climbSpeed = 5f;
-
-    public float sticktowall = 1f;
-    public float range = 2f;
-    public float distanceToGround = 1.1f;
+    [SerializeField] private float climbSpeed = 5f;
 
     #endregion Climbing Stuff
 
     // Damage stuff
     public float DamageAmount;
 
-    [Range(0, 100)] public float AmountOfHealth;
+    private float AmountOfHealth;
     public float health;
     public AudioSource PainNoise;
     public AudioSource Sizzle;
@@ -62,19 +52,20 @@ public class TheThirdPerson : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        playerAmature = GameObject.FindGameObjectWithTag("Bones");
     }
 
     //Invokes when object is enabled
     private void OnEnable()
     {
         InputScript.doMove += M_Movement;
+        InputScript.doGrab += M_PClimb;
     }
 
     //Invokes when object is disable
     private void OnDisable()
     {
         InputScript.doMove -= M_Movement;
+        InputScript.doGrab -= M_PClimb;
     }
 
     public void Start()
@@ -91,11 +82,20 @@ public class TheThirdPerson : MonoBehaviour
         Vector2 tempV2 = InputScript.moveCtx().ReadValue<Vector2>();
         if (!climbing)
         {
+            Debug.Log("normal movement");
             movement = new Vector3(tempV2.x, 0f, tempV2.y);
         }
         else
         {
-            movement = new Vector3(0f, tempV2.x, tempV2.y);
+            Debug.Log("Climbing");
+            movement = new Vector3(tempV2.x, tempV2.y, 0f);
+            float distance = Vector3.Distance(transform.position, climbBox.ClosestPoint(transform.position));
+            Debug.Log(distance);
+            if (distance < .5f)
+            {
+                climbing = false;
+                rb.useGravity = false;
+            }
         }
 
         movementDirection = Camera.main.transform.TransformDirection(movement);
@@ -110,7 +110,7 @@ public class TheThirdPerson : MonoBehaviour
     }
 
     //Move the player through MovePosition
-    private void M_PMoveMP()
+    private void M_PlayerMovePosition()
     {
         if (movement == Vector3.zero) { return; }
 
@@ -118,25 +118,46 @@ public class TheThirdPerson : MonoBehaviour
     }
 
     //Move the player though Velocity
-    private void M_PMoveV()
+    private void M_PClimbVelocity()
     {
         if (movement == Vector3.zero) return;
 
-        rb.velocity = movement * speed * Time.fixedDeltaTime;
+        rb.velocity = movement * climbSpeed * Time.fixedDeltaTime;
     }
 
     //Gets the direction of the camera in world space
     private void M_PMoveDirectionOfCamera()
     {
         Vector3 camDirection = Camera.main.transform.TransformDirection(movement);
+        //Prevents the player model form leaning down when looking down
         movementDirection = new Vector3(camDirection.x, 0f, camDirection.z);
+    }
+
+    private void M_PClimb()
+    {
+        Climbing();
+        if (climbing)
+        {
+            rb.useGravity = false;
+        }
+        else
+        {
+            rb.useGravity = true;
+        }
     }
 
     private void FixedUpdate()
     {
         M_PRotate();
         M_PMoveDirectionOfCamera();
-        M_PMoveMP();
+        if (!climbing)
+        {
+            M_PlayerMovePosition();
+        }
+        else
+        {
+            M_PClimbVelocity();
+        }
     }
 
     // Update is called once per frame
@@ -162,7 +183,7 @@ public class TheThirdPerson : MonoBehaviour
         //    PunchForce();
         //}
 
-        ////force Checkpoint
+        //force Checkpoint
         //if (Input.GetKeyDown(KeyCode.Return))
         //{ Respawn(); }
 

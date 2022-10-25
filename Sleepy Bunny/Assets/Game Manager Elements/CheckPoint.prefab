@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7090466443550508681}
   - component: {fileID: 1946992532421344666}
   - component: {fileID: 2137343814898492385}
-  - component: {fileID: 5649308208380713978}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: Untagged
@@ -98,16 +97,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5649308208380713978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2943076747353068826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b81f7389c113680459a39506ae67da3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  am: {fileID: 0}

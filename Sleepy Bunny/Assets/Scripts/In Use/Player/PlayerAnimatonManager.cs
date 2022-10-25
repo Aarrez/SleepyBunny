@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimatonManager : Raycasts
+public class PlayerAnimatonManager : PlayerRaycast
 {
     [SerializeField] private bool startAtCheckpoint;
     private GameMaster gm;

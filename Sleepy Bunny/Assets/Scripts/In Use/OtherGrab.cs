@@ -6,39 +6,22 @@ public class OtherGrab : MonoBehaviour
 {
     public bool pickup;
     public Transform holdParent;
-    [SerializeField] private Raycasts rc;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    [SerializeField] private PlayerRaycast rc;
 
     public void PickUp()
     {
-            //Debug.Log("can pick up");
-            Rigidbody weight = GetComponent<Rigidbody>();
-            //weight.useGravity = false;
-            weight.isKinematic = true;
-            weight.transform.parent = holdParent;
+        //Debug.Log("can pick up");
+        Rigidbody weight = GetComponent<Rigidbody>();
+        //weight.useGravity = false;
+        weight.isKinematic = true;
+        weight.transform.parent = holdParent;
     }
-
 
     public void LetGo()
     {
-            Rigidbody weight = GetComponent<Rigidbody>();
-            weight.useGravity = true;
-            weight.transform.parent = null;
-            weight.isKinematic = false;
-
+        Rigidbody weight = GetComponent<Rigidbody>();
+        weight.useGravity = true;
+        weight.transform.parent = null;
+        weight.isKinematic = false;
     }
-    void Update()
-    {
-        
-
-
-
-    }
-
 }

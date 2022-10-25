@@ -1,17 +1,21 @@
 using System.ComponentModel;
 using UnityEngine;
 
-public class Raycasts : MonoBehaviour
+public class PlayerRaycast : MonoBehaviour
 {
     private Rigidbody grabObject;
     private HingeJoint tether;
 
+    internal BoxCollider climbBox;
+
     //Player Bool List
     internal bool grounded;
 
+    internal bool climbing;
+
     //RayCast Lengths
 
-    [Range(0, 1)] public float range;
+    private float range = 0.5f;
 
     private void Awake()
     {
@@ -28,20 +32,19 @@ public class Raycasts : MonoBehaviour
         //InputScript.doGrab -= PickUp;
     }
 
-    //public void Climbing()
-    //{
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(transform.position, transform.forward, out hit, range))
-    //    {
-    //        if (hit.transform.gameObject.CompareTag("Climb"))
-    //        {
-    //            climb = true;
-    //            Debug.Log("Scramble Up Here");
-    //        }
-    //        else
-    //        { climb = false; }
-    //    }
-    //}
+    public void Climbing()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, range))
+        {
+            if (hit.transform.gameObject.CompareTag("Climb"))
+            {
+                climbBox = hit.transform.GetComponent<BoxCollider>();
+                climbing = true;
+            }
+        }
+        else climbing = false;
+    }
 
     public void PickUp()
     {
