@@ -16,23 +16,23 @@ public class Grounded : PlayerRaycast
         if (!other.CompareTag("Ground")) return;
         touchedGround?.Invoke();
 
-        grounded = true;
+        _grounded = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Ground")) return;
-        grounded = false;
+        _grounded = false;
     }
 
     private void FixedUpdate()
     {
-        if (!grounded)
+        if (!_grounded)
         {
             time += Time.fixedDeltaTime;
             timeCollected = false;
         }
-        else if (!timeCollected && grounded)
+        else if (!timeCollected && _grounded)
         {
             totalTimeInAir = time;
             time = 0f;

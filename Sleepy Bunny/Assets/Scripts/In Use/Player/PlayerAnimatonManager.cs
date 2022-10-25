@@ -71,7 +71,7 @@ public class PlayerAnimatonManager : PlayerRaycast
 
     private void M_AnimMoveIdle()
     {
-        if (grounded) { return; }
+        if (_grounded) { return; }
         if (InputScript.moveCtx().ReadValue<Vector2>() == Vector2.zero)
         {
             anim.SetBool("idle", true);
@@ -86,7 +86,7 @@ public class PlayerAnimatonManager : PlayerRaycast
 
     private void M_AnimJump()
     {
-        if (!grounded)
+        if (!_grounded)
         {
             anim.SetBool("walk", false);
             anim.SetBool("idle", false);
@@ -102,7 +102,7 @@ public class PlayerAnimatonManager : PlayerRaycast
 
     private void M_AnimGrab()
     {
-        if (grounded) return;
+        if (_grounded) return;
 
         Debug.Log("Doing");
         if (InputScript.grabCtx().performed)

@@ -1,25 +1,24 @@
-using System.ComponentModel;
 using UnityEngine;
 
 public class PlayerRaycast : MonoBehaviour
 {
-    private Rigidbody grabObject;
-    private HingeJoint tether;
+    private Rigidbody _grabObject;
+    private HingeJoint _tether;
 
-    internal BoxCollider climbBox;
+    internal Collider _climbBox;
 
     //Player Bool List
-    internal bool grounded;
+    internal bool _grounded;
 
-    internal bool climbing;
+    internal bool _climbing;
 
     //RayCast Lengths
 
-    private float range = 0.5f;
+    private float _range = 0.5f;
 
     private void Awake()
     {
-        tether = GetComponentInChildren<HingeJoint>();
+        _tether = GetComponentInChildren<HingeJoint>();
     }
 
     private void OnEnable()
@@ -35,15 +34,15 @@ public class PlayerRaycast : MonoBehaviour
     public void Climbing()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, range))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, _range))
         {
             if (hit.transform.gameObject.CompareTag("Climb"))
             {
-                climbBox = hit.transform.GetComponent<BoxCollider>();
-                climbing = true;
+                _climbBox = hit.transform.GetComponent<Collider>();
+                _climbing = true;
             }
         }
-        else climbing = false;
+        else _climbing = false;
     }
 
     public void PickUp()
@@ -51,11 +50,11 @@ public class PlayerRaycast : MonoBehaviour
         if (InputScript.grabCtx().performed)
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, range))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, _range))
             {
                 if (!hit.collider.CompareTag("Move_Object")) return;
-                grabObject = hit.rigidbody;
-                tether.connectedBody = grabObject;
+                _grabObject = hit.rigidbody;
+                _tether.connectedBody = _grabObject;
             }
         }
         if (InputScript.grabCtx().canceled)

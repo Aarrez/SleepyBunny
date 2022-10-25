@@ -7,26 +7,26 @@ public class TheThirdPerson : PlayerRaycast
 {
     #region Varibales
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
     #region refrence scripts
 
-    private GameMaster gm;
+    private GameMaster _gm;
 
     #endregion refrence scripts
 
-    public float speed = 1f;
+    public float Speed = 1f;
 
     public float JumpHeight = 10f;
 
-    public float rotationSpeed = .1f;
+    public float RotationSpeed = .1f;
 
-    public float punchforce = 4f;
+    public float Punchforce = 4f;
 
     //Move Vector
-    private Vector3 movement = Vector3.zero;
+    private Vector3 _movement = Vector3.zero;
 
-    private Vector3 movementDirection = Vector3.zero;
+    private Vector3 _movementDirection = Vector3.zero;
 
     //Falling
     public Vector3 Velocity;
@@ -40,32 +40,32 @@ public class TheThirdPerson : PlayerRaycast
     // Damage stuff
     public float DamageAmount;
 
-    private float AmountOfHealth;
-    public float health;
+    private float _amountOfHealth;
+    public float Health;
     public AudioSource PainNoise;
     public AudioSource Sizzle;
 
-    public bool respawn = false;
+    public bool ShouldRespawn = false;
 
     #endregion Varibales
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     //Invokes when object is enabled
     private void OnEnable()
     {
         InputScript.doMove += M_Movement;
-        InputScript.doGrab += M_PClimb;
+        InputScript.doGrab += PClimb;
     }
 
     //Invokes when object is disable
     private void OnDisable()
     {
         InputScript.doMove -= M_Movement;
-        InputScript.doGrab -= M_PClimb;
+        InputScript.doGrab -= PClimb;
     }
 
     public void Start()
@@ -80,83 +80,83 @@ public class TheThirdPerson : PlayerRaycast
     {
         //Gets the input
         Vector2 tempV2 = InputScript.moveCtx().ReadValue<Vector2>();
-        if (!climbing)
+        if (!_climbing)
         {
             Debug.Log("normal movement");
-            movement = new Vector3(tempV2.x, 0f, tempV2.y);
+            _movement = new Vector3(tempV2.x, 0f, tempV2.y);
         }
         else
         {
             Debug.Log("Climbing");
-            movement = new Vector3(tempV2.x, tempV2.y, 0f);
-            float distance = Vector3.Distance(transform.position, climbBox.ClosestPoint(transform.position));
-            Debug.Log(distance);
-            if (distance > .1f)
+            _movement = new Vector3(tempV2.x, tempV2.y, 0f);
+            float objectDistance = Vector3.Distance(transform.position, _climbBox.ClosestPointOnBounds(transform.position));
+            Debug.Log(objectDistance);
+            if (objectDistance > .1f)
             {
-                climbing = false;
-                rb.useGravity = true;
+                _climbing = false;
+                _rb.useGravity = true;
             }
         }
 
-        movementDirection = Camera.main.transform.TransformDirection(movement);
+        _movementDirection = Camera.main.transform.TransformDirection(_movement);
     }
 
     //Uses Ridgid body to rotate the player
-    private void M_PRotate()
+    private void PRotate()
     {
-        if (movement == Vector3.zero) return;
+        if (_movement == Vector3.zero) return;
 
-        rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(movementDirection, Vector3.up), rotationSpeed);
+        _rb.rotation = Quaternion.RotateTowards(_rb.rotation, Quaternion.LookRotation(_movementDirection, Vector3.up), RotationSpeed);
     }
 
     //Move the player through MovePosition
-    private void M_PlayerMovePosition()
+    private void PlayerMovePosition()
     {
-        if (movement == Vector3.zero) { return; }
+        if (_movement == Vector3.zero) { return; }
 
-        rb.MovePosition(transform.position + movementDirection * speed * Time.fixedDeltaTime);
+        _rb.MovePosition(transform.position + _movementDirection * Speed * Time.fixedDeltaTime);
     }
 
     //Move the player though Velocity
-    private void M_PClimbVelocity()
+    private void PClimbVelocity()
     {
-        if (movement == Vector3.zero) return;
+        if (_movement == Vector3.zero) return;
 
-        rb.velocity = movement * climbSpeed * Time.fixedDeltaTime;
+        _rb.velocity = _movement * climbSpeed * Time.fixedDeltaTime;
     }
 
     //Gets the direction of the camera in world space
-    private void M_PMoveDirectionOfCamera()
+    private void PMoveDirectionOfCamera()
     {
-        Vector3 camDirection = Camera.main.transform.TransformDirection(movement);
+        Vector3 camDirection = Camera.main.transform.TransformDirection(_movement);
         //Prevents the player model form leaning down when looking down
-        movementDirection = new Vector3(camDirection.x, 0f, camDirection.z);
+        _movementDirection = new Vector3(camDirection.x, 0f, camDirection.z);
     }
 
-    private void M_PClimb()
+    private void PClimb()
     {
         Climbing();
-        if (climbing)
+        if (_climbing)
         {
-            rb.useGravity = false;
+            _rb.useGravity = false;
         }
         else
         {
-            rb.useGravity = true;
+            _rb.useGravity = true;
         }
     }
 
     private void FixedUpdate()
     {
-        M_PRotate();
-        M_PMoveDirectionOfCamera();
-        if (!climbing)
+        PRotate();
+        PMoveDirectionOfCamera();
+        if (!_climbing)
         {
-            M_PlayerMovePosition();
+            PlayerMovePosition();
         }
         else
         {
-            M_PClimbVelocity();
+            PClimbVelocity();
         }
     }
 
@@ -164,7 +164,7 @@ public class TheThirdPerson : PlayerRaycast
     void Update()
     {
         //Movement and rotation
-        M_PMoveDirectionOfCamera();
+        PMoveDirectionOfCamera();
 
         #region Climbing & Push & Forece Checkpoint
 
@@ -191,20 +191,20 @@ public class TheThirdPerson : PlayerRaycast
     }
 
     //Jump Force
-    public void M_ApplyJumpUpforce()
+    public void ApplyJumpUpforce()
     {
-        rb.AddForce(Vector3.up * JumpHeight, ForceMode.Force);
+        _rb.AddForce(Vector3.up * JumpHeight, ForceMode.Force);
     }
 
     //Punch Force
     public void PunchForce()
     {
-        rb.AddForce(Vector3.forward * punchforce, ForceMode.Force);
+        _rb.AddForce(Vector3.forward * Punchforce, ForceMode.Force);
     }
 
     //Respaawn
     public void Respawn()
     {
-        transform.position = gm.lastCheckPointPos;
+        transform.position = _gm.lastCheckPointPos;
     }
 }
