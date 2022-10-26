@@ -1,27 +1,47 @@
-public class GroundedPlayerState : BasePlayerState
+using PlayerStM.BaseStates;
+using UnityEngine.InputSystem;
+
+namespace PlayerStM.SubStates
 {
-    public GroundedPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
-        : base(currentContext, stateFactory)
+    public class GroundedPlayerState : BasePlayerState
     {
-    }
+        private bool _hasJumped;
 
-    public override void CheckSwitchState()
-    {
-    }
+        public GroundedPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+            : base(currentContext, stateFactory)
+        {
+        }
 
-    public override void EnterState()
-    {
-    }
+        public override void CheckSwitchState()
+        {
+            if (_hasJumped)
+            {
+                SwitchState(StateFactory.Jump());
+            }
+        }
 
-    public override void ExitState()
-    {
-    }
+        public override void EnterState()
+        {
+            Ctx.Jump += HasJumped;
+        }
 
-    public override void InitializeSubState()
-    {
-    }
+        public override void ExitState()
+        {
+            Ctx.Jump -= HasJumped;
+        }
 
-    public override void UpdateState()
-    {
+        public override void InitializeSubState()
+        {
+        }
+
+        public override void UpdateState()
+        {
+            CheckSwitchState();
+        }
+
+        private void HasJumped(InputAction.CallbackContext inputCtx)
+        {
+            _hasJumped = inputCtx.ReadValueAsButton();
+        }
     }
 }

@@ -44,7 +44,7 @@ public class PlayerAnimatonManager : PlayerRaycast
         InputScript.doJump += M_AnimJump;
         InputScript.doGrab += M_AnimGrab;
 
-        Grounded.touchedGround += M_JumpLanded;
+        Grounded.IsGroundedEvent += M_JumpLanded;
 
         #endregion Subscribeing Methods to delegets
     }
@@ -57,7 +57,7 @@ public class PlayerAnimatonManager : PlayerRaycast
         InputScript.doJump -= M_AnimJump;
         InputScript.doGrab -= M_AnimGrab;
 
-        Grounded.touchedGround -= M_JumpLanded;
+        Grounded.IsGroundedEvent -= M_JumpLanded;
 
         #endregion Unsubscribing Methods from delegets
     }
@@ -94,7 +94,7 @@ public class PlayerAnimatonManager : PlayerRaycast
         }
     }
 
-    private void M_JumpLanded()
+    private void M_JumpLanded(bool ctx)
     {
         anim.SetBool("walk", false);
         anim.SetBool("idle", true);

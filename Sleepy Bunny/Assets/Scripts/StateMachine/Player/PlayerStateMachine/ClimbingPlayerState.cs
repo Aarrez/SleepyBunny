@@ -1,28 +1,34 @@
-public class ClimbingPlayerState : BasePlayerState
+using PlayerStM.BaseStates;
 
+namespace PlayerStM.SubStates
 {
-    public ClimbingPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
-        : base(currentContext, stateFactory)
-    {
-    }
+    public class ClimbingPlayerState : BasePlayerState
 
-    public override void CheckSwitchState()
     {
-    }
+        public ClimbingPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+            : base(currentContext, stateFactory)
+        {
+        }
 
-    public override void EnterState()
-    {
-    }
+        public override void CheckSwitchState()
+        {
+        }
 
-    public override void ExitState()
-    {
-    }
+        public override void EnterState()
+        {
+        }
 
-    public override void InitializeSubState()
-    {
-    }
+        public override void ExitState()
+        {
+        }
 
-    public override void UpdateState()
-    {
+        public override void InitializeSubState()
+        {
+        }
+
+        public override void UpdateState()
+        {
+            CheckSwitchState();
+        }
     }
 }

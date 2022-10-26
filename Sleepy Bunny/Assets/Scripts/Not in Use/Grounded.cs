@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 
-public class Grounded : PlayerRaycast
+public class Grounded : MonoBehaviour
 {
-    public static event Action touchedGround;
+    private bool _grounded;
+    private static Action<bool> _isGroundedEvent;
 
     private float totalTimeInAir, time;
 
@@ -11,17 +12,20 @@ public class Grounded : PlayerRaycast
 
     public static Func<float> airTime;
 
+    public static event Action<bool> IsGroundedEvent
+    { add => _isGroundedEvent += value; remove => _isGroundedEvent -= value; }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Ground")) return;
-        touchedGround?.Invoke();
-
         _grounded = true;
+        _isGroundedEvent?.Invoke(_grounded);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Ground")) return;
+        _isGroundedEvent?.Invoke(_grounded);
         _grounded = false;
     }
 

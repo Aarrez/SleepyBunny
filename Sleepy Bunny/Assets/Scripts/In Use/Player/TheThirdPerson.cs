@@ -58,6 +58,7 @@ public class TheThirdPerson : PlayerRaycast
     private void OnEnable()
     {
         InputScript.doMove += M_Movement;
+
         InputScript.doGrab += PClimb;
     }
 

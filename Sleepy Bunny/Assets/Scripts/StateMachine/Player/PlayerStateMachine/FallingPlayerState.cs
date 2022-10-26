@@ -1,18 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
+using PlayerStM.BaseStates;
 using UnityEngine;
 
-public class FallingPlayerState : MonoBehaviour
+namespace PlayerStM.SubStates
 {
-    // Start is called before the first frame update
-    void Start()
+    public class FallingPlayerState : BasePlayerState
     {
-        
-    }
+        public FallingPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+            : base(currentContext, stateFactory)
+        {
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void CheckSwitchState()
+        {
+        }
+
+        public override void EnterState()
+        {
+        }
+
+        public override void ExitState()
+        {
+        }
+
+        public override void InitializeSubState()
+        {
+        }
+
+        public override void UpdateState()
+        {
+            CheckSwitchState();
+        }
     }
 }
