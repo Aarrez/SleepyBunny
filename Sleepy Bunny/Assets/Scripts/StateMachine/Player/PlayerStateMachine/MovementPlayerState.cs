@@ -19,15 +19,15 @@ namespace PlayerStM.SubStates
         {
             if (_moveVector == Vector3.zero)
             {
-                SwitchState(StateFactory.Idle());
+                SwitchState(Factory.Idle());
             }
             else if (!Ctx.IsGrounded)
             {
-                SwitchState(StateFactory.Falling());
+                SwitchState(Factory.Falling());
             }
             else if (Ctx.IsClimbing)
             {
-                SwitchState(StateFactory.Climb());
+                SwitchState(Factory.Climb());
             }
         }
 

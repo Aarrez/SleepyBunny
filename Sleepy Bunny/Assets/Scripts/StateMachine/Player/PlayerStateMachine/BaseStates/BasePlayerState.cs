@@ -5,12 +5,12 @@ namespace PlayerStM.BaseStates
     public abstract class BasePlayerState
     {
         protected PlayerStateMachine Ctx;
-        protected StateFactory StateFactory;
+        protected StateFactory Factory;
 
-        public BasePlayerState(PlayerStateMachine ctx, StateFactory stateFactory)
+        public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
         {
             this.Ctx = ctx;
-            this.StateFactory = stateFactory;
+            this.Factory = factory;
         }
 
         public abstract void EnterState();
@@ -37,11 +37,11 @@ namespace PlayerStM.BaseStates
             Ctx.PlayerState = nextState;
         }
 
-        void SetSuperState(BasePlayerState newSuperState)
+        protected void SetSuperState(BasePlayerState newSuperState)
         {
         }
 
-        void SetSubState(BasePlayerState newSubState)
+        protected void SetSubState(BasePlayerState newSubState)
         {
         }
     }

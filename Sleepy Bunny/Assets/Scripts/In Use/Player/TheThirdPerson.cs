@@ -1,7 +1,5 @@
 using System;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TheThirdPerson : PlayerRaycast
 {
@@ -177,12 +175,6 @@ public class TheThirdPerson : PlayerRaycast
         //}
         //else
         //{ rb.useGravity = true; }
-
-        ////Punch
-        //if (rc.pushOrPull && Input.GetKeyDown(KeyCode.P))
-        //{
-        //    PunchForce();
-        //}
 
         //force Checkpoint
         //if (Input.GetKeyDown(KeyCode.Return))

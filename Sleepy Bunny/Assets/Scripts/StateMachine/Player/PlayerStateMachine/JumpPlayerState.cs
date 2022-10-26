@@ -15,7 +15,7 @@ namespace PlayerStM.SuperState
         {
             if (Ctx.IsGrounded)
             {
-                SwitchState(StateFactory.Grounded());
+                SwitchState(Factory.Grounded());
             }
         }
 
@@ -31,8 +31,14 @@ namespace PlayerStM.SuperState
 
         public override void InitializeSubState()
         {
-            InputAction.CallbackContext some = Ctx.Moveing();
-            if (Ctx.Moveing)
+            if (Ctx.IsClimbing && Ctx.IsFalling)
+            {
+                SetSubState(Factory.Climb());
+            }
+            else if (Ctx.IsFalling)
+            {
+                SetSubState(Factory.Falling());
+            }
         }
 
         public override void UpdateState()

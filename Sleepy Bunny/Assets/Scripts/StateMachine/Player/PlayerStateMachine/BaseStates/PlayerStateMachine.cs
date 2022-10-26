@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PlayerStM.SubStates;
+using UnityEngine.SocialPlatforms;
 
 namespace PlayerStM.BaseStates
 {
@@ -28,6 +29,8 @@ namespace PlayerStM.BaseStates
 
         private Animator _anim;
 
+        private Collider _collider;
+
         //State Variables
         private BasePlayerState _playerState;
 
@@ -53,6 +56,8 @@ namespace PlayerStM.BaseStates
         public bool ShouldRespawn = false;
         private bool _isGrounded = false;
         private bool _isClimbing = false;
+        private bool _isFalling = false;
+        private int _range = 1;
 
         #endregion Variables
 
@@ -66,8 +71,8 @@ namespace PlayerStM.BaseStates
 
         public Action<InputAction.CallbackContext> Moveing
         {
-            get => return _moveing;
-            remove => _moveing -= value;
+            get => _moveing;
+            set => _moveing -= value;
         }
 
         public event Action<InputAction.CallbackContext> Jump
@@ -96,6 +101,7 @@ namespace PlayerStM.BaseStates
         public float RotationSpeed { get => rotationSpeed; set => rotationSpeed = value; }
         public bool IsGrounded { get => _isGrounded; set => _isGrounded = value; }
         public bool IsClimbing { get => _isClimbing; set => _isClimbing = value; }
+        public bool IsFalling { get => _isFalling; set => _isFalling = value; }
 
         #endregion Get and set
 
@@ -184,6 +190,19 @@ namespace PlayerStM.BaseStates
         private void CheckGrounded(bool grounded)
         {
             _isGrounded = grounded;
+        }
+
+        public void Climbing()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, _range))
+            {
+                if (hit.transform.gameObject.CompareTag("Climb"))
+                {
+                    _collider = hit.transform.GetComponent<Collider>();
+                    _isClimbing = true;
+                }
+            }
         }
     }
 }
