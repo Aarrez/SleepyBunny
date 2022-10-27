@@ -1,10 +1,17 @@
+using System.Numerics;
+
 using PlayerStM.BaseStates;
+
+using UnityEngine.XR.LegacyInputHelpers;
 
 namespace PlayerStM.SubStates
 {
-    public class IdlePlayerState : BasePlayerState
+    public class SuperClimbingPlayerState : BasePlayerState
+
     {
-        public IdlePlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+        private Vector2 _climbVector;
+
+        public SuperClimbingPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
         }
@@ -15,6 +22,7 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
+            Ctx.Moveing += GetMoveCtx;
         }
 
         public override void EnterState(SuperStates currentSuperState)
@@ -29,15 +37,29 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
+            Ctx.Moveing -= GetMoveCtx;
         }
 
         public override void InitializeSubState()
         {
+            if (_climbVector == Vector2.Zero)
+            {
+                //SwitchState(Factory.SubIdle());
+            }
+            else
+            {
+                //SwitchState(Factory.Movement(States.Climb));
+            }
         }
 
         public override void UpdateState()
         {
             CheckSwitchState();
+        }
+
+        private void GetMoveCtx()
+        {
+            _climbVector = Ctx.MoveCtx.ReadValue<Vector2>();
         }
     }
 }

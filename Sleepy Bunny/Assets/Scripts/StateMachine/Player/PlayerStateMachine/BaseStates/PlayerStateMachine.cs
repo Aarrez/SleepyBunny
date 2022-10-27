@@ -13,7 +13,9 @@ namespace PlayerStM.BaseStates
         #region Script Refrences
 
         //Input value storage
-        private Action<InputAction.CallbackContext> _moveing, _jump, _grab, _pause;
+        private Action _moveing, _jump, _grab, _pause;
+
+        private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx, _pauseCtx;
 
         public AudioSource PainNoise;
         public AudioSource Sizzle;
@@ -40,24 +42,21 @@ namespace PlayerStM.BaseStates
 
         #region Variables
 
-        public Vector3 Velocity;
         private Vector3 _movement = Vector3.zero;
         private Vector3 _movementDirection = Vector3.zero;
 
-        private float _force = 1f;
-        private float jumpHeight = 10f;
-        private float rotationSpeed = .1f;
-        public float Punchforce = 4f;
-        public float Health;
-        public float DamageAmount;
-        private float _climbSpeed = 5f;
-        private float _amountOfHealth;
+        [SerializeField] private float _movementForce = 1f;
+        [SerializeField] private float _jumpHeight = 10f;
+        [SerializeField] private float _rotationSpeed = .1f;
+        [SerializeField] private float _climbSpeed = 5f;
+
+        [SerializeField, Range(0, 1.5f)] private float _range = 1;
 
         public bool ShouldRespawn = false;
         private bool _isGrounded = false;
         private bool _isClimbing = false;
         private bool _isFalling = false;
-        private int _range = 1;
+        private bool _isCrouching = false;
 
         #endregion Variables
 
@@ -69,25 +68,25 @@ namespace PlayerStM.BaseStates
 
         public Animator Anim { get => _anim; set => _anim = value; }
 
-        public Action<InputAction.CallbackContext> Moveing
+        public event Action Moveing
         {
-            get => _moveing;
-            set => _moveing -= value;
+            add => _moveing += value;
+            remove => _moveing -= value;
         }
 
-        public event Action<InputAction.CallbackContext> Jump
+        public event Action Jump
         {
             add => _jump += value;
             remove => _jump -= value;
         }
 
-        public event Action<InputAction.CallbackContext> Grab
+        public event Action Grab
         {
             add => _grab += value;
             remove => _grab -= value;
         }
 
-        public event Action<InputAction.CallbackContext> Pause
+        public event Action Pause
         {
             add => _grab += value;
             remove => _grab -= value;
@@ -96,12 +95,17 @@ namespace PlayerStM.BaseStates
         public BasePlayerState PlayerState
         { get { return _playerState; } set { _playerState = value; } }
 
-        public float Force { get => _force; set => _force = value; }
-        public float JumpHeight { get => jumpHeight; set => jumpHeight = value; }
-        public float RotationSpeed { get => rotationSpeed; set => rotationSpeed = value; }
-        public bool IsGrounded { get => _isGrounded; set => _isGrounded = value; }
-        public bool IsClimbing { get => _isClimbing; set => _isClimbing = value; }
-        public bool IsFalling { get => _isFalling; set => _isFalling = value; }
+        public float Force { get => _movementForce; set => _movementForce = value; }
+        public float JumpHeight { get => _jumpHeight; set => _jumpHeight = value; }
+        public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
+        public bool IsGrounded { get => _isGrounded; }
+        public bool IsClimbing { get => _isClimbing; }
+        public bool IsFalling { get => _isFalling; }
+        public bool IsCrouching { get => _isCrouching; }
+        public InputAction.CallbackContext MoveCtx { get => _moveCtx; }
+        public InputAction.CallbackContext JumpCtx { get => _jumpCtx; }
+        public InputAction.CallbackContext GrabCtx { get => _grabCtx; }
+        public InputAction.CallbackContext PauseCtx { get => _pauseCtx; }
 
         #endregion Get and set
 
@@ -115,31 +119,40 @@ namespace PlayerStM.BaseStates
 
             //set state
             _stateFactory = new StateFactory(this);
-            _playerState = _stateFactory.Grounded();
+            _playerState = _stateFactory.SuperGrounded();
             _playerState.EnterState();
         }
 
         private void OnEnable()
         {
+            // Gets all the inputs from the InputActionMap and Invokes events
+            // when a button/stick is interacted with
+
             #region Input Stuff
 
             #region Movement Input
 
             _cPlayer.Movement.performed += ctx =>
             {
-                _moveing?.Invoke(ctx);
+                _moveing?.Invoke();
+                _moveCtx = ctx;
             };
 
             _cPlayer.Movement.canceled += ctx =>
             {
-                _moveing?.Invoke(ctx);
+                _moveing?.Invoke();
+                _moveCtx = ctx;
             };
 
             #endregion Movement Input
 
             #region Jump Input
 
-            _cPlayer.Jump.performed += ctx => _jump?.Invoke(ctx);
+            _cPlayer.Jump.performed += ctx =>
+            {
+                _jump?.Invoke();
+                _jumpCtx = ctx;
+            };
 
             #endregion Jump Input
 
@@ -147,12 +160,14 @@ namespace PlayerStM.BaseStates
 
             _cPlayer.Grab.performed += ctx =>
             {
-                _grab?.Invoke(ctx);
+                _grab?.Invoke();
+                _grabCtx = ctx;
             };
 
             _cPlayer.Grab.canceled += ctx =>
             {
-                _grab?.Invoke(ctx);
+                _grab?.Invoke();
+                _grabCtx = ctx;
             };
 
             #endregion Grab Input
@@ -161,7 +176,8 @@ namespace PlayerStM.BaseStates
 
             _cUI.Pause.performed += ctx =>
             {
-                _pause?.Invoke(ctx);
+                _pause?.Invoke();
+                _pauseCtx = ctx;
             };
 
             #endregion Pause Input

@@ -1,14 +1,13 @@
 using PlayerStM.BaseStates;
-using System.Data;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace PlayerStM.SubStates
 {
     public class MovementPlayerState : BasePlayerState
     {
         private Vector3 _moveVector;
+        private SuperStates _currentSuperState;
 
         public MovementPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
             : base(currentContext, stateFactory)
@@ -19,26 +18,38 @@ namespace PlayerStM.SubStates
         {
             if (_moveVector == Vector3.zero)
             {
-                SwitchState(Factory.Idle());
+                SwitchState(Factory.SubIdle(SuperStates.Grounded).Item1
+                    , Factory.SubIdle(SuperStates.Grounded).Item2);
             }
             else if (!Ctx.IsGrounded)
             {
-                SwitchState(Factory.Falling());
+                SwitchState(Factory.SubFalling(SuperStates.Grounded).Item1
+                    , Factory.SubFalling(SuperStates.Grounded).Item2);
             }
             else if (Ctx.IsClimbing)
             {
-                SwitchState(Factory.Climb());
+                SwitchState(Factory.SuperClimb());
             }
+        }
+
+        public override void EnterState(SuperStates currentSuperState)
+        {
+            Ctx.Moveing += GetMoveCtx;
         }
 
         public override void EnterState()
         {
-            Ctx.Moveing += GetMoveContext;
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnterState(BaseStates.SubStates currentSubState)
+        {
+            throw new System.NotImplementedException();
         }
 
         public override void ExitState()
         {
-            Ctx.Moveing -= GetMoveContext;
+            Ctx.Moveing -= GetMoveCtx;
         }
 
         public override void InitializeSubState()
@@ -51,8 +62,11 @@ namespace PlayerStM.SubStates
             PlayerMoving();
         }
 
-        private void GetMoveContext(InputAction.CallbackContext ctx)
-        { _moveVector = new Vector3(ctx.ReadValue<Vector2>().x, 0f, ctx.ReadValue<Vector2>().y); }
+        private void GetMoveCtx()
+        {
+            Vector2 moveVector = Ctx.MoveCtx.ReadValue<Vector2>();
+            _moveVector = new Vector3(moveVector.x, 0f, moveVector.y);
+        }
 
         private void PlayerMoving()
         {

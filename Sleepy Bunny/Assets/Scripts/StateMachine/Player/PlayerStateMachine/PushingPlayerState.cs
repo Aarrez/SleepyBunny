@@ -1,20 +1,24 @@
 using PlayerStM.BaseStates;
 
+using UnityEngine;
+
 namespace PlayerStM.SubStates
 {
-    public class IdlePlayerState : BasePlayerState
+    public class PushingPlayerState : BasePlayerState
     {
-        public IdlePlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
-            : base(currentContext, stateFactory)
+        public PushingPlayerState(PlayerStateMachine ctx, StateFactory factory)
+            : base(ctx, factory)
         {
         }
 
         public override void CheckSwitchState()
         {
+            throw new System.NotImplementedException();
         }
 
         public override void EnterState()
         {
+            throw new System.NotImplementedException();
         }
 
         public override void EnterState(SuperStates currentSuperState)
@@ -29,15 +33,17 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
+            throw new System.NotImplementedException();
         }
 
         public override void InitializeSubState()
         {
+            throw new System.NotImplementedException();
         }
 
         public override void UpdateState()
         {
-            CheckSwitchState();
+            throw new System.NotImplementedException();
         }
     }
 }

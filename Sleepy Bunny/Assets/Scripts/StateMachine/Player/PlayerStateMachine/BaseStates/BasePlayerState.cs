@@ -6,6 +6,14 @@ namespace PlayerStM.BaseStates
     {
         protected PlayerStateMachine Ctx;
         protected StateFactory Factory;
+        private BasePlayerState _currentSuperState;
+        private BasePlayerState _currentSubState;
+
+        public BasePlayerState CurrnetSuperState =>
+            _currentSuperState;
+
+        public BasePlayerState CurrnetSubState =>
+            _currentSubState;
 
         public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
         {
@@ -14,6 +22,10 @@ namespace PlayerStM.BaseStates
         }
 
         public abstract void EnterState();
+
+        public abstract void EnterState(SuperStates currentSuperState);
+
+        public abstract void EnterState(SubStates currentSubState);
 
         public abstract void UpdateState();
 
@@ -37,12 +49,33 @@ namespace PlayerStM.BaseStates
             Ctx.PlayerState = nextState;
         }
 
+        protected void SwitchState(BasePlayerState nextState, SuperStates currentSuperState)
+        {
+            ExitState();
+
+            nextState.EnterState();
+
+            Ctx.PlayerState = nextState;
+        }
+
+        protected void SwitchState(BasePlayerState nextState, SubStates currentSubState)
+        {
+            EnterState();
+
+            nextState.EnterState();
+
+            Ctx.PlayerState = nextState;
+        }
+
         protected void SetSuperState(BasePlayerState newSuperState)
         {
+            _currentSubState = newSuperState;
         }
 
         protected void SetSubState(BasePlayerState newSubState)
         {
+            _currentSubState = newSubState;
+            newSubState.SetSuperState(this);
         }
     }
 }

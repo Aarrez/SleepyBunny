@@ -1,4 +1,5 @@
 using PlayerStM.BaseStates;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,46 +10,50 @@ namespace PlayerStM.SuperState
         public JumpPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
+            InitializeSubState();
         }
 
         public override void CheckSwitchState()
         {
             if (Ctx.IsGrounded)
             {
-                SwitchState(Factory.Grounded());
+                SwitchState(Factory.SuperGrounded());
             }
         }
 
         public override void EnterState()
         {
-            Ctx.Jump += DoJump;
+        }
+
+        public override void EnterState(SuperStates currentSuperState)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnterState(BaseStates.SubStates currentSubState)
+        {
+            throw new System.NotImplementedException();
         }
 
         public override void ExitState()
         {
-            Ctx.Jump -= DoJump;
         }
 
         public override void InitializeSubState()
         {
-            if (Ctx.IsClimbing && Ctx.IsFalling)
+            if (Ctx.IsClimbing)
             {
-                SetSubState(Factory.Climb());
+                SetSubState(Factory.SuperClimb());
             }
-            else if (Ctx.IsFalling)
+            else if (Ctx.IsFalling && !Ctx.IsClimbing)
             {
-                SetSubState(Factory.Falling());
+                SetSubState(Factory.SubFalling(SuperStates.Jump).Item1);
             }
         }
 
         public override void UpdateState()
         {
             CheckSwitchState();
-        }
-
-        private void DoJump(InputAction.CallbackContext inputCtx)
-        {
-            Ctx.Rb.AddForce(Vector3.up * Ctx.JumpHeight, ForceMode.Impulse);
         }
     }
 }
