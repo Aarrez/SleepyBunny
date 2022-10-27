@@ -12115,7 +12115,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1547854623875078716}
-  m_RootOrder: 13
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &658734474
 Rigidbody:
@@ -12145,7 +12145,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -4.53, y: 11.476, z: -4.899}
+  m_ConnectedAnchor: {x: -4.53, y: 11.51, z: 2.49}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -97471,6 +97471,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 17.192804
+      objectReference: {fileID: 0}
+    - target: {fileID: 8735671540916840443, guid: 9f00cee04ae9ec44d815b6f6f76d4aaf,
+        type: 3}
+      propertyPath: _range
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9221912027850780232, guid: 9f00cee04ae9ec44d815b6f6f76d4aaf,
         type: 3}
