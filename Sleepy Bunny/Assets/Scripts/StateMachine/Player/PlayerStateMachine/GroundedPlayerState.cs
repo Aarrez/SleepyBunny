@@ -6,7 +6,8 @@ namespace PlayerStM.SuperState
 {
     public class GroundedPlayerState : BasePlayerState
     {
-        public GroundedPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+        public GroundedPlayerState(PlayerStateMachine currentContext
+            , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
             InitializeSubState();
@@ -16,22 +17,13 @@ namespace PlayerStM.SuperState
         {
             if (Ctx.JumpCtx.ReadValueAsButton())
             {
-                SwitchState(Factory.SuperJump());
+                SwitchState(Factory.SuperJump(), eStates.SuperJump);
             }
         }
 
-        public override void EnterState()
+        public override void EnterState(eStates CurrentState)
         {
-        }
-
-        public override void EnterState(SuperStates currentSuperState)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(BaseStates.SubStates currentSubState)
-        {
-            throw new System.NotImplementedException();
+            Ctx.CurrentSuperState = CurrentState;
         }
 
         public override void ExitState()
@@ -42,18 +34,18 @@ namespace PlayerStM.SuperState
         {
             if (Ctx.IsFalling)
             {
-                SwitchState(Factory.SubFalling(SuperStates.Grounded).Item1
-                    , Factory.SubFalling(SuperStates.Grounded).Item2);
+                SwitchState(Factory.SubFalling(eStates.SuperGrounded).Item1
+                    , Factory.SubFalling(eStates.SuperGrounded).Item2);
             }
             else if (Ctx.MoveCtx.ReadValueAsButton())
             {
-                SwitchState(Factory.SubMovement(SuperStates.Grounded).Item1
-                    , Factory.SubMovement(SuperStates.Grounded).Item2);
+                SwitchState(Factory.SubMovement(eStates.SuperGrounded).Item1
+                    , Factory.SubMovement(eStates.SuperGrounded).Item2);
             }
             else
             {
-                SwitchState(Factory.SubIdle(SuperStates.Grounded).Item1
-                    , Factory.SubIdle(SuperStates.Grounded).Item2);
+                SwitchState(Factory.SubIdle(eStates.SuperGrounded).Item1
+                    , Factory.SubIdle(eStates.SuperGrounded).Item2);
             }
         }
 

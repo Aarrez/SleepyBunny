@@ -1,13 +1,13 @@
 using PlayerStM.BaseStates;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace PlayerStM.SuperState
 {
     public class JumpPlayerState : BasePlayerState
     {
-        public JumpPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+        public JumpPlayerState(PlayerStateMachine currentContext
+            , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
             InitializeSubState();
@@ -17,22 +17,18 @@ namespace PlayerStM.SuperState
         {
             if (Ctx.IsGrounded)
             {
-                SwitchState(Factory.SuperGrounded());
+                SwitchState(Factory.SuperGrounded(), eStates.SuperGrounded);
+            }
+            else if (Ctx.IsClimbing)
+            {
+                SwitchState(Factory.SuperClimb(), eStates.SuperClimb);
             }
         }
 
-        public override void EnterState()
+        public override void EnterState(eStates CurrentState)
         {
-        }
-
-        public override void EnterState(SuperStates currentSuperState)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(BaseStates.SubStates currentSubState)
-        {
-            throw new System.NotImplementedException();
+            Ctx.CurrentSuperState = CurrentState;
+            AddJumpForce();
         }
 
         public override void ExitState()
@@ -41,19 +37,24 @@ namespace PlayerStM.SuperState
 
         public override void InitializeSubState()
         {
-            if (Ctx.IsClimbing)
+            if (Ctx.IsFalling)
             {
-                SetSubState(Factory.SuperClimb());
+                SetSubState(Factory.SubFalling(eStates.SuperJump).Item1);
             }
-            else if (Ctx.IsFalling && !Ctx.IsClimbing)
+            else if (Ctx.MoveCtx.ReadValue<Vector2>() == Vector2.zero)
             {
-                SetSubState(Factory.SubFalling(SuperStates.Jump).Item1);
+                SetSubState(Factory.SubMovement(eStates.SuperJump).Item1);
             }
         }
 
         public override void UpdateState()
         {
             CheckSwitchState();
+        }
+
+        private void AddJumpForce()
+        {
+            Ctx.Rb.AddForce(Vector3.up, ForceMode.Impulse);
         }
     }
 }

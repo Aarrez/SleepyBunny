@@ -7,98 +7,77 @@ using Unity.PlasticSCM.Editor.WebApi;
 
 namespace PlayerStM.BaseStates
 {
-    public enum States
+    public enum eStates
     {
-        Idle,
-        Movement,
-        Jump,
-        Grounded,
-        Crouch,
-        Climb,
-        Falling,
-        Pushing,
-    }
-
-    public enum SuperStates
-    {
-        Jump,
-        Grounded,
-        Climb
-    }
-
-    public enum SubStates
-    {
-        Idle,
-        Movement,
-        Climb,
-        Falling,
-        Pushing
-    }
-
-    public enum MinorStates
-    {
-        Crouch
+        SubIdle,
+        SubMovement,
+        SuperJump,
+        SuperGrounded,
+        MinorCrouch,
+        SuperClimb,
+        SubFalling,
+        SuperPushing,
     }
 
     public class StateFactory
     {
         private PlayerStateMachine _context;
-        private (BasePlayerState, SuperStates) some;
+        private (BasePlayerState, eStates) some;
 
-        private Dictionary<States, BasePlayerState> _states =
-            new Dictionary<States, BasePlayerState>();
+        private Dictionary<eStates, BasePlayerState> _states =
+            new Dictionary<eStates, BasePlayerState>();
 
         public StateFactory(PlayerStateMachine currentContext)
         {
             _context = currentContext;
-            _states[States.Idle] = new IdlePlayerState(_context, this);
-            _states[States.Movement] = new MovementPlayerState(_context, this);
-            _states[States.Jump] = new JumpPlayerState(_context, this);
-            _states[States.Grounded] = new GroundedPlayerState(_context, this);
-            _states[States.Crouch] = new CrouchPlayerState(_context, this);
-            _states[States.Climb] = new SuperClimbingPlayerState(_context, this);
-            _states[States.Falling] = new FallingPlayerState(_context, this);
-            _states[States.Pushing] = new PushingPlayerState(_context, this);
+            _states[eStates.SubIdle] = new IdlePlayerState(_context, this);
+            _states[eStates.SubMovement] = new MovementPlayerState(_context, this);
+            _states[eStates.SuperJump] = new JumpPlayerState(_context, this);
+            _states[eStates.SuperGrounded] = new GroundedPlayerState(_context, this);
+            _states[eStates.MinorCrouch] = new CrouchPlayerState(_context, this);
+            _states[eStates.SuperClimb] = new SuperClimbingPlayerState(_context, this);
+            _states[eStates.SubFalling] = new FallingPlayerState(_context, this);
+            _states[eStates.SuperPushing] = new PushingPlayerState(_context, this);
         }
 
         public BasePlayerState SuperJump()
         {
-            return _states[States.Jump];
+            return _states[eStates.SuperJump];
         }
 
         public BasePlayerState SuperGrounded()
         {
-            return _states[States.Grounded];
+            return _states[eStates.SuperGrounded];
         }
 
         public BasePlayerState SuperClimb()
         {
-            return _states[States.Climb];
+            return _states[eStates.SuperClimb];
         }
 
-        public (BasePlayerState, SuperStates) SubIdle(SuperStates currentSuperState)
+        public (BasePlayerState, eStates) SubIdle(eStates currentSuperState)
         {
-            return (_states[States.Idle], currentSuperState);
+            return (_states[eStates.SubIdle], currentSuperState);
         }
 
-        public (BasePlayerState, SuperStates) SubMovement(SuperStates currentSuperState)
+        public (BasePlayerState, eStates) SubMovement(eStates currentSuperState)
         {
-            return some = (_states[States.Movement], currentSuperState);
+            return some = (_states[eStates.SubMovement], currentSuperState);
         }
 
-        public (BasePlayerState, SuperStates) SubFalling(SuperStates currentSuperState)
+        public (BasePlayerState, eStates) SubFalling(eStates currentSuperState)
         {
-            return (_states[States.Falling], currentSuperState);
+            return (_states[eStates.SubFalling], currentSuperState);
         }
 
-        public (BasePlayerState, SuperStates) SubPushing(SuperStates currentSuperState)
+        public (BasePlayerState, eStates) SubPushing(eStates currentSuperState)
         {
-            return (_states[States.Pushing], currentSuperState);
+            return (_states[eStates.SuperPushing], currentSuperState);
         }
 
-        public (BasePlayerState, SubStates) MinorCrouch(SubStates CurrentSubState)
+        public (BasePlayerState, eStates) MinorCrouch(eStates CurrentSubState)
         {
-            return (_states[States.Crouch], CurrentSubState);
+            return (_states[eStates.MinorCrouch], CurrentSubState);
         }
     }
 }

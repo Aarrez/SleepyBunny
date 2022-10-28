@@ -6,7 +6,8 @@ namespace PlayerStM.SubStates
 {
     public class FallingPlayerState : BasePlayerState
     {
-        public FallingPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+        public FallingPlayerState(PlayerStateMachine currentContext
+            , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
         }
@@ -15,18 +16,8 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void EnterState()
+        public override void EnterState(eStates CurrentState)
         {
-        }
-
-        public override void EnterState(SuperStates currentSuperState)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(BaseStates.SubStates currentSubState)
-        {
-            throw new System.NotImplementedException();
         }
 
         public override void ExitState()

@@ -1,4 +1,9 @@
+using System;
+using System.Runtime.CompilerServices;
+
 using PlayerStM.BaseStates;
+
+using UnityEditor.Compilation;
 
 using UnityEngine;
 
@@ -6,44 +11,30 @@ namespace PlayerStM.SubStates
 {
     public class PushingPlayerState : BasePlayerState
     {
-        public PushingPlayerState(PlayerStateMachine ctx, StateFactory factory)
+        public PushingPlayerState(PlayerStateMachine ctx
+            , StateFactory factory)
             : base(ctx, factory)
         {
         }
 
         public override void CheckSwitchState()
         {
-            throw new System.NotImplementedException();
         }
 
-        public override void EnterState()
+        public override void EnterState(eStates CurrentState)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(SuperStates currentSuperState)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(BaseStates.SubStates currentSubState)
-        {
-            throw new System.NotImplementedException();
         }
 
         public override void ExitState()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void InitializeSubState()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void UpdateState()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

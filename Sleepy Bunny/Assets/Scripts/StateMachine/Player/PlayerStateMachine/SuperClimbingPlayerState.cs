@@ -11,7 +11,8 @@ namespace PlayerStM.SubStates
     {
         private Vector2 _climbVector;
 
-        public SuperClimbingPlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+        public SuperClimbingPlayerState(PlayerStateMachine currentContext
+            , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
         }
@@ -20,19 +21,10 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void EnterState()
+        //If the state is a sub or minor state this method will be called
+        public override void EnterState(eStates CurrentState)
         {
             Ctx.Moveing += GetMoveCtx;
-        }
-
-        public override void EnterState(SuperStates currentSuperState)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(BaseStates.SubStates currentSubState)
-        {
-            throw new System.NotImplementedException();
         }
 
         public override void ExitState()
@@ -44,11 +36,13 @@ namespace PlayerStM.SubStates
         {
             if (_climbVector == Vector2.Zero)
             {
-                //SwitchState(Factory.SubIdle());
+                SwitchState(Factory.SubIdle(eStates.SuperClimb).Item1
+                    , Factory.SubIdle(eStates.SuperClimb).Item2);
             }
             else
             {
-                //SwitchState(Factory.Movement(States.Climb));
+                SwitchState(Factory.SubMovement(eStates.SuperClimb).Item1
+                    , Factory.SubMovement(eStates.SuperClimb).Item2);
             }
         }
 

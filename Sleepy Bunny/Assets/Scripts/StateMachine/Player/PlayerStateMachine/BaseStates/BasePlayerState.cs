@@ -1,4 +1,7 @@
+using PlayerStM.BaseStates;
 using PlayerStM.SubStates;
+
+using Unity.VisualScripting;
 
 namespace PlayerStM.BaseStates
 {
@@ -21,11 +24,13 @@ namespace PlayerStM.BaseStates
             this.Factory = factory;
         }
 
-        public abstract void EnterState();
-
-        public abstract void EnterState(SuperStates currentSuperState);
-
-        public abstract void EnterState(SubStates currentSubState);
+        /// <summary>
+        /// Only use if the current state has a superior state.
+        /// <br></br>
+        /// do not use on Superstates it will not work
+        /// </summary>
+        /// <param name="SuperiorState"></param>
+        public abstract void EnterState(eStates SuperiorState);
 
         public abstract void UpdateState();
 
@@ -40,29 +45,11 @@ namespace PlayerStM.BaseStates
             UpdateState();
         }
 
-        protected void SwitchState(BasePlayerState nextState)
+        protected void SwitchState(BasePlayerState nextState, eStates currentSuperiorState)
         {
             ExitState();
 
-            nextState.EnterState();
-
-            Ctx.PlayerState = nextState;
-        }
-
-        protected void SwitchState(BasePlayerState nextState, SuperStates currentSuperState)
-        {
-            ExitState();
-
-            nextState.EnterState();
-
-            Ctx.PlayerState = nextState;
-        }
-
-        protected void SwitchState(BasePlayerState nextState, SubStates currentSubState)
-        {
-            EnterState();
-
-            nextState.EnterState();
+            nextState.EnterState(currentSuperiorState);
 
             Ctx.PlayerState = nextState;
         }

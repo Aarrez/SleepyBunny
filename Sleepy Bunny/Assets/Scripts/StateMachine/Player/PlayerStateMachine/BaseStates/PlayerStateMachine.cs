@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using PlayerStM.SubStates;
 using UnityEngine.SocialPlatforms;
+using TMPro;
 
 namespace PlayerStM.BaseStates
 {
@@ -45,7 +46,10 @@ namespace PlayerStM.BaseStates
         private Vector3 _movement = Vector3.zero;
         private Vector3 _movementDirection = Vector3.zero;
 
+        private eStates _currentSuperState;
+
         [SerializeField] private float _movementForce = 1f;
+        [SerializeField] private float _airMovemntForce = .5f;
         [SerializeField] private float _jumpHeight = 10f;
         [SerializeField] private float _rotationSpeed = .1f;
         [SerializeField] private float _climbSpeed = 5f;
@@ -95,17 +99,29 @@ namespace PlayerStM.BaseStates
         public BasePlayerState PlayerState
         { get { return _playerState; } set { _playerState = value; } }
 
-        public float Force { get => _movementForce; set => _movementForce = value; }
-        public float JumpHeight { get => _jumpHeight; set => _jumpHeight = value; }
-        public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
-        public bool IsGrounded { get => _isGrounded; }
-        public bool IsClimbing { get => _isClimbing; }
-        public bool IsFalling { get => _isFalling; }
-        public bool IsCrouching { get => _isCrouching; }
-        public InputAction.CallbackContext MoveCtx { get => _moveCtx; }
-        public InputAction.CallbackContext JumpCtx { get => _jumpCtx; }
-        public InputAction.CallbackContext GrabCtx { get => _grabCtx; }
-        public InputAction.CallbackContext PauseCtx { get => _pauseCtx; }
+        public float Force
+        { get => _movementForce; set => _movementForce = value; }
+
+        public float JumpHeight
+        { get => _jumpHeight; set => _jumpHeight = value; }
+
+        public float RotationSpeed
+        { get => _rotationSpeed; set => _rotationSpeed = value; }
+
+        public float AirMovemntForce
+        { get => _airMovemntForce; set => _airMovemntForce = value; }
+
+        public bool IsGrounded => _isGrounded;
+        public bool IsClimbing => _isClimbing;
+        public bool IsFalling => _isFalling;
+        public bool IsCrouching => _isCrouching;
+
+        public InputAction.CallbackContext MoveCtx => _moveCtx;
+        public InputAction.CallbackContext JumpCtx => _jumpCtx;
+        public InputAction.CallbackContext GrabCtx => _grabCtx;
+        public InputAction.CallbackContext PauseCtx => _pauseCtx;
+
+        public eStates CurrentSuperState { get => _currentSuperState; set => _currentSuperState = value; }
 
         #endregion Get and set
 
@@ -120,7 +136,7 @@ namespace PlayerStM.BaseStates
             //set state
             _stateFactory = new StateFactory(this);
             _playerState = _stateFactory.SuperGrounded();
-            _playerState.EnterState();
+            _playerState.EnterState(eStates.SuperGrounded);
         }
 
         private void OnEnable()

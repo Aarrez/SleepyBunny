@@ -4,27 +4,39 @@ namespace PlayerStM.SubStates
 {
     public class IdlePlayerState : BasePlayerState
     {
-        public IdlePlayerState(PlayerStateMachine currentContext, StateFactory stateFactory)
+        public IdlePlayerState(PlayerStateMachine currentContext
+            , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
         }
 
         public override void CheckSwitchState()
         {
+            if (Ctx.CurrentSuperState == eStates.SuperPushing)
+            {
+                if (Ctx.MoveCtx.ReadValueAsButton())
+                {
+                    SwitchState(Factory.SubMovement(Ctx.CurrentSuperState).Item1
+                        , Ctx.CurrentSuperState);
+                }
+            }
+            else
+            {
+                if (Ctx.MoveCtx.ReadValueAsButton())
+                {
+                    SwitchState(Factory.SubMovement(Ctx.CurrentSuperState).Item1
+                        , Ctx.CurrentSuperState);
+                }
+                else if (!Ctx.IsGrounded)
+                {
+                    SwitchState(Factory.SubFalling(Ctx.CurrentSuperState).Item1
+                        , Ctx.CurrentSuperState);
+                }
+            }
         }
 
-        public override void EnterState()
+        public override void EnterState(eStates CurrentState)
         {
-        }
-
-        public override void EnterState(SuperStates currentSuperState)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(BaseStates.SubStates currentSubState)
-        {
-            throw new System.NotImplementedException();
         }
 
         public override void ExitState()
