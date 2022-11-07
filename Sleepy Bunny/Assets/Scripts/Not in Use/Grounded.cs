@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 public class Grounded : MonoBehaviour
@@ -25,8 +26,8 @@ public class Grounded : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Ground")) return;
-        _isGroundedEvent?.Invoke(_grounded);
         _grounded = false;
+        _isGroundedEvent?.Invoke(_grounded);
     }
 
     private void FixedUpdate()

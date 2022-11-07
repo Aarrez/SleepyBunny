@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace PlayerStM.SubStates
 {
-    public class PushingPlayerState : BasePlayerState
+    public class SuperPushingPlayerState : BasePlayerState
     {
-        public PushingPlayerState(PlayerStateMachine ctx
+        public SuperPushingPlayerState(PlayerStateMachine ctx
             , StateFactory factory)
             : base(ctx, factory)
         {
@@ -21,7 +21,7 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void EnterState(eStates CurrentState)
+        public override void EnterState()
         {
         }
 
@@ -31,6 +31,11 @@ namespace PlayerStM.SubStates
 
         public override void InitializeSubState()
         {
+        }
+
+        public override void OnNewSuperState()
+        {
+            throw new NotImplementedException();
         }
 
         public override void UpdateState()

@@ -22,7 +22,7 @@ namespace PlayerStM.SubStates
         }
 
         //If the state is a sub or minor state this method will be called
-        public override void EnterState(eStates CurrentState)
+        public override void EnterState()
         {
             Ctx.Moveing += GetMoveCtx;
         }
@@ -36,14 +36,16 @@ namespace PlayerStM.SubStates
         {
             if (_climbVector == Vector2.Zero)
             {
-                SwitchState(Factory.SubIdle(eStates.SuperClimb).Item1
-                    , Factory.SubIdle(eStates.SuperClimb).Item2);
+                SwitchState(Factory.SubIdle());
             }
             else
             {
-                SwitchState(Factory.SubMovement(eStates.SuperClimb).Item1
-                    , Factory.SubMovement(eStates.SuperClimb).Item2);
+                SwitchState(Factory.SubMovement());
             }
+        }
+
+        public override void OnNewSuperState()
+        {
         }
 
         public override void UpdateState()

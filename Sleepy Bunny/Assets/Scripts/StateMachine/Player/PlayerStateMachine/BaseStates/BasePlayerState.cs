@@ -1,22 +1,27 @@
 using PlayerStM.BaseStates;
 using PlayerStM.SubStates;
-
-using Unity.VisualScripting;
+using UnityEngine;
+using System;
 
 namespace PlayerStM.BaseStates
 {
     public abstract class BasePlayerState
     {
+        protected bool IsRootState = false;
         protected PlayerStateMachine Ctx;
         protected StateFactory Factory;
         private BasePlayerState _currentSuperState;
         private BasePlayerState _currentSubState;
+        private BasePlayerState _currentMinorState;
 
         public BasePlayerState CurrnetSuperState =>
             _currentSuperState;
 
         public BasePlayerState CurrnetSubState =>
             _currentSubState;
+
+        public BasePlayerState CurrentMinorState =>
+            _currentMinorState;
 
         public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
         {
@@ -30,7 +35,7 @@ namespace PlayerStM.BaseStates
         /// do not use on Superstates it will not work
         /// </summary>
         /// <param name="SuperiorState"></param>
-        public abstract void EnterState(eStates SuperiorState);
+        public abstract void EnterState();
 
         public abstract void UpdateState();
 
@@ -40,29 +45,51 @@ namespace PlayerStM.BaseStates
 
         public abstract void InitializeSubState();
 
+        public abstract void OnNewSuperState();
+
         public void UpdateStates()
         {
             UpdateState();
+            if (_currentSubState != null)
+            {
+                _currentSubState.UpdateState();
+            }
         }
 
-        protected void SwitchState(BasePlayerState nextState, eStates currentSuperiorState)
+        protected void SwitchState(BasePlayerState nextState)
         {
             ExitState();
 
-            nextState.EnterState(currentSuperiorState);
+            nextState.EnterState();
 
-            Ctx.PlayerState = nextState;
+            if (IsRootState)
+            {
+                Ctx.PlayerState = nextState;
+            }
+            else if (_currentSuperState != null)
+            {
+                _currentSuperState.SetSubState(nextState);
+            }
         }
 
         protected void SetSuperState(BasePlayerState newSuperState)
         {
-            _currentSubState = newSuperState;
+            _currentSuperState = newSuperState;
         }
 
         protected void SetSubState(BasePlayerState newSubState)
         {
             _currentSubState = newSubState;
+            newSubState.EnterState();
             newSubState.SetSuperState(this);
+            OnNewSuperState();
+        }
+
+        protected void SetMinorState(BasePlayerState newMinorState)
+        {
+            _currentMinorState = newMinorState;
+            newMinorState.EnterState();
+            newMinorState.SetSubState(this);
         }
     }
 }

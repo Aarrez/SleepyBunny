@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PlayerStM.SubStates;
-using UnityEngine.SocialPlatforms;
-using TMPro;
+
+using Cinemachine;
 
 namespace PlayerStM.BaseStates
 {
@@ -14,12 +14,13 @@ namespace PlayerStM.BaseStates
         #region Script Refrences
 
         //Input value storage
-        private Action _moveing, _jump, _grab, _pause;
+        private Action _moveing, _jump, _grab, _pause, _crouch;
 
-        private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx, _pauseCtx;
+        private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
+            _pauseCtx, _crouchCtx;
 
-        public AudioSource PainNoise;
-        public AudioSource Sizzle;
+        [SerializeField] private AudioSource _painNoise;
+        [SerializeField] private AudioSource _sizzle;
 
         private Rigidbody _rb;
 
@@ -34,6 +35,8 @@ namespace PlayerStM.BaseStates
 
         private Collider _collider;
 
+        private CinemachineFreeLook _mainCamera;
+
         //State Variables
         private BasePlayerState _playerState;
 
@@ -46,15 +49,16 @@ namespace PlayerStM.BaseStates
         private Vector3 _movement = Vector3.zero;
         private Vector3 _movementDirection = Vector3.zero;
 
-        private eStates _currentSuperState;
+        [Header("Movement related variables")]
+        [SerializeField] private float _movmentForce = 1f;
 
-        [SerializeField] private float _movementForce = 1f;
         [SerializeField] private float _airMovemntForce = .5f;
+        [SerializeField] private float _climbSpeed = 5f;
         [SerializeField] private float _jumpHeight = 10f;
         [SerializeField] private float _rotationSpeed = .1f;
-        [SerializeField] private float _climbSpeed = 5f;
 
-        [SerializeField, Range(0, 1.5f)] private float _range = 1;
+        [Header("")]
+        [SerializeField, Range(0, 1.5f)] private float _rCRange = 1;
 
         public bool ShouldRespawn = false;
         private bool _isGrounded = false;
@@ -96,11 +100,17 @@ namespace PlayerStM.BaseStates
             remove => _grab -= value;
         }
 
+        public event Action Crouch
+        {
+            add => _crouch += value;
+            remove => _crouch -= value;
+        }
+
         public BasePlayerState PlayerState
         { get { return _playerState; } set { _playerState = value; } }
 
-        public float Force
-        { get => _movementForce; set => _movementForce = value; }
+        public float MovmentForce
+        { get => _movmentForce; set => _movmentForce = value; }
 
         public float JumpHeight
         { get => _jumpHeight; set => _jumpHeight = value; }
@@ -120,8 +130,7 @@ namespace PlayerStM.BaseStates
         public InputAction.CallbackContext JumpCtx => _jumpCtx;
         public InputAction.CallbackContext GrabCtx => _grabCtx;
         public InputAction.CallbackContext PauseCtx => _pauseCtx;
-
-        public eStates CurrentSuperState { get => _currentSuperState; set => _currentSuperState = value; }
+        public InputAction.CallbackContext CrouchCtx => _crouchCtx;
 
         #endregion Get and set
 
@@ -132,11 +141,21 @@ namespace PlayerStM.BaseStates
             _cUI = thePlayerInput.CustomUI;
 
             _anim = GetComponent<Animator>();
+            _rb = GetComponent<Rigidbody>();
 
             //set state
             _stateFactory = new StateFactory(this);
             _playerState = _stateFactory.SuperGrounded();
-            _playerState.EnterState(eStates.SuperGrounded);
+            _playerState.EnterState();
+        }
+
+        private void Start()
+        {
+            Physics.gravity = new Vector3(0, -9.82F, 0);
+            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+            _mainCamera = camera.GetComponent<CinemachineFreeLook>();
+            _mainCamera.Follow = transform;
+            _mainCamera.LookAt = transform;
         }
 
         private void OnEnable()
@@ -198,6 +217,22 @@ namespace PlayerStM.BaseStates
 
             #endregion Pause Input
 
+            #region Crouch Input
+
+            _cPlayer.Crouch.performed += ctx =>
+            {
+                _crouch?.Invoke();
+                _crouchCtx = ctx;
+            };
+
+            _cPlayer.Crouch.canceled += ctx =>
+            {
+                _crouch?.Invoke();
+                _crouchCtx = ctx;
+            };
+
+            #endregion Crouch Input
+
             _cPlayer.Enable();
             _cUI.Enable();
 
@@ -211,12 +246,12 @@ namespace PlayerStM.BaseStates
             _cPlayer.Disable();
             _cUI.Disable();
 
-            Grounded.IsGroundedEvent += CheckGrounded;
+            Grounded.IsGroundedEvent -= CheckGrounded;
         }
 
         private void FixedUpdate()
         {
-            _playerState.UpdateState();
+            _playerState.UpdateStates();
         }
 
         private void CheckGrounded(bool grounded)
@@ -227,7 +262,7 @@ namespace PlayerStM.BaseStates
         public void Climbing()
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, _range))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, _rCRange))
             {
                 if (hit.transform.gameObject.CompareTag("Climb"))
                 {

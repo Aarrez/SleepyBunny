@@ -3,8 +3,6 @@ using PlayerStM.SuperState;
 
 using System.Collections.Generic;
 
-using Unity.PlasticSCM.Editor.WebApi;
-
 namespace PlayerStM.BaseStates
 {
     public enum eStates
@@ -16,28 +14,28 @@ namespace PlayerStM.BaseStates
         MinorCrouch,
         SuperClimb,
         SubFalling,
-        SuperPushing,
+        SuperPushing
     }
 
     public class StateFactory
     {
         private PlayerStateMachine _context;
-        private (BasePlayerState, eStates) some;
 
         private Dictionary<eStates, BasePlayerState> _states =
-            new Dictionary<eStates, BasePlayerState>();
+            new();
 
         public StateFactory(PlayerStateMachine currentContext)
         {
             _context = currentContext;
-            _states[eStates.SubIdle] = new IdlePlayerState(_context, this);
-            _states[eStates.SubMovement] = new MovementPlayerState(_context, this);
-            _states[eStates.SuperJump] = new JumpPlayerState(_context, this);
-            _states[eStates.SuperGrounded] = new GroundedPlayerState(_context, this);
-            _states[eStates.MinorCrouch] = new CrouchPlayerState(_context, this);
+
+            _states[eStates.MinorCrouch] = new MinorCrouchPlayerState(_context, this);
+            _states[eStates.SubMovement] = new SubMovementPlayerState(_context, this);
+            _states[eStates.SubIdle] = new SubIdlePlayerState(_context, this);
+            _states[eStates.SubFalling] = new SubFallingPlayerState(_context, this);
+            _states[eStates.SuperPushing] = new SuperPushingPlayerState(_context, this);
             _states[eStates.SuperClimb] = new SuperClimbingPlayerState(_context, this);
-            _states[eStates.SubFalling] = new FallingPlayerState(_context, this);
-            _states[eStates.SuperPushing] = new PushingPlayerState(_context, this);
+            _states[eStates.SuperJump] = new SuperJumpPlayerState(_context, this);
+            _states[eStates.SuperGrounded] = new SuperGroundedPlayerState(_context, this);
         }
 
         public BasePlayerState SuperJump()
@@ -50,34 +48,34 @@ namespace PlayerStM.BaseStates
             return _states[eStates.SuperGrounded];
         }
 
+        public BasePlayerState SuperPushing()
+        {
+            return _states[eStates.SuperPushing];
+        }
+
         public BasePlayerState SuperClimb()
         {
             return _states[eStates.SuperClimb];
         }
 
-        public (BasePlayerState, eStates) SubIdle(eStates currentSuperState)
+        public BasePlayerState SubIdle()
         {
-            return (_states[eStates.SubIdle], currentSuperState);
+            return _states[eStates.SubIdle];
         }
 
-        public (BasePlayerState, eStates) SubMovement(eStates currentSuperState)
+        public BasePlayerState SubMovement()
         {
-            return some = (_states[eStates.SubMovement], currentSuperState);
+            return _states[eStates.SubMovement];
         }
 
-        public (BasePlayerState, eStates) SubFalling(eStates currentSuperState)
+        public BasePlayerState SubFalling()
         {
-            return (_states[eStates.SubFalling], currentSuperState);
+            return _states[eStates.SubFalling];
         }
 
-        public (BasePlayerState, eStates) SubPushing(eStates currentSuperState)
+        public BasePlayerState MinorCrouch()
         {
-            return (_states[eStates.SuperPushing], currentSuperState);
-        }
-
-        public (BasePlayerState, eStates) MinorCrouch(eStates CurrentSubState)
-        {
-            return (_states[eStates.MinorCrouch], CurrentSubState);
+            return _states[eStates.MinorCrouch];
         }
     }
 }

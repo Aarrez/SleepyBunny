@@ -2,9 +2,9 @@ using PlayerStM.BaseStates;
 
 namespace PlayerStM.SubStates
 {
-    public class CrouchPlayerState : BasePlayerState
+    public class MinorCrouchPlayerState : BasePlayerState
     {
-        public CrouchPlayerState(PlayerStateMachine currentContext
+        public MinorCrouchPlayerState(PlayerStateMachine currentContext
             , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
@@ -12,17 +12,26 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
+            if (!Ctx.CrouchCtx.ReadValueAsButton())
+            {
+                ExitState();
+            }
         }
 
-        public override void EnterState(eStates CurrentState)
+        public override void EnterState()
         {
         }
 
         public override void ExitState()
         {
+            SetMinorState(null);
         }
 
         public override void InitializeSubState()
+        {
+        }
+
+        public override void OnNewSuperState()
         {
         }
 
