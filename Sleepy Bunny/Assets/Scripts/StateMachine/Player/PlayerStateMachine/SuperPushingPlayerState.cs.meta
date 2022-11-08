@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: ef1347f9accf16b41ac26dbf6754039d
+labels:
+- Player
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
