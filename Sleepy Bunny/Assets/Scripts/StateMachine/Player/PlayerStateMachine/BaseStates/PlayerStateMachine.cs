@@ -60,6 +60,8 @@ namespace PlayerStM.BaseStates
         [Header("")]
         [SerializeField, Range(0, 1.5f)] private float _rCRange = 1;
 
+        [SerializeField] private Animator _playerAnimator;
+
         public bool ShouldRespawn = false;
         private bool _isGrounded = false;
         private bool _isClimbing = false;
@@ -126,11 +128,15 @@ namespace PlayerStM.BaseStates
         public bool IsFalling => _isFalling;
         public bool IsCrouching => _isCrouching;
 
+        public Vector3 MovementDirection => _movementDirection;
+
         public InputAction.CallbackContext MoveCtx => _moveCtx;
         public InputAction.CallbackContext JumpCtx => _jumpCtx;
         public InputAction.CallbackContext GrabCtx => _grabCtx;
         public InputAction.CallbackContext PauseCtx => _pauseCtx;
         public InputAction.CallbackContext CrouchCtx => _crouchCtx;
+
+        public Animator PlayerAnimator => _playerAnimator;
 
         #endregion Get and set
 
@@ -147,12 +153,14 @@ namespace PlayerStM.BaseStates
             _stateFactory = new StateFactory(this);
             _playerState = _stateFactory.SuperGrounded();
             _playerState.EnterState();
+
+            _playerAnimator = GetComponent<Animator>();
         }
 
         private void Start()
         {
             Physics.gravity = new Vector3(0, -9.82F, 0);
-            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+            GameObject camera = GameObject.FindGameObjectWithTag("CMFreeLookCam");
             _mainCamera = camera.GetComponent<CinemachineFreeLook>();
             _mainCamera.Follow = transform;
             _mainCamera.LookAt = transform;

@@ -12,6 +12,7 @@ TagManager:
   - CCPoint
   - Bones
   - Tether
+  - CMFreeLookCam
   layers:
   - Default
   - TransparentFX

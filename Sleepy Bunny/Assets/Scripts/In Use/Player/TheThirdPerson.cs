@@ -78,6 +78,7 @@ public class TheThirdPerson : PlayerRaycast
     //Gets input and sets rotation on button press
     private void M_Movement()
     {
+        _movementDirection = Camera.main.transform.TransformDirection(_movement);
         //Gets the input
         Vector2 tempV2 = InputScript.moveCtx().ReadValue<Vector2>();
         if (!_climbing)
@@ -89,7 +90,8 @@ public class TheThirdPerson : PlayerRaycast
         {
             Debug.Log("Climbing");
             _movement = new Vector3(tempV2.x, tempV2.y, 0f);
-            float objectDistance = Vector3.Distance(transform.position, _climbBox.ClosestPointOnBounds(transform.position));
+            float objectDistance = Vector3.Distance(transform.position,
+                _climbBox.ClosestPointOnBounds(transform.position));
             Debug.Log(objectDistance);
             if (objectDistance > .1f)
             {
@@ -97,8 +99,6 @@ public class TheThirdPerson : PlayerRaycast
                 _rb.useGravity = true;
             }
         }
-
-        _movementDirection = Camera.main.transform.TransformDirection(_movement);
     }
 
     //Uses Ridgid body to rotate the player
@@ -106,7 +106,9 @@ public class TheThirdPerson : PlayerRaycast
     {
         if (_movement == Vector3.zero) return;
 
-        _rb.rotation = Quaternion.RotateTowards(_rb.rotation, Quaternion.LookRotation(_movementDirection, Vector3.up), RotationSpeed);
+        _rb.rotation = Quaternion.RotateTowards(_rb.rotation,
+            Quaternion.LookRotation(_movementDirection, Vector3.up),
+            RotationSpeed);
     }
 
     //Move the player through MovePosition
@@ -114,7 +116,8 @@ public class TheThirdPerson : PlayerRaycast
     {
         if (_movement == Vector3.zero) { return; }
 
-        _rb.MovePosition(transform.position + _movementDirection * Speed * Time.fixedDeltaTime);
+        _rb.MovePosition(transform.position +
+            _movementDirection * Speed * Time.fixedDeltaTime);
     }
 
     //Move the player though Velocity

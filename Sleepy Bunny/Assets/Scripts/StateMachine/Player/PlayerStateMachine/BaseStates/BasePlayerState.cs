@@ -75,6 +75,7 @@ namespace PlayerStM.BaseStates
         protected void SetSuperState(BasePlayerState newSuperState)
         {
             _currentSuperState = newSuperState;
+            OnNewSuperState();
         }
 
         protected void SetSubState(BasePlayerState newSubState)
@@ -82,7 +83,6 @@ namespace PlayerStM.BaseStates
             _currentSubState = newSubState;
             newSubState.EnterState();
             newSubState.SetSuperState(this);
-            OnNewSuperState();
         }
 
         protected void SetMinorState(BasePlayerState newMinorState)

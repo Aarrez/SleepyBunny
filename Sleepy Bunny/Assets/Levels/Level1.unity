@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.11768, g: 324.74365, b: 429.81006, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11387,6 +11387,7 @@ MonoBehaviour:
   _jumpHeight: 1
   _rotationSpeed: 0.1
   _rCRange: 1
+  _playerAnimator: {fileID: 0}
   ShouldRespawn: 0
 --- !u!4 &584904078 stripped
 Transform:
@@ -36723,7 +36724,7 @@ GameObject:
   - component: {fileID: 961739756}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105170,7 +105171,7 @@ PrefabInstance:
     - target: {fileID: 8916875050992293559, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_TagString
-      value: MainCamera
+      value: CMFreeLookCam
       objectReference: {fileID: 0}
     - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}

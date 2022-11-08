@@ -8,7 +8,7 @@ namespace PlayerStM.SubStates
     public class SubMovementPlayerState : BasePlayerState
     {
         private Vector3 _moveVector;
-        private Vector3 CtxMoveVector;
+        private Vector3 _ctxMoveVector;
 
         public SubMovementPlayerState(PlayerStateMachine currentContext
             , StateFactory stateFactory)
@@ -55,30 +55,42 @@ namespace PlayerStM.SubStates
         {
             CheckSwitchState();
             PlayerMoveing();
+            RotateToMovment();
         }
 
         private void GetMoveCtx()
         {
-            CtxMoveVector = Ctx.MoveCtx.ReadValue<Vector2>();
+            _ctxMoveVector = Ctx.MoveCtx.ReadValue<Vector2>();
             switch (CurrnetSuperState)
             {
                 case SuperGroundedPlayerState:
-                    _moveVector = new Vector3(CtxMoveVector.x, 0f, CtxMoveVector.y);
+                    _moveVector =
+                        new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
                     break;
 
                 case SuperJumpPlayerState:
-                    _moveVector = new Vector3(CtxMoveVector.x, 0f, CtxMoveVector.y);
+                    _moveVector =
+                        new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
                     break;
 
                 case SuperClimbingPlayerState:
-                    _moveVector = new Vector3(CtxMoveVector.x, CtxMoveVector.y, 0f);
+                    _moveVector
+                        = new Vector3(_ctxMoveVector.x, _ctxMoveVector.y, 0f);
                     break;
             }
         }
 
         private void PlayerMoveing()
         {
-            Ctx.Rb.velocity = _moveVector * Ctx.MovmentForce * Time.fixedDeltaTime;
+            Ctx.Rb.velocity = Ctx.MovementDirection * Ctx.MovmentForce
+                * Time.fixedDeltaTime;
+        }
+
+        private void RotateToMovment()
+        {
+            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
+                Quaternion.LookRotation(Ctx.MovementDirection, Vector3.up),
+                Ctx.RotationSpeed);
         }
     }
 }
