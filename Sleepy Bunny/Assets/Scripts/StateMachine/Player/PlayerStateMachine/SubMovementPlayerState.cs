@@ -5,10 +5,15 @@ using UnityEngine;
 
 namespace PlayerStM.SubStates
 {
+    /// <summary>
+    /// Handles everything with movement so every superstate has this
+    /// substate if it involves movment
+    /// </summary>
     public class SubMovementPlayerState : BasePlayerState
     {
-        private Vector3 _moveVector;
+        private Vector3 _moveVector = Vector3.zero;
         private Vector3 _ctxMoveVector;
+        private Vector3 _moveDirection;
 
         public SubMovementPlayerState(PlayerStateMachine currentContext
             , StateFactory stateFactory)
@@ -32,13 +37,11 @@ namespace PlayerStM.SubStates
         public override void EnterState()
         {
             Ctx.Moveing += GetMoveCtx;
-            Debug.Log("Seeing movemnt");
         }
 
         public override void ExitState()
         {
             Ctx.Moveing -= GetMoveCtx;
-            Debug.Log("Not seeing enought movment");
         }
 
         public override void InitializeSubState()
@@ -54,6 +57,7 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
             CheckSwitchState();
+            GetCameraDirection();
             PlayerMoveing();
             RotateToMovment();
         }
@@ -66,30 +70,38 @@ namespace PlayerStM.SubStates
                 case SuperGroundedPlayerState:
                     _moveVector =
                         new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
+
                     break;
 
                 case SuperJumpPlayerState:
                     _moveVector =
                         new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
+
                     break;
 
                 case SuperClimbingPlayerState:
                     _moveVector
                         = new Vector3(_ctxMoveVector.x, _ctxMoveVector.y, 0f);
+
                     break;
             }
         }
 
+        private void GetCameraDirection()
+        {
+            _moveDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
+        }
+
         private void PlayerMoveing()
         {
-            Ctx.Rb.velocity = Ctx.MovementDirection * Ctx.MovmentForce
+            Ctx.Rb.velocity = _moveDirection * Ctx.MovmentForce
                 * Time.fixedDeltaTime;
         }
 
         private void RotateToMovment()
         {
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
-                Quaternion.LookRotation(Ctx.MovementDirection, Vector3.up),
+                Quaternion.LookRotation(_moveDirection, Vector3.up),
                 Ctx.RotationSpeed);
         }
     }

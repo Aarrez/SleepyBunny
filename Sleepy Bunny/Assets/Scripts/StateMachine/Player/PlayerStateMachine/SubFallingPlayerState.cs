@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace PlayerStM.SubStates
 {
+    /// <summary>
+    /// This state handles all functionaly when the player is falling
+    /// </summary>
+    /// If your want more info then please refer to TemplatePlayerState.cs
+
     public class SubFallingPlayerState : BasePlayerState
     {
         public SubFallingPlayerState(PlayerStateMachine currentContext
@@ -26,7 +31,6 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Debug.Log("Enterd falling");
         }
 
         public override void ExitState()

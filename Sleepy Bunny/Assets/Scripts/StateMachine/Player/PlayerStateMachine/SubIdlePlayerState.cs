@@ -4,6 +4,10 @@ using PlayerStM.BaseStates;
 
 namespace PlayerStM.SubStates
 {
+    /// <summary>
+    /// This class is most defenetly the default substate
+    /// becase it handles everything todo with statding still.
+    /// </summary>
     public class SubIdlePlayerState : BasePlayerState
     {
         public SubIdlePlayerState(PlayerStateMachine currentContext
@@ -16,7 +20,6 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
             {
-                Debug.Log("Is moveing");
                 SwitchState(Factory.SubMovement());
             }
             else if (!Ctx.IsGrounded)
@@ -27,7 +30,6 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Debug.Log("Enterd Idle");
         }
 
         public override void ExitState()
@@ -45,7 +47,6 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
             CheckSwitchState();
-            Debug.Log(this.ToString());
         }
     }
 }

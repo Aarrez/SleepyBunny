@@ -9,6 +9,10 @@ using UnityEngine;
 
 namespace PlayerStM.SubStates
 {
+    /// <summary>
+    /// A super state that tells it's sub state they are pushing something
+    /// will handle the push funciton when implememented
+    /// </summary>
     public class SuperPushingPlayerState : BasePlayerState
     {
         public SuperPushingPlayerState(PlayerStateMachine ctx
@@ -35,7 +39,6 @@ namespace PlayerStM.SubStates
 
         public override void OnNewSuperState()
         {
-            throw new NotImplementedException();
         }
 
         public override void UpdateState()

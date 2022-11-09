@@ -6,6 +6,10 @@ using UnityEngine.XR.LegacyInputHelpers;
 
 namespace PlayerStM.SubStates
 {
+    /// <summary>
+    /// A SuperState that tells it substates that it is climbing up a wall
+    /// or other objects
+    /// </summary>
     public class SuperClimbingPlayerState : BasePlayerState
 
     {

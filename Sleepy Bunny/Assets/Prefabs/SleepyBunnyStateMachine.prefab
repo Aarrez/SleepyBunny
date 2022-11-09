@@ -3408,6 +3408,7 @@ GameObject:
   - component: {fileID: 1547854623875078733}
   - component: {fileID: 5859667142052098503}
   - component: {fileID: 1547854623875078734}
+  - component: {fileID: 557063142}
   m_Layer: 8
   m_Name: SleepyBunnyStateMachine
   m_TagString: Player
@@ -3675,6 +3676,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tourchLight: {fileID: 226289315}
+--- !u!114 &557063142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742119443717295249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7140de63b5c6f4ebeed6c52e578c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _painNoise: {fileID: 0}
+  _sizzle: {fileID: 0}
+  _movmentForce: 100
+  _airMovemntForce: 0.5
+  _climbSpeed: 5
+  _jumpHeight: 1
+  _rotationSpeed: 0.1
+  _rCRange: 1
+  _playerAnimator: {fileID: 0}
+  ShouldRespawn: 0
 --- !u!1 &6911617406584751383
 GameObject:
   m_ObjectHideFlags: 0

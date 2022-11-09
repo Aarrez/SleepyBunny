@@ -5,6 +5,10 @@ using PlayerStM.SubStates;
 
 namespace PlayerStM.SuperState
 {
+    /// <summary>
+    /// The most default super state becasue it handles everything while on ground
+    /// and not doing a more advanced task
+    /// </summary>
     public class SuperGroundedPlayerState : BasePlayerState
     {
         public SuperGroundedPlayerState(PlayerStateMachine currentContext
@@ -24,7 +28,7 @@ namespace PlayerStM.SuperState
         public override void EnterState()
         {
             IsRootState = true;
-            Debug.Log("Enterd grounded");
+
             InitializeSubState();
         }
 

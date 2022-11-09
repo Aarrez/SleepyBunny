@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace PlayerStM.SuperState
 {
+    /// <summary>
+    /// A superstate that handels the jump function
+    /// </summary>
     public class SuperJumpPlayerState : BasePlayerState
     {
         public SuperJumpPlayerState(PlayerStateMachine currentContext

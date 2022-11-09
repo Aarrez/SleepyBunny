@@ -35,7 +35,7 @@ namespace PlayerStM.BaseStates
 
         private Collider _collider;
 
-        private CinemachineFreeLook _mainCamera;
+        private Camera _mainCamera;
 
         //State Variables
         private BasePlayerState _playerState;
@@ -45,9 +45,6 @@ namespace PlayerStM.BaseStates
         #endregion Script Refrences
 
         #region Variables
-
-        private Vector3 _movement = Vector3.zero;
-        private Vector3 _movementDirection = Vector3.zero;
 
         [Header("Movement related variables")]
         [SerializeField] private float _movmentForce = 1f;
@@ -117,8 +114,7 @@ namespace PlayerStM.BaseStates
         public float JumpHeight
         { get => _jumpHeight; set => _jumpHeight = value; }
 
-        public float RotationSpeed
-        { get => _rotationSpeed; set => _rotationSpeed = value; }
+        public float RotationSpeed => _rotationSpeed;
 
         public float AirMovemntForce
         { get => _airMovemntForce; set => _airMovemntForce = value; }
@@ -128,8 +124,6 @@ namespace PlayerStM.BaseStates
         public bool IsFalling => _isFalling;
         public bool IsCrouching => _isCrouching;
 
-        public Vector3 MovementDirection => _movementDirection;
-
         public InputAction.CallbackContext MoveCtx => _moveCtx;
         public InputAction.CallbackContext JumpCtx => _jumpCtx;
         public InputAction.CallbackContext GrabCtx => _grabCtx;
@@ -137,6 +131,8 @@ namespace PlayerStM.BaseStates
         public InputAction.CallbackContext CrouchCtx => _crouchCtx;
 
         public Animator PlayerAnimator => _playerAnimator;
+
+        public Camera MainCamera => _mainCamera;
 
         #endregion Get and set
 
@@ -155,15 +151,13 @@ namespace PlayerStM.BaseStates
             _playerState.EnterState();
 
             _playerAnimator = GetComponent<Animator>();
+
+            _mainCamera = Camera.main;
         }
 
         private void Start()
         {
             Physics.gravity = new Vector3(0, -9.82F, 0);
-            GameObject camera = GameObject.FindGameObjectWithTag("CMFreeLookCam");
-            _mainCamera = camera.GetComponent<CinemachineFreeLook>();
-            _mainCamera.Follow = transform;
-            _mainCamera.LookAt = transform;
         }
 
         private void OnEnable()
