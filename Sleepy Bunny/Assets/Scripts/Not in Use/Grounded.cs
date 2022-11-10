@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grounded : MonoBehaviour
 {
-    private bool _grounded;
+    [SerializeField] private bool _grounded;
     private static Action<bool> _isGroundedEvent;
 
     private float totalTimeInAir, time;
@@ -19,6 +19,7 @@ public class Grounded : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Ground")) return;
+
         _grounded = true;
         _isGroundedEvent?.Invoke(_grounded);
     }
@@ -26,6 +27,7 @@ public class Grounded : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Ground")) return;
+
         _grounded = false;
         _isGroundedEvent?.Invoke(_grounded);
     }

@@ -31,12 +31,15 @@ namespace PlayerStM.SuperState
         {
             IsRootState = true;
             InitializeSubState();
-            Debug.Log("jumping");
+            Ctx.PlayerAnimator.SetBool("Jump", true);
+            Ctx.PlayerAnimator.SetTrigger("Jumping");
+            Debug.Log("Jumping");
             AddJumpForce();
         }
 
         public override void ExitState()
         {
+            Ctx.PlayerAnimator.SetBool("Jump", false);
         }
 
         public override void InitializeSubState()

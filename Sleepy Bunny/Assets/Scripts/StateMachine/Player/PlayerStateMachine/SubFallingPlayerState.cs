@@ -31,6 +31,9 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
+            Ctx.PlayerAnimator.SetTrigger("Falling");
+            Ctx.PlayerAnimator.SetFloat("GSIndex",
+                (float)_eGAnim.Falling);
         }
 
         public override void ExitState()

@@ -30,6 +30,8 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
+            Ctx.PlayerAnimator.SetFloat("GSIndex",
+                (float)_eGAnim.Idle);
         }
 
         public override void ExitState()

@@ -22,6 +22,7 @@ namespace PlayerStM.SubStates
             : base(currentContext, stateFactory)
         {
             InitializeSubState();
+            Ctx.Moveing += GetMoveCtx;
         }
 
         public override void CheckSwitchState()
@@ -38,12 +39,10 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Ctx.Moveing += GetMoveCtx;
         }
 
         public override void ExitState()
         {
-            Ctx.Moveing -= GetMoveCtx;
         }
 
         public override void InitializeSubState()
@@ -59,7 +58,7 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
             CheckSwitchState();
-            GetCameraDirection();
+
             PlayerMoveing();
             RotateToMovment();
         }
@@ -72,6 +71,8 @@ namespace PlayerStM.SubStates
                 case SuperGroundedPlayerState:
                     _moveVector =
                         new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
+                    Ctx.PlayerAnimator.SetFloat("GSIndex",
+                        (float)_eGAnim.Walking);
 
                     break;
 
@@ -93,6 +94,7 @@ namespace PlayerStM.SubStates
 
                     break;
             }
+            GetCameraDirection();
         }
 
         private void GetCameraDirection()

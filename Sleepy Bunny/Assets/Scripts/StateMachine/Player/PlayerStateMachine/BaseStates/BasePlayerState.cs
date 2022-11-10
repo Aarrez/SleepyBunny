@@ -14,6 +14,14 @@ namespace PlayerStM.BaseStates
         private BasePlayerState _currentSubState;
         private BasePlayerState _currentMinorState;
 
+        internal enum _eGAnim : long
+        {
+            Idle = 0,
+            Walking = 1,
+            Falling = 2,
+            Runing = 3
+        }
+
         public BasePlayerState CurrnetSuperState =>
             _currentSuperState;
 
@@ -81,14 +89,12 @@ namespace PlayerStM.BaseStates
         protected void SetSubState(BasePlayerState newSubState)
         {
             _currentSubState = newSubState;
-            newSubState.EnterState();
             newSubState.SetSuperState(this);
         }
 
         protected void SetMinorState(BasePlayerState newMinorState)
         {
             _currentMinorState = newMinorState;
-            newMinorState.EnterState();
             newMinorState.SetSubState(this);
         }
     }

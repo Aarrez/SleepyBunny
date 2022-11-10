@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 using PlayerStM.SubStates;
 
 using Cinemachine;
+using JetBrains.Annotations;
+using static PlayerStM.BaseStates.PlayerStateMachine;
 
 namespace PlayerStM.BaseStates
 {
@@ -30,8 +32,6 @@ namespace PlayerStM.BaseStates
 
         private ControllAction.CustomPlayerActions _cPlayer;
         private ControllAction.CustomUIActions _cUI;
-
-        private Animator _anim;
 
         private Collider _collider;
 
@@ -72,8 +72,6 @@ namespace PlayerStM.BaseStates
         #region Get and set
 
         public Rigidbody Rb { get => _rb; set => _rb = value; }
-
-        public Animator Anim { get => _anim; set => _anim = value; }
 
         public event Action Moveing
         {
@@ -130,6 +128,13 @@ namespace PlayerStM.BaseStates
         public InputAction.CallbackContext PauseCtx => _pauseCtx;
         public InputAction.CallbackContext CrouchCtx => _crouchCtx;
 
+        /// <summary>
+        /// When setting GSIndex(Integer)
+        /// <br></br>
+        /// Idle = 0,  Walking = 1,
+        /// <br></br>
+        /// Falling = 2, Run = 3(Might not be used)
+        /// </summary>
         public Animator PlayerAnimator => _playerAnimator;
 
         public Camera MainCamera => _mainCamera;
@@ -142,15 +147,13 @@ namespace PlayerStM.BaseStates
             _cPlayer = thePlayerInput.CustomPlayer;
             _cUI = thePlayerInput.CustomUI;
 
-            _anim = GetComponent<Animator>();
+            _playerAnimator = GetComponentInChildren<Animator>();
             _rb = GetComponent<Rigidbody>();
 
             //set state
             _stateFactory = new StateFactory(this);
             _playerState = _stateFactory.SuperGrounded();
             _playerState.EnterState();
-
-            _playerAnimator = GetComponent<Animator>();
 
             _mainCamera = Camera.main;
         }
@@ -162,6 +165,7 @@ namespace PlayerStM.BaseStates
 
         private void OnEnable()
         {
+            _playerAnimator.SetBool("Enabled", true);
             // Gets all the inputs from the InputActionMap and Invokes events
             // when a button/stick is interacted with
 
@@ -245,6 +249,7 @@ namespace PlayerStM.BaseStates
 
         private void OnDisable()
         {
+            _playerAnimator.SetBool("Enabled", false);
             _cPlayer.Disable();
             _cUI.Disable();
 

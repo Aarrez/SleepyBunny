@@ -11,22 +11,22 @@ ModelImporter:
     second: IDLE_WAIT
   - first:
       74: 744061453431460982
-    second: JUMP
+    second: New_JUMP
   - first:
       74: 3425395189600132052
-    second: TRIP
+    second: New_TRIP
   - first:
       74: -7969577759617228146
-    second: PUSH OBJECT 2
+    second: New_PUSH OBJECT 2
   - first:
       74: -2585861755411534162
-    second: LANDING HARD
+    second: New_LANDING HARD
   - first:
       74: 2737408049491052172
-    second: LANDING SOFT
+    second: New_LANDING SOFT
   - first:
       74: 864546719200000708
-    second: WALK
+    second: New_WALK
   - first:
       74: 4764509770609546314
     second: Armature|CLIMB_UP
@@ -35,7 +35,7 @@ ModelImporter:
     second: Armature|CLIMB_WALL
   - first:
       74: 2876981554226286365
-    second: LEDGE HANG
+    second: New_LEDGE HANG
   - first:
       74: 1217951827469927584
     second: Armature|IDLE_WAIT
@@ -53,10 +53,10 @@ ModelImporter:
     second: LEDGE HANG
   - first:
       74: -7707536207999393673
-    second: PULL OBJECT
+    second: New_PULL OBJECT
   - first:
       74: -5538256074181917967
-    second: PUSH OBJECT 1
+    second: New_PUSH OBJECT 1
   - first:
       74: 431079630209533449
     second: Armature|PUSH OBJECT 2
@@ -71,7 +71,13 @@ ModelImporter:
     second: Armature|WALK
   - first:
       74: 2126459665172807778
-    second: IDLE
+    second: New_IDLE
+  - first:
+      74: -1500354584072067147
+    second: New_Falling
+  - first:
+      74: 864546719200000708
+    second: New_WALK
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -102,10 +108,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: IDLE_WAIT
-      takeName: IDLE_WAIT
+      name: New_Falling
+      takeName: JUMP
       internalID: 0
-      firstFrame: 20
+      firstFrame: 60
       lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
@@ -113,8 +119,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -131,7 +137,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: WALK
+      name: New_WALK
       takeName: WALK
       internalID: 0
       firstFrame: 20
@@ -142,7 +148,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -160,7 +166,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: JUMP
+      name: New_JUMP
       takeName: JUMP
       internalID: 0
       firstFrame: 20
@@ -189,7 +195,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: TRIP
+      name: New_TRIP
       takeName: TRIP
       internalID: 0
       firstFrame: 20
@@ -218,7 +224,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: PUSH OBJECT 2
+      name: New_PUSH OBJECT 2
       takeName: PUSH OBJECT 2.001
       internalID: 0
       firstFrame: 20
@@ -247,7 +253,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: PUSH OBJECT 1
+      name: New_PUSH OBJECT 1
       takeName: Armature|PUSH OBJECT
       internalID: 0
       firstFrame: 20
@@ -276,7 +282,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: PULL OBJECT
+      name: New_PULL OBJECT
       takeName: Armature|PULL OBJECT
       internalID: 0
       firstFrame: 20
@@ -305,7 +311,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: LANDING HARD
+      name: New_LANDING HARD
       takeName: Armature|LANDING HARD
       internalID: 0
       firstFrame: 20
@@ -334,7 +340,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: LANDING SOFT
+      name: New_LANDING SOFT
       takeName: Armature|LANDING SOFT
       internalID: 0
       firstFrame: 20
@@ -363,7 +369,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: LEDGE HANG
+      name: New_LEDGE HANG
       takeName: Armature|LEDGE HANG
       internalID: 0
       firstFrame: 20
@@ -392,7 +398,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: IDLE
+      name: New_IDLE
       takeName: Armature|IDLE
       internalID: 0
       firstFrame: 20
@@ -403,7 +409,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
