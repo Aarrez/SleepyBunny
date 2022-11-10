@@ -1,3 +1,5 @@
+using FMODUnity;
+
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
 
@@ -84,6 +86,12 @@ namespace PlayerStM.SubStates
                         = new Vector3(_ctxMoveVector.x, _ctxMoveVector.y, 0f);
 
                     break;
+
+                case SuperPushingPlayerState:
+                    _moveVector =
+                        new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
+
+                    break;
             }
         }
 
@@ -100,6 +108,8 @@ namespace PlayerStM.SubStates
 
         private void RotateToMovment()
         {
+            if (_moveDirection == Vector3.zero) return;
+
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
                 Quaternion.LookRotation(_moveDirection, Vector3.up),
                 Ctx.RotationSpeed);

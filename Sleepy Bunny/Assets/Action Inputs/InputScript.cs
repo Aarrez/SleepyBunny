@@ -1,7 +1,9 @@
 using System;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// This code is in the statemachine script
 public class InputScript : MonoBehaviour
 {
     private ControllAction thePlayerInput;

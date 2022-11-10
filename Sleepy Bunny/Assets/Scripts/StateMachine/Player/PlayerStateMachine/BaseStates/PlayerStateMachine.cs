@@ -52,7 +52,7 @@ namespace PlayerStM.BaseStates
         [SerializeField] private float _airMovemntForce = .5f;
         [SerializeField] private float _climbSpeed = 5f;
         [SerializeField] private float _jumpHeight = 10f;
-        [SerializeField] private float _rotationSpeed = .1f;
+        [SerializeField] private float _rotationSpeed;
 
         [Header("")]
         [SerializeField, Range(0, 1.5f)] private float _rCRange = 1;

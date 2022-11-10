@@ -31718,7 +31718,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797094403}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c13107f4a559aa9438b51e85912a624e, type: 3}
   m_Name: 
@@ -58511,8 +58511,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 557063142, guid: c9982aecbb68f6542931747964ff53a7, type: 3}
+      propertyPath: _movmentForce
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 557063142, guid: c9982aecbb68f6542931747964ff53a7, type: 3}
       propertyPath: _rotationSpeed
-      value: 0.1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6258597503943726635, guid: c9982aecbb68f6542931747964ff53a7,
         type: 3}
@@ -105078,6 +105082,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CM ThidpersonCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
