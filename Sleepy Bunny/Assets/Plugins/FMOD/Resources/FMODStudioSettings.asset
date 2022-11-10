@@ -426,8 +426,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../My project/FmodProjects/Basic Sounds/Basic Sounds.fspro
-  sourceBankPath: ../My project/FmodProjects/Basic Sounds/Build
+  sourceProjectPath: FMOD/SleepyBunnySFX/SleepyBunnySFX.fspro
+  sourceBankPath: FMOD/SleepyBunnySFX/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
