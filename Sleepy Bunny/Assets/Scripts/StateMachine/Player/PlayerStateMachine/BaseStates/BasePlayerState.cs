@@ -10,21 +10,7 @@ namespace PlayerStM.BaseStates
         protected bool IsRootState = false;
         protected PlayerStateMachine Ctx;
         protected StateFactory Factory;
-        private BasePlayerState _currentSuperState;
-        private BasePlayerState _currentSubState;
         internal BasePlayerState _currentMinorState;
-
-        public BasePlayerState CurrentSuperState
-        {
-            get => _currentSuperState;
-            set => _currentSuperState = value;
-        }
-
-        public BasePlayerState CurrentSubState
-        {
-            get => _currentSubState;
-            set => _currentSubState = value;
-        }
 
         public BasePlayerState CurrentMinorState => _currentMinorState;
 
@@ -71,37 +57,37 @@ namespace PlayerStM.BaseStates
         public void UpdateStates()
         {
             UpdateState();
-            if (CurrentSubState != null)
+            if (Ctx.CurrentSub != null)
             {
-                CurrentSubState.UpdateStates();
+                Ctx.CurrentSub.UpdateState();
             }
         }
 
-        public void SwitchState(BasePlayerState nextState)
+        protected void SwitchState(BasePlayerState nextState)
         {
             ExitState();
 
             nextState.EnterState();
-            Debug.Log(CurrentSuperState);
+            Debug.Log(Ctx.CurrentSuper);
             if (IsRootState)
             {
-                Ctx.PlayerState = nextState;
+                Ctx.CurrentSuper = nextState;
             }
-            else if (CurrentSuperState != null)
+            else if (Ctx.CurrentSub != null)
             {
                 Debug.Log("Setting new substate");
-                CurrentSuperState.SetSubState(nextState);
+                Ctx.CurrentSuper.SetSubState(nextState);
             }
         }
 
         protected void SetSuperState(BasePlayerState newSuperState)
         {
-            CurrentSuperState = newSuperState;
+            Ctx.CurrentSuper = newSuperState;
         }
 
         protected void SetSubState(BasePlayerState newSubState)
         {
-            CurrentSubState = newSubState;
+            Ctx.CurrentSub = newSubState;
             SetSuperState(this);
             Debug.Log(this + "set in sub state");
         }

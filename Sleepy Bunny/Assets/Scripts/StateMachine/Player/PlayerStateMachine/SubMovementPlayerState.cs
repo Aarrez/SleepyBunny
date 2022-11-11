@@ -25,7 +25,6 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            Debug.Log("Movement");
             if (Ctx.MoveCtx.ReadValue<Vector2>() == Vector2.zero)
             {
                 SwitchState(Factory.SubIdle());
@@ -101,7 +100,6 @@ namespace PlayerStM.SubStates
         {
             Ctx.Rb.velocity = _moveDirection * Ctx.MovmentForce
                 * Time.fixedDeltaTime;
-            Debug.Log("Moveing player" + _moveDirection);
         }
 
         private void RotateToMovment()

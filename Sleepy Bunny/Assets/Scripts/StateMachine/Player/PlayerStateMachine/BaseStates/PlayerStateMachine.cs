@@ -38,7 +38,9 @@ namespace PlayerStM.BaseStates
         private Camera _mainCamera;
 
         //State Variables
-        private BasePlayerState _playerState;
+        private BasePlayerState _currentSuper;
+
+        private BasePlayerState _currentSub;
 
         private StateFactory _stateFactory;
 
@@ -103,8 +105,17 @@ namespace PlayerStM.BaseStates
             remove => _crouch -= value;
         }
 
-        public BasePlayerState PlayerState
-        { get { return _playerState; } set { _playerState = value; } }
+        public BasePlayerState CurrentSuper
+        {
+            get { return _currentSuper; }
+            set { _currentSuper = value; }
+        }
+
+        public BasePlayerState CurrentSub
+        {
+            get { return _currentSub; }
+            set { _currentSub = value; }
+        }
 
         public float MovmentForce
         { get => _movmentForce; set => _movmentForce = value; }
@@ -158,8 +169,8 @@ namespace PlayerStM.BaseStates
             Physics.gravity = new Vector3(0, -9.82F, 0);
             //set state
             _stateFactory = new StateFactory(this);
-            _playerState = _stateFactory.SuperGrounded();
-            _playerState.EnterState();
+            _currentSuper = _stateFactory.SuperGrounded();
+            _currentSuper.EnterState();
         }
 
         private void OnEnable()
@@ -259,7 +270,7 @@ namespace PlayerStM.BaseStates
 
         private void FixedUpdate()
         {
-            _playerState.UpdateStates();
+            _currentSuper.UpdateStates();
         }
 
         private void CheckGrounded(bool grounded)
@@ -269,8 +280,8 @@ namespace PlayerStM.BaseStates
 
         private void GetCurrentState()
         {
-            Debug.Log("SuperState " + _playerState.CurrentSuperState);
-            Debug.Log("SubState: " + _playerState.CurrentSubState);
+            Debug.Log("SuperState " + CurrentSuper);
+            Debug.Log("SubState: " + CurrentSub);
         }
 
         public void Climbing()
