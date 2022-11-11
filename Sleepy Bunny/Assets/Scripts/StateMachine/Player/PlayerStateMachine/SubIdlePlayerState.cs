@@ -22,20 +22,22 @@ namespace PlayerStM.SubStates
             {
                 SwitchState(Factory.SubMovement());
             }
-            else if (!Ctx.IsGrounded)
-            {
-                SwitchState(Factory.SubFalling());
-            }
         }
 
         public override void EnterState()
         {
             Ctx.PlayerAnimator.SetFloat("GSIndex",
-                (float)_eGAnim.Idle);
+                (float)_eGroundAnim.Idle);
+        }
+
+        public override void UpdateState()
+        {
+            CheckSwitchState();
         }
 
         public override void ExitState()
         {
+            Debug.Log("Exit Idle");
         }
 
         public override void InitializeSubState()
@@ -44,11 +46,6 @@ namespace PlayerStM.SubStates
 
         public override void OnNewSuperState()
         {
-        }
-
-        public override void UpdateState()
-        {
-            CheckSwitchState();
         }
     }
 }

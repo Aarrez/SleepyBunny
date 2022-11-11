@@ -12,9 +12,23 @@ namespace PlayerStM.BaseStates
         protected StateFactory Factory;
         private BasePlayerState _currentSuperState;
         private BasePlayerState _currentSubState;
-        private BasePlayerState _currentMinorState;
+        internal BasePlayerState _currentMinorState;
 
-        internal enum _eGAnim : long
+        public BasePlayerState CurrentSuperState
+        {
+            get => _currentSuperState;
+            set => _currentSuperState = value;
+        }
+
+        public BasePlayerState CurrentSubState
+        {
+            get => _currentSubState;
+            set => _currentSubState = value;
+        }
+
+        public BasePlayerState CurrentMinorState => _currentMinorState;
+
+        internal enum _eGroundAnim : long
         {
             Idle = 0,
             Walking = 1,
@@ -22,14 +36,13 @@ namespace PlayerStM.BaseStates
             Runing = 3
         }
 
-        public BasePlayerState CurrnetSuperState =>
-            _currentSuperState;
-
-        public BasePlayerState CurrnetSubState =>
-            _currentSubState;
-
-        public BasePlayerState CurrentMinorState =>
-            _currentMinorState;
+        internal enum _eJumpAnim : long
+        {
+            Jump = 0,
+            Falling = 1,
+            LandSoft = 2,
+            LandHard = 3
+        }
 
         public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
         {
@@ -58,38 +71,39 @@ namespace PlayerStM.BaseStates
         public void UpdateStates()
         {
             UpdateState();
-            if (_currentSubState != null)
+            if (CurrentSubState != null)
             {
-                _currentSubState.UpdateState();
+                CurrentSubState.UpdateStates();
             }
         }
 
-        protected void SwitchState(BasePlayerState nextState)
+        public void SwitchState(BasePlayerState nextState)
         {
             ExitState();
 
             nextState.EnterState();
-
+            Debug.Log(CurrentSuperState);
             if (IsRootState)
             {
                 Ctx.PlayerState = nextState;
             }
-            else if (_currentSuperState != null)
+            else if (CurrentSuperState != null)
             {
-                _currentSuperState.SetSubState(nextState);
+                Debug.Log("Setting new substate");
+                CurrentSuperState.SetSubState(nextState);
             }
         }
 
         protected void SetSuperState(BasePlayerState newSuperState)
         {
-            _currentSuperState = newSuperState;
-            OnNewSuperState();
+            CurrentSuperState = newSuperState;
         }
 
         protected void SetSubState(BasePlayerState newSubState)
         {
-            _currentSubState = newSubState;
-            newSubState.SetSuperState(this);
+            CurrentSubState = newSubState;
+            SetSuperState(this);
+            Debug.Log(this + "set in sub state");
         }
 
         protected void SetMinorState(BasePlayerState newMinorState)

@@ -13,6 +13,8 @@ namespace PlayerStM.SuperState
             , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
+            IsRootState = true;
+            InitializeSubState();
         }
 
         public override void CheckSwitchState()
@@ -21,37 +23,31 @@ namespace PlayerStM.SuperState
             {
                 SwitchState(Factory.SuperGrounded());
             }
-            //else if (Ctx.IsClimbing)
-            //{
-            //    SwitchState(Factory.SuperClimb(), eStates.SuperClimb);
-            //}
         }
 
         public override void EnterState()
         {
-            IsRootState = true;
-            InitializeSubState();
-            Ctx.PlayerAnimator.SetBool("Jump", true);
-            Ctx.PlayerAnimator.SetTrigger("Jumping");
+            Ctx.PlayerAnimator.SetTrigger("Jump");
+            Ctx.PlayerAnimator.SetFloat("LandEffect", (float)_eJumpAnim.Jump);
             Debug.Log("Jumping");
             AddJumpForce();
         }
 
         public override void ExitState()
         {
-            Ctx.PlayerAnimator.SetBool("Jump", false);
+            Ctx.PlayerAnimator.ResetTrigger("Jump");
         }
 
         public override void InitializeSubState()
         {
-            if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
-            {
-                SetSubState(Factory.SubMovement());
-            }
-            else
-            {
-                SetSubState(Factory.SubFalling());
-            }
+            //if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
+            //{
+            //    SetSubState(Factory.SubMovement());
+            //}
+            //else
+            //{
+            //    SetSubState(Factory.SubFalling());
+            //}
         }
 
         public override void OnNewSuperState()
@@ -66,6 +62,7 @@ namespace PlayerStM.SuperState
         private void AddJumpForce()
         {
             Ctx.Rb.AddForce(Vector3.up * Ctx.JumpHeight, ForceMode.Impulse);
+            Debug.Log("jumpting");
         }
     }
 }

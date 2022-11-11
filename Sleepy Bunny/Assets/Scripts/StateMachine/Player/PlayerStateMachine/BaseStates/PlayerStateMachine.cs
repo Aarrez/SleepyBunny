@@ -57,7 +57,7 @@ namespace PlayerStM.BaseStates
         [Header("")]
         [SerializeField, Range(0, 1.5f)] private float _rCRange = 1;
 
-        [SerializeField] private Animator _playerAnimator;
+        private Animator _playerAnimator;
 
         public bool ShouldRespawn = false;
         private bool _isGrounded = false;
@@ -150,17 +150,16 @@ namespace PlayerStM.BaseStates
             _playerAnimator = GetComponentInChildren<Animator>();
             _rb = GetComponent<Rigidbody>();
 
-            //set state
-            _stateFactory = new StateFactory(this);
-            _playerState = _stateFactory.SuperGrounded();
-            _playerState.EnterState();
-
             _mainCamera = Camera.main;
         }
 
         private void Start()
         {
             Physics.gravity = new Vector3(0, -9.82F, 0);
+            //set state
+            _stateFactory = new StateFactory(this);
+            _playerState = _stateFactory.SuperGrounded();
+            _playerState.EnterState();
         }
 
         private void OnEnable()
@@ -239,6 +238,8 @@ namespace PlayerStM.BaseStates
 
             #endregion Crouch Input
 
+            _cPlayer.DebugState.performed += ctx => GetCurrentState();
+
             _cPlayer.Enable();
             _cUI.Enable();
 
@@ -264,6 +265,12 @@ namespace PlayerStM.BaseStates
         private void CheckGrounded(bool grounded)
         {
             _isGrounded = grounded;
+        }
+
+        private void GetCurrentState()
+        {
+            Debug.Log("SuperState " + _playerState.CurrentSuperState);
+            Debug.Log("SubState: " + _playerState.CurrentSubState);
         }
 
         public void Climbing()

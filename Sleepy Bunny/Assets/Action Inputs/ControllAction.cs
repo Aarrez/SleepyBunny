@@ -71,6 +71,15 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DebugState"",
+                    ""type"": ""Button"",
+                    ""id"": ""4594f350-cd0b-489c-b587-82b36bd15bd0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,17 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b9b296c-3dce-4895-b7e7-5ab6822ce96f"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -296,6 +316,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         m_CustomPlayer_Grab = m_CustomPlayer.FindAction("Grab", throwIfNotFound: true);
         m_CustomPlayer_Crouch = m_CustomPlayer.FindAction("Crouch", throwIfNotFound: true);
         m_CustomPlayer_Look = m_CustomPlayer.FindAction("Look", throwIfNotFound: true);
+        m_CustomPlayer_DebugState = m_CustomPlayer.FindAction("DebugState", throwIfNotFound: true);
         // CustomUI
         m_CustomUI = asset.FindActionMap("CustomUI", throwIfNotFound: true);
         m_CustomUI_Pause = m_CustomUI.FindAction("Pause", throwIfNotFound: true);
@@ -363,6 +384,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_CustomPlayer_Grab;
     private readonly InputAction m_CustomPlayer_Crouch;
     private readonly InputAction m_CustomPlayer_Look;
+    private readonly InputAction m_CustomPlayer_DebugState;
     public struct CustomPlayerActions
     {
         private @ControllAction m_Wrapper;
@@ -372,6 +394,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         public InputAction @Grab => m_Wrapper.m_CustomPlayer_Grab;
         public InputAction @Crouch => m_Wrapper.m_CustomPlayer_Crouch;
         public InputAction @Look => m_Wrapper.m_CustomPlayer_Look;
+        public InputAction @DebugState => m_Wrapper.m_CustomPlayer_DebugState;
         public InputActionMap Get() { return m_Wrapper.m_CustomPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -396,6 +419,9 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnLook;
+                @DebugState.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnDebugState;
+                @DebugState.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnDebugState;
+                @DebugState.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnDebugState;
             }
             m_Wrapper.m_CustomPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -415,6 +441,9 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @DebugState.started += instance.OnDebugState;
+                @DebugState.performed += instance.OnDebugState;
+                @DebugState.canceled += instance.OnDebugState;
             }
         }
     }
@@ -477,6 +506,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         void OnGrab(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnDebugState(InputAction.CallbackContext context);
     }
     public interface ICustomUIActions
     {

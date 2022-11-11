@@ -1,3 +1,5 @@
+using System.Data.Common;
+
 using PlayerStM.BaseStates;
 
 using UnityEngine;
@@ -19,13 +21,14 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsGrounded)
-            {
-                SwitchState(Factory.SubIdle());
-            }
+            Debug.Log("trying to switch");
             if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
             {
                 SwitchState(Factory.SubMovement());
+            }
+            else if (Ctx.IsGrounded)
+            {
+                SwitchState(Factory.SubIdle());
             }
         }
 
@@ -33,7 +36,12 @@ namespace PlayerStM.SubStates
         {
             Ctx.PlayerAnimator.SetTrigger("Falling");
             Ctx.PlayerAnimator.SetFloat("GSIndex",
-                (float)_eGAnim.Falling);
+                (float)_eGroundAnim.Falling);
+        }
+
+        public override void UpdateState()
+        {
+            CheckSwitchState();
         }
 
         public override void ExitState()
@@ -46,11 +54,6 @@ namespace PlayerStM.SubStates
 
         public override void OnNewSuperState()
         {
-        }
-
-        public override void UpdateState()
-        {
-            CheckSwitchState();
         }
     }
 }

@@ -19,6 +19,8 @@ namespace PlayerStM.SubStates
             , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
+            IsRootState = true;
+            InitializeSubState();
         }
 
         public override void CheckSwitchState()
@@ -38,14 +40,6 @@ namespace PlayerStM.SubStates
 
         public override void InitializeSubState()
         {
-            if (_climbVector == Vector2.Zero)
-            {
-                SwitchState(Factory.SubIdle());
-            }
-            else
-            {
-                SwitchState(Factory.SubMovement());
-            }
         }
 
         public override void OnNewSuperState()

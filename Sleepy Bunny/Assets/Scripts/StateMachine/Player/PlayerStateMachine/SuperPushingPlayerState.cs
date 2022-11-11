@@ -19,6 +19,8 @@ namespace PlayerStM.SubStates
             , StateFactory factory)
             : base(ctx, factory)
         {
+            InitializeSubState();
+            IsRootState = true;
         }
 
         public override void CheckSwitchState()

@@ -15,6 +15,8 @@ namespace PlayerStM.SuperState
             , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
+            IsRootState = true;
+            InitializeSubState();
         }
 
         public override void CheckSwitchState()
@@ -27,11 +29,8 @@ namespace PlayerStM.SuperState
 
         public override void EnterState()
         {
-            IsRootState = true;
             Ctx.PlayerAnimator.SetBool("Grounded", Ctx.IsGrounded);
             Debug.Log("Grounded");
-
-            InitializeSubState();
         }
 
         public override void ExitState()
@@ -45,14 +44,14 @@ namespace PlayerStM.SuperState
             {
                 SetSubState(Factory.SubMovement());
             }
-            else if (!Ctx.IsGrounded)
-            {
-                SetSubState(Factory.SubFalling());
-            }
             else
             {
                 SetSubState(Factory.SubIdle());
             }
+            //else if (!Ctx.IsGrounded)
+            //{
+            //    SetSubState(Factory.SubFalling());
+            //}
         }
 
         public override void OnNewSuperState()
