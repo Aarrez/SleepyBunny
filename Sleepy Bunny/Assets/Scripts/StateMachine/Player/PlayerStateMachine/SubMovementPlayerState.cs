@@ -11,6 +11,7 @@ namespace PlayerStM.SubStates
     /// Handles everything with movement so every superstate has this
     /// substate if it involves movment
     /// </summary>
+    ///
     public class SubMovementPlayerState : BasePlayerState
     {
         private Vector3 _moveVector = Vector3.zero;

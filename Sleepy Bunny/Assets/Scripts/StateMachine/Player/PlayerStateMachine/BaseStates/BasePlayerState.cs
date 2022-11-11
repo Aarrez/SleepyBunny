@@ -36,12 +36,6 @@ namespace PlayerStM.BaseStates
             this.Factory = factory;
         }
 
-        /// <summary>
-        /// Only use if the current state has a superior state.
-        /// <br></br>
-        /// do not use on Superstates it will not work
-        /// </summary>
-        /// <param name="SuperiorState"></param>
         public abstract void EnterState();
 
         public abstract void UpdateState();
