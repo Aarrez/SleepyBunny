@@ -37,7 +37,6 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            Debug.Log("Exit Idle");
         }
 
         public override void InitializeSubState()

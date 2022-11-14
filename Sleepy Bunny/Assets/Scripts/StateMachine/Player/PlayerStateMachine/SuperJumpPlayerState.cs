@@ -29,8 +29,8 @@ namespace PlayerStM.SuperState
         {
             Ctx.PlayerAnimator.SetTrigger("Jump");
             Ctx.PlayerAnimator.SetFloat("LandEffect", (float)_eJumpAnim.Jump);
-            Debug.Log("Jumping");
             AddJumpForce();
+            Debug.Log("Jumping");
         }
 
         public override void ExitState()
@@ -40,14 +40,7 @@ namespace PlayerStM.SuperState
 
         public override void InitializeSubState()
         {
-            //if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
-            //{
-            //    SetSubState(Factory.SubMovement());
-            //}
-            //else
-            //{
-            //    SetSubState(Factory.SubFalling());
-            //}
+            SetSubState(Factory.SubFalling());
         }
 
         public override void OnNewSuperState()
@@ -59,10 +52,12 @@ namespace PlayerStM.SuperState
             CheckSwitchState();
         }
 
+        //First half determines jumpheight
+        //Second half determines directional distance
         private void AddJumpForce()
         {
-            Ctx.Rb.AddForce(Vector3.up * Ctx.JumpHeight, ForceMode.Impulse);
-            Debug.Log("jumpting");
+            Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
+                + (_moveDirection * Ctx.DirectionalJumpForce);
         }
     }
 }

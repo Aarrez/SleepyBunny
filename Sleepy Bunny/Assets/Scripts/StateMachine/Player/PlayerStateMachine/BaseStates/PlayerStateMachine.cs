@@ -5,7 +5,6 @@ using PlayerStM.SubStates;
 
 using Cinemachine;
 using JetBrains.Annotations;
-using static PlayerStM.BaseStates.PlayerStateMachine;
 
 namespace PlayerStM.BaseStates
 {
@@ -16,7 +15,7 @@ namespace PlayerStM.BaseStates
         #region Script Refrences
 
         //Input value storage
-        private Action _moveing, _jump, _grab, _pause, _crouch;
+        private Action _moveing, _jump, _grab, _pause, _crouch, _climb;
 
         private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
             _pauseCtx, _crouchCtx;
@@ -49,11 +48,16 @@ namespace PlayerStM.BaseStates
         #region Variables
 
         [Header("Movement related variables")]
+        [Tooltip("Determines how speedy the character is")]
         [SerializeField] private float _movmentForce = 1f;
 
-        [SerializeField] private float _airMovemntForce = .5f;
-        [SerializeField] private float _climbSpeed = 5f;
+        [Tooltip("Determines how much directional force is applyed when jumping")]
+        [SerializeField] private float _directionalJumpForce = .5f;
+
+        [Tooltip("Determines how high you jump")]
         [SerializeField] private float _jumpHeight = 10f;
+
+        [SerializeField] private float _climbSpeed = 5f;
         [SerializeField] private float _rotationSpeed;
 
         [Header("")]
@@ -66,6 +70,7 @@ namespace PlayerStM.BaseStates
         private bool _isClimbing = false;
         private bool _isFalling = false;
         private bool _isCrouching = false;
+        private bool _isGrabing = false;
 
         #endregion Variables
 
@@ -125,13 +130,14 @@ namespace PlayerStM.BaseStates
 
         public float RotationSpeed => _rotationSpeed;
 
-        public float AirMovemntForce
-        { get => _airMovemntForce; set => _airMovemntForce = value; }
+        public float DirectionalJumpForce
+        { get => _directionalJumpForce; set => _directionalJumpForce = value; }
 
         public bool IsGrounded => _isGrounded;
         public bool IsClimbing => _isClimbing;
         public bool IsFalling => _isFalling;
         public bool IsCrouching => _isCrouching;
+        public bool IsGrabing => _isGrabing;
 
         public InputAction.CallbackContext MoveCtx => _moveCtx;
         public InputAction.CallbackContext JumpCtx => _jumpCtx;
@@ -284,15 +290,19 @@ namespace PlayerStM.BaseStates
             Debug.Log("SubState: " + CurrentSub);
         }
 
-        public void Climbing()
+        public void ClimbGrab(RaycastHit hit)
         {
-            RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, _rCRange))
             {
                 if (hit.transform.gameObject.CompareTag("Climb"))
                 {
-                    _collider = hit.transform.GetComponent<Collider>();
                     _isClimbing = true;
+                    Debug.Log("Hit climbable object");
+                }
+                else if (hit.transform.gameObject.CompareTag("Move_Object"))
+                {
+                    Debug.Log("Hit movable object");
+                    _isGrabing = true;
                 }
             }
         }

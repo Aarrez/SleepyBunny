@@ -2,17 +2,30 @@ using PlayerStM.BaseStates;
 using PlayerStM.SubStates;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
+using PlayerStM.SuperState;
 
 namespace PlayerStM.BaseStates
 {
     public abstract class BasePlayerState
     {
-        protected bool IsRootState = false;
-        protected PlayerStateMachine Ctx;
-        protected StateFactory Factory;
-        internal BasePlayerState _currentMinorState;
+        // Varibales for movment
+        // Used in SubMovmentPlayerState
+        protected Vector3 _moveVector = Vector3.zero;
 
-        public BasePlayerState CurrentMinorState => _currentMinorState;
+        protected Vector3 _ctxMoveVector;
+        protected Vector3 _moveDirection;
+
+        protected RaycastHit Hit;
+
+        // Bool used to check if state is Super of sub
+        protected bool IsRootState = false;
+
+        // Used to accsess the geters and setters of PlayerStateMachine
+        protected PlayerStateMachine Ctx;
+
+        // Gain accsess to all the states for switching or other stuff
+        protected StateFactory Factory;
 
         internal enum _eGroundAnim : long
         {
@@ -34,6 +47,8 @@ namespace PlayerStM.BaseStates
         {
             this.Ctx = ctx;
             this.Factory = factory;
+            Ctx.Moveing += GetMoveCtx;
+            ctx.Grab += GrabClimb;
         }
 
         public abstract void EnterState();
@@ -62,14 +77,13 @@ namespace PlayerStM.BaseStates
             ExitState();
 
             nextState.EnterState();
-            Debug.Log(Ctx.CurrentSuper);
+
             if (IsRootState)
             {
                 Ctx.CurrentSuper = nextState;
             }
             else if (Ctx.CurrentSub != null)
             {
-                Debug.Log("Setting new substate");
                 Ctx.CurrentSuper.SetSubState(nextState);
             }
         }
@@ -83,13 +97,40 @@ namespace PlayerStM.BaseStates
         {
             Ctx.CurrentSub = newSubState;
             SetSuperState(this);
-            Debug.Log(this + "set in sub state");
         }
 
-        protected void SetMinorState(BasePlayerState newMinorState)
+        private void GetMoveCtx()
         {
-            _currentMinorState = newMinorState;
-            newMinorState.SetSubState(this);
+            _ctxMoveVector = Ctx.MoveCtx.ReadValue<Vector2>();
+
+            switch (Ctx.CurrentSuper)
+            {
+                case SuperClimbingPlayerState:
+                    _moveVector
+                        = new Vector3(_ctxMoveVector.x, _ctxMoveVector.y, 0f);
+                    break;
+
+                case SuperPushingPlayerState:
+                    _moveVector =
+                        new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
+                    break;
+
+                case SuperJumpPlayerState:
+
+                    goto default;
+
+                default:
+                    _moveVector =
+                       new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
+                    break;
+            }
+            Vector3 tempV3 = Ctx.MainCamera.transform.TransformDirection(_moveVector);
+            _moveDirection = new Vector3(tempV3.x, 0f, tempV3.z);
+        }
+
+        private void GrabClimb()
+        {
+            Ctx.ClimbGrab(Hit);
         }
     }
 }

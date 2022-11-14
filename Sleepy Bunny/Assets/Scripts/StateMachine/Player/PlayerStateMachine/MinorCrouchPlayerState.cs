@@ -24,7 +24,6 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            SetMinorState(null);
         }
 
         public override void InitializeSubState()

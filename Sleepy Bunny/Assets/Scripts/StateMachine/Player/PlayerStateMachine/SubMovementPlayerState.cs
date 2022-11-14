@@ -1,3 +1,5 @@
+using BulletSharp;
+
 using FMODUnity;
 
 using PlayerStM.BaseStates;
@@ -14,10 +16,6 @@ namespace PlayerStM.SubStates
     ///
     public class SubMovementPlayerState : BasePlayerState
     {
-        private Vector3 _moveVector = Vector3.zero;
-        private Vector3 _ctxMoveVector;
-        private Vector3 _moveDirection;
-
         public SubMovementPlayerState(PlayerStateMachine currentContext
             , StateFactory stateFactory)
             : base(currentContext, stateFactory)
@@ -34,18 +32,18 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Ctx.Moveing += GetMoveCtx;
+            Ctx.PlayerAnimator.SetFloat("GSIndex",
+                        (float)_eGroundAnim.Walking);
         }
 
         public override void ExitState()
         {
-            Ctx.Moveing -= GetMoveCtx;
         }
 
         public override void InitializeSubState()
         {
             //if (Ctx.CrouchCtx.ReadValueAsButton())
-            //    SetMinorState(Factory.MinorCrouch());
+            //    SetSubState(Factory.MinorCrouch());
         }
 
         public override void OnNewSuperState()
@@ -55,49 +53,27 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
             CheckSwitchState();
-            PlayerMoveing();
+            PlayerMove();
             RotateToMovment();
         }
 
-        private void GetMoveCtx()
+        private void PlayerMove()
         {
-            _ctxMoveVector = Ctx.MoveCtx.ReadValue<Vector2>();
-            _moveVector = new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
-            Ctx.PlayerAnimator.SetFloat("GSIndex",
-                (float)_eGroundAnim.Walking);
-            _moveDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
+            switch (Ctx.CurrentSuper)
+            {
+                case SuperClimbingPlayerState: break;
 
-            //switch (_currentSuperState)
-            //{
-            //    case SuperGroundedPlayerState:
-            //        _moveVector =
-            //            new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
-            //        Ctx.PlayerAnimator.SetFloat("GSIndex",
-            //            (float)_eGAnim.Walking);
+                case SuperPushingPlayerState: break;
 
-            //        break;
+                case SuperJumpPlayerState: break;
 
-            //    case SuperJumpPlayerState:
-            //        _moveVector =
-            //            new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
-
-            //        break;
-
-            //    case SuperClimbingPlayerState:
-            //        _moveVector
-            //            = new Vector3(_ctxMoveVector.x, _ctxMoveVector.y, 0f);
-
-            //        break;
-
-            //    case SuperPushingPlayerState:
-            //        _moveVector =
-            //            new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
-
-            //        break;
-            //}
+                default:
+                    GroundedMovment();
+                    break;
+            }
         }
 
-        private void PlayerMoveing()
+        private void GroundedMovment()
         {
             Ctx.Rb.velocity = _moveDirection * Ctx.MovmentForce
                 * Time.fixedDeltaTime;
