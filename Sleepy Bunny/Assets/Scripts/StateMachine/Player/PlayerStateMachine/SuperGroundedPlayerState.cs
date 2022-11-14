@@ -25,6 +25,13 @@ namespace PlayerStM.SuperState
             {
                 SwitchState(Factory.SuperJump());
             }
+            else if (Ctx.IsClimbing)
+            {
+                SwitchState(Factory.SuperClimb());
+            }
+            else if (Ctx.IsGrabing)
+            {
+            }
         }
 
         public override void EnterState()

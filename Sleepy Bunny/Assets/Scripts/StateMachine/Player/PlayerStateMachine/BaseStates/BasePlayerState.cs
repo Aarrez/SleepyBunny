@@ -10,11 +10,11 @@ namespace PlayerStM.BaseStates
     public abstract class BasePlayerState
     {
         // Varibales for movment
-        // Used in SubMovmentPlayerState
-        protected Vector3 _moveVector = Vector3.zero;
+        private Vector3 _moveVector = Vector3.zero;
 
-        protected Vector3 _ctxMoveVector;
-        protected Vector3 _moveDirection;
+        private Vector3 _ctxMoveVector;
+
+        private Vector3 _moveDirection;
 
         protected RaycastHit Hit;
 
@@ -42,6 +42,8 @@ namespace PlayerStM.BaseStates
             LandSoft = 2,
             LandHard = 3
         }
+
+        public Vector3 MoveDirection => _moveDirection;
 
         public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
         {

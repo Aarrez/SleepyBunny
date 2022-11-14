@@ -3,9 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using PlayerStM.SubStates;
 
-using Cinemachine;
-using JetBrains.Annotations;
-
 namespace PlayerStM.BaseStates
 {
     public class PlayerStateMachine : MonoBehaviour
@@ -296,8 +293,8 @@ namespace PlayerStM.BaseStates
             {
                 if (hit.transform.gameObject.CompareTag("Climb"))
                 {
-                    _isClimbing = true;
                     Debug.Log("Hit climbable object");
+                    _isClimbing = true;
                 }
                 else if (hit.transform.gameObject.CompareTag("Move_Object"))
                 {

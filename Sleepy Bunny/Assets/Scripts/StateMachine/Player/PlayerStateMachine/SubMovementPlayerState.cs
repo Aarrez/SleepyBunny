@@ -1,10 +1,5 @@
-using BulletSharp;
-
-using FMODUnity;
-
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
-
 using UnityEngine;
 
 namespace PlayerStM.SubStates
@@ -27,6 +22,10 @@ namespace PlayerStM.SubStates
             if (Ctx.MoveCtx.ReadValue<Vector2>() == Vector2.zero)
             {
                 SwitchState(Factory.SubIdle());
+            }
+            else if (Ctx.Rb.velocity.y > 0)
+            {
+                SwitchState(Factory.SubFalling());
             }
         }
 
@@ -75,16 +74,16 @@ namespace PlayerStM.SubStates
 
         private void GroundedMovment()
         {
-            Ctx.Rb.velocity = _moveDirection * Ctx.MovmentForce
+            Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce
                 * Time.fixedDeltaTime;
         }
 
         private void RotateToMovment()
         {
-            if (_moveDirection == Vector3.zero) return;
+            if (MoveDirection == Vector3.zero) return;
 
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
-                Quaternion.LookRotation(_moveDirection, Vector3.up),
+                Quaternion.LookRotation(MoveDirection, Vector3.up),
                 Ctx.RotationSpeed);
         }
     }

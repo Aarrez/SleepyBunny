@@ -21,8 +21,7 @@ namespace PlayerStM.BaseStates
     {
         private PlayerStateMachine _context;
 
-        private Dictionary<eStates, BasePlayerState> _states =
-            new();
+        private Dictionary<eStates, BasePlayerState> _states = new();
 
         public StateFactory(PlayerStateMachine currentContext)
         {

@@ -1,5 +1,4 @@
 using UnityEngine;
-
 using PlayerStM.BaseStates;
 
 namespace PlayerStM.SubStates
@@ -21,6 +20,10 @@ namespace PlayerStM.SubStates
             if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
             {
                 SwitchState(Factory.SubMovement());
+            }
+            else if (Ctx.Rb.velocity.y > 0)
+            {
+                SwitchState(Factory.SubFalling());
             }
         }
 

@@ -1,5 +1,4 @@
 using PlayerStM.BaseStates;
-
 using UnityEngine;
 
 namespace PlayerStM.SuperState
@@ -57,7 +56,7 @@ namespace PlayerStM.SuperState
         private void AddJumpForce()
         {
             Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
-                + (_moveDirection * Ctx.DirectionalJumpForce);
+                + (MoveDirection * Ctx.DirectionalJumpForce);
         }
     }
 }

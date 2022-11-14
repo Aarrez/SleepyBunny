@@ -21,15 +21,6 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            Debug.Log("trying to switch");
-            if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
-            {
-                SwitchState(Factory.SubMovement());
-            }
-            else if (Ctx.IsGrounded)
-            {
-                SwitchState(Factory.SubIdle());
-            }
         }
 
         public override void EnterState()

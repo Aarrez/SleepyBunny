@@ -1,8 +1,5 @@
-using System.Numerics;
-
 using PlayerStM.BaseStates;
-
-using UnityEngine.XR.LegacyInputHelpers;
+using UnityEngine;
 
 namespace PlayerStM.SubStates
 {
@@ -11,9 +8,10 @@ namespace PlayerStM.SubStates
     /// or other objects
     /// </summary>
     public class SuperClimbingPlayerState : BasePlayerState
-
     {
+        private RaycastHit Climbhit;
         private Vector2 _climbVector;
+        private float _originalMass;
 
         public SuperClimbingPlayerState(PlayerStateMachine currentContext
             , StateFactory stateFactory)
@@ -21,6 +19,8 @@ namespace PlayerStM.SubStates
         {
             IsRootState = true;
             InitializeSubState();
+            Climbhit = base.Hit;
+            _originalMass = Ctx.Rb.mass;
         }
 
         public override void CheckSwitchState()
@@ -30,12 +30,11 @@ namespace PlayerStM.SubStates
         //If the state is a sub or minor state this method will be called
         public override void EnterState()
         {
-            Ctx.Moveing += GetMoveCtx;
         }
 
         public override void ExitState()
         {
-            Ctx.Moveing -= GetMoveCtx;
+            Ctx.Rb.mass = _originalMass;
         }
 
         public override void InitializeSubState()
@@ -49,11 +48,6 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
             CheckSwitchState();
-        }
-
-        private void GetMoveCtx()
-        {
-            _climbVector = Ctx.MoveCtx.ReadValue<Vector2>();
         }
     }
 }
