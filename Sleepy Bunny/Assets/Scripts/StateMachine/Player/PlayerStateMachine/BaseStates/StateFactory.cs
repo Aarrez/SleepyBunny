@@ -1,3 +1,4 @@
+using PlayerStm.SubStates;
 using PlayerStM.SubStates;
 using PlayerStM.SuperState;
 
@@ -7,14 +8,15 @@ namespace PlayerStM.BaseStates
 {
     public enum eStates
     {
+        MinorCrouch,
+        SubLand,
         SubIdle,
         SubMovement,
         SuperJump,
         SuperGrounded,
-        MinorCrouch,
         SuperClimb,
         SubFalling,
-        SuperPushing
+        SuperPushing,
     }
 
     public class StateFactory
@@ -28,6 +30,7 @@ namespace PlayerStM.BaseStates
             _context = currentContext;
 
             _states[eStates.MinorCrouch] = new MinorCrouchPlayerState(_context, this);
+            _states[eStates.SubLand] = new SubLandPlayerState(_context, this);
             _states[eStates.SubMovement] = new SubMovementPlayerState(_context, this);
             _states[eStates.SubIdle] = new SubIdlePlayerState(_context, this);
             _states[eStates.SubFalling] = new SubFallingPlayerState(_context, this);
@@ -70,6 +73,11 @@ namespace PlayerStM.BaseStates
         public BasePlayerState SubFalling()
         {
             return _states[eStates.SubFalling];
+        }
+
+        public BasePlayerState SubLand()
+        {
+            return _states[eStates.SubLand];
         }
 
         public BasePlayerState MinorCrouch()

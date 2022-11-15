@@ -30,16 +30,22 @@ namespace PlayerStM.BaseStates
         internal enum _eGroundAnim : long
         {
             Idle = 0,
+
             Walking = 1,
+
             Falling = 2,
+
             Runing = 3
         }
 
         internal enum _eJumpAnim : long
         {
             Jump = 0,
+
             Falling = 1,
+
             LandSoft = 2,
+
             LandHard = 3
         }
 
@@ -74,7 +80,7 @@ namespace PlayerStM.BaseStates
             }
         }
 
-        protected void SwitchState(BasePlayerState nextState)
+        public void SwitchState(BasePlayerState nextState)
         {
             ExitState();
 

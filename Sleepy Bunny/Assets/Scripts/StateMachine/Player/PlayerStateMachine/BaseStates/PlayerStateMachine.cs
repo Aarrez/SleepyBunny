@@ -18,6 +18,7 @@ namespace PlayerStM.BaseStates
             _pauseCtx, _crouchCtx;
 
         [SerializeField] private AudioSource _painNoise;
+
         [SerializeField] private AudioSource _sizzle;
 
         private Rigidbody _rb;
@@ -27,6 +28,7 @@ namespace PlayerStM.BaseStates
         private ControllAction thePlayerInput;
 
         private ControllAction.CustomPlayerActions _cPlayer;
+
         private ControllAction.CustomUIActions _cUI;
 
         private Collider _collider;
@@ -37,6 +39,8 @@ namespace PlayerStM.BaseStates
         private BasePlayerState _currentSuper;
 
         private BasePlayerState _currentSub;
+
+        private BasePlayerState _currentMinor;
 
         private StateFactory _stateFactory;
 
@@ -55,6 +59,7 @@ namespace PlayerStM.BaseStates
         [SerializeField] private float _jumpHeight = 10f;
 
         [SerializeField] private float _climbSpeed = 5f;
+
         [SerializeField] private float _rotationSpeed;
 
         [Header("")]
@@ -63,11 +68,18 @@ namespace PlayerStM.BaseStates
         private Animator _playerAnimator;
 
         public bool ShouldRespawn = false;
+
         private bool _isGrounded = false;
+
         private bool _isClimbing = false;
+
         private bool _isFalling = false;
+
         private bool _isCrouching = false;
+
         private bool _isGrabing = false;
+
+        private bool _landAnimationDone = false;
 
         #endregion Variables
 
@@ -119,6 +131,8 @@ namespace PlayerStM.BaseStates
             set { _currentSub = value; }
         }
 
+        public BasePlayerState CurrentMinor => _currentMinor;
+
         public float MovmentForce
         { get => _movmentForce; set => _movmentForce = value; }
 
@@ -131,15 +145,29 @@ namespace PlayerStM.BaseStates
         { get => _directionalJumpForce; set => _directionalJumpForce = value; }
 
         public bool IsGrounded => _isGrounded;
+
         public bool IsClimbing => _isClimbing;
+
         public bool IsFalling => _isFalling;
+
         public bool IsCrouching => _isCrouching;
+
         public bool IsGrabing => _isGrabing;
 
+        public bool LandAnimationDone
+        {
+            get => _landAnimationDone;
+            set => _landAnimationDone = value;
+        }
+
         public InputAction.CallbackContext MoveCtx => _moveCtx;
+
         public InputAction.CallbackContext JumpCtx => _jumpCtx;
+
         public InputAction.CallbackContext GrabCtx => _grabCtx;
+
         public InputAction.CallbackContext PauseCtx => _pauseCtx;
+
         public InputAction.CallbackContext CrouchCtx => _crouchCtx;
 
         /// <summary>
@@ -170,6 +198,7 @@ namespace PlayerStM.BaseStates
         private void Start()
         {
             Physics.gravity = new Vector3(0, -9.82F, 0);
+
             //set state
             _stateFactory = new StateFactory(this);
             _currentSuper = _stateFactory.SuperGrounded();
@@ -179,6 +208,7 @@ namespace PlayerStM.BaseStates
         private void OnEnable()
         {
             _playerAnimator.SetBool("Enabled", true);
+
             // Gets all the inputs from the InputActionMap and Invokes events
             // when a button/stick is interacted with
 
@@ -302,6 +332,11 @@ namespace PlayerStM.BaseStates
                     _isGrabing = true;
                 }
             }
+        }
+
+        public void SwitchFromFallingState()
+        {
+            _landAnimationDone = true;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsGrounded)
+            if (Ctx.LandAnimationDone)
             {
                 SwitchState(Factory.SuperGrounded());
             }
