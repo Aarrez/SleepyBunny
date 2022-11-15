@@ -7,8 +7,6 @@ namespace PlayerStM.BaseStates
 {
     public class PlayerStateMachine : MonoBehaviour
     {
-        #region Refrences
-
         #region Script Refrences
 
         //Input value storage
@@ -82,8 +80,6 @@ namespace PlayerStM.BaseStates
         private bool _landAnimationDone = false;
 
         #endregion Variables
-
-        #endregion Refrences
 
         #region Get and set
 
@@ -175,7 +171,10 @@ namespace PlayerStM.BaseStates
         /// <br></br>
         /// Idle = 0,  Walking = 1,
         /// <br></br>
-        /// Falling = 2, Run = 3(Might not be used)
+        /// Falling = 2, Land(blendTree) = 3
+        /// <br></br>
+        /// LandEffect: SoftLand = 1;
+        /// HardLanding = 2, dead = 3(not yet implemented)
         /// </summary>
         public Animator PlayerAnimator => _playerAnimator;
 
@@ -332,11 +331,6 @@ namespace PlayerStM.BaseStates
                     _isGrabing = true;
                 }
             }
-        }
-
-        public void SwitchFromFallingState()
-        {
-            _landAnimationDone = true;
         }
     }
 }

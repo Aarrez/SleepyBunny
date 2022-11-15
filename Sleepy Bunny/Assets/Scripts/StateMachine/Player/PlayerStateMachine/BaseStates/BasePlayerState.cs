@@ -35,7 +35,7 @@ namespace PlayerStM.BaseStates
 
             Falling = 2,
 
-            Runing = 3
+            Land = 3
         }
 
         internal enum _eJumpAnim : long
@@ -47,6 +47,15 @@ namespace PlayerStM.BaseStates
             LandSoft = 2,
 
             LandHard = 3
+        }
+
+        internal enum _eLandAnim : long
+        {
+            LandSoft = 0,
+
+            LandHard = 1,
+
+            LandDead = 2
         }
 
         public Vector3 MoveDirection => _moveDirection;
@@ -73,7 +82,7 @@ namespace PlayerStM.BaseStates
 
         public void UpdateStates()
         {
-            UpdateState();
+            Ctx.CurrentSuper.UpdateState();
             if (Ctx.CurrentSub != null)
             {
                 Ctx.CurrentSub.UpdateState();

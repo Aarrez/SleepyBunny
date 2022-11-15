@@ -20,12 +20,16 @@ namespace PlayerStm.SubStates
         //switch between different states
         public override void CheckSwitchState()
         {
-            if (!Ctx.IsGrounded) { return; }
+            if (!Ctx.LandAnimationDone) { return; }
+
+            SwitchState(Factory.SuperGrounded());
         }
 
         //Called when this state is switched to
         public override void EnterState()
         {
+            Ctx.PlayerAnimator.SetFloat("GSIndex", (float)_eGroundAnim.Land);
+            Ctx.PlayerAnimator.SetFloat("LandEffect", (float)_eLandAnim.LandSoft);
         }
 
         //Runs on FixedUpdate
@@ -37,6 +41,7 @@ namespace PlayerStm.SubStates
         //When switching to another state this method will be called
         public override void ExitState()
         {
+            Ctx.LandAnimationDone = false;
         }
 
         //Do not use if a Sub- or minorstate
