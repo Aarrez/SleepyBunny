@@ -28,8 +28,14 @@ namespace PlayerStM.SubStates
         //Called when this state is switched to
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("GSIndex", (float)_eGroundAnim.Land);
-            Ctx.PlayerAnimator.SetFloat("LandEffect", (float)_eLandAnim.LandSoft);
+            Ctx.PlayerAnimator.SetFloat("GSIndex",
+                (float)_eGroundAnim.Land);
+
+            Ctx.PlayerAnimator.SetFloat("JSIndex",
+                (float)_eJumpAnim.Land);
+
+            Ctx.PlayerAnimator.SetFloat("LandEffect",
+                (float)_eLandAnim.LandSoft);
         }
 
         //Runs on FixedUpdate

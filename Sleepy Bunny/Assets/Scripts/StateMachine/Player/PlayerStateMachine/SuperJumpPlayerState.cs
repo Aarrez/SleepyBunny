@@ -19,6 +19,7 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
+            Debug.Log("Is happeing");
             SwitchState(Factory.SuperGrounded());
         }
 
