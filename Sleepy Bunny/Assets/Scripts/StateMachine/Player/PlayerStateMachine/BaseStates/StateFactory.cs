@@ -1,5 +1,5 @@
-using PlayerStm.SubStates;
 using PlayerStM.SubStates;
+
 using PlayerStM.SuperState;
 
 using System.Collections.Generic;
@@ -9,13 +9,21 @@ namespace PlayerStM.BaseStates
     public enum eStates
     {
         MinorCrouch,
+
         SubLand,
+
         SubIdle,
+
         SubMovement,
+
         SuperJump,
+
         SuperGrounded,
+
         SuperClimb,
+
         SubFalling,
+
         SuperPushing,
     }
 

@@ -14,14 +14,12 @@ namespace PlayerStM.SuperState
         {
             IsRootState = true;
             InitializeSubState();
+            AnimationFunctionManager.LandAnimation += CheckSwitchState;
         }
 
         public override void CheckSwitchState()
         {
-            if (Ctx.LandAnimationDone)
-            {
-                SwitchState(Factory.SuperGrounded());
-            }
+            SwitchState(Factory.SuperGrounded());
         }
 
         public override void EnterState()
@@ -35,6 +33,7 @@ namespace PlayerStM.SuperState
         public override void ExitState()
         {
             Ctx.PlayerAnimator.ResetTrigger("Jump");
+            AnimationFunctionManager.LandAnimation -= CheckSwitchState;
         }
 
         public override void InitializeSubState()
@@ -48,7 +47,6 @@ namespace PlayerStM.SuperState
 
         public override void UpdateState()
         {
-            CheckSwitchState();
         }
 
         //First half determines jumpheight

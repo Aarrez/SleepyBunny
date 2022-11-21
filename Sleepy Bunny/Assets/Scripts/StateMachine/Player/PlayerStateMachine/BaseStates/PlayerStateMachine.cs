@@ -12,6 +12,8 @@ namespace PlayerStM.BaseStates
         //Input value storage
         private Action _moveing, _jump, _grab, _pause, _crouch, _climb;
 
+        private Action _landAnimationDoneEvent;
+
         private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
             _pauseCtx, _crouchCtx;
 
@@ -84,6 +86,12 @@ namespace PlayerStM.BaseStates
         #region Get and set
 
         public Rigidbody Rb { get => _rb; set => _rb = value; }
+
+        public Action LandAnimationDoneEvent
+        {
+            get => _landAnimationDoneEvent;
+            set => _landAnimationDoneEvent = value;
+        }
 
         public event Action Moveing
         {
@@ -189,7 +197,7 @@ namespace PlayerStM.BaseStates
             _cUI = thePlayerInput.CustomUI;
 
             _playerAnimator = GetComponentInChildren<Animator>();
-            _rb = GetComponent<Rigidbody>();
+            _rb = GetComponentInParent<Rigidbody>();
 
             _mainCamera = Camera.main;
         }

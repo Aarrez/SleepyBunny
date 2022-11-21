@@ -10,7 +10,9 @@ namespace PlayerStM.SubStates
     public class SuperClimbingPlayerState : BasePlayerState
     {
         private RaycastHit Climbhit;
+
         private Vector2 _climbVector;
+
         private float _originalMass;
 
         public SuperClimbingPlayerState(PlayerStateMachine currentContext
@@ -20,7 +22,6 @@ namespace PlayerStM.SubStates
             IsRootState = true;
             InitializeSubState();
             Climbhit = base.Hit;
-            _originalMass = Ctx.Rb.mass;
         }
 
         public override void CheckSwitchState()
@@ -34,7 +35,6 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            Ctx.Rb.mass = _originalMass;
         }
 
         public override void InitializeSubState()

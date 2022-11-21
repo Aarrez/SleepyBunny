@@ -22,17 +22,12 @@ namespace PlayerStM.SubStates
         public override void CheckSwitchState()
         {
             if (!Ctx.IsGrounded) { return; }
-            if (Ctx.CurrentSuper == Factory.SuperGrounded())
-            { Ctx.PlayerAnimator.SetFloat("Falling", (float)_eGroundAnim.Falling); }
-            else if (Ctx.CurrentSuper == Factory.SuperJump())
-            { Ctx.PlayerAnimator.SetFloat("Falling", (float)_eJumpAnim.Falling); }
 
             SwitchState(Factory.SubLand());
         }
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetTrigger("Falling");
             Ctx.PlayerAnimator.SetFloat("GSIndex",
                 (float)_eGroundAnim.Falling);
         }

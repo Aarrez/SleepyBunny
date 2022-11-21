@@ -2,7 +2,6 @@ using PlayerStM.BaseStates;
 using PlayerStM.SubStates;
 using UnityEngine;
 using System;
-using UnityEngine.EventSystems;
 using PlayerStM.SuperState;
 
 namespace PlayerStM.BaseStates

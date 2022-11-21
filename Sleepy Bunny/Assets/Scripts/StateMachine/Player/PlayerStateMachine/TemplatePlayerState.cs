@@ -4,7 +4,7 @@ using UnityEngine;
 
 using PlayerStM.BaseStates;
 
-namespace PlayerStm.SubStates
+namespace PlayerStM.SubStates
 {
     /*
      * A template for every state.
@@ -24,6 +24,7 @@ namespace PlayerStm.SubStates
 
         //This should be called in UpdateState to consistenly
         //switch between different states
+        //This is a sugestion another way would be to use events
         public override void CheckSwitchState()
         {
         }

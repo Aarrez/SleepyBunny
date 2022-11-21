@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using PlayerStM.BaseStates;
+using PlayerStM.SuperState;
 
-namespace PlayerStm.SubStates
+namespace PlayerStM.SubStates
 {
     public class SubLandPlayerState : BasePlayerState
     {
@@ -14,15 +15,14 @@ namespace PlayerStm.SubStates
             StateFactory factory) :
             base(ctx, factory)
         {
+            AnimationFunctionManager.LandAnimation += CheckSwitchState;
         }
 
         //This should be called in UpdateState to consistenly
         //switch between different states
         public override void CheckSwitchState()
         {
-            if (!Ctx.LandAnimationDone) { return; }
-
-            SwitchState(Factory.SuperGrounded());
+            SwitchState(Factory.SubIdle());
         }
 
         //Called when this state is switched to
@@ -35,7 +35,6 @@ namespace PlayerStm.SubStates
         //Runs on FixedUpdate
         public override void UpdateState()
         {
-            CheckSwitchState();
         }
 
         //When switching to another state this method will be called

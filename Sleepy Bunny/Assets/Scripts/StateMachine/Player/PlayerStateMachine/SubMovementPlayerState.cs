@@ -41,8 +41,6 @@ namespace PlayerStM.SubStates
 
         public override void InitializeSubState()
         {
-            //if (Ctx.CrouchCtx.ReadValueAsButton())
-            //    SetSubState(Factory.MinorCrouch());
         }
 
         public override void OnNewSuperState()
@@ -64,6 +62,8 @@ namespace PlayerStM.SubStates
 
                 case SuperPushingPlayerState: break;
 
+                // SuperJump should always be blank so no movment
+                // can be done when jumping
                 case SuperJumpPlayerState: break;
 
                 default:
