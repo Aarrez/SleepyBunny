@@ -30,6 +30,9 @@ namespace PlayerStM.SubStates
         {
             Ctx.PlayerAnimator.SetFloat("GSIndex",
                 (float)_eGroundAnim.Falling);
+
+            Ctx.PlayerAnimator.SetFloat("JSIndex",
+                (float)_eJumpAnim.Falling);
         }
 
         public override void UpdateState()

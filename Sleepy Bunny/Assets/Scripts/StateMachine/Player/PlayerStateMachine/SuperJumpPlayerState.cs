@@ -25,7 +25,7 @@ namespace PlayerStM.SuperState
         public override void EnterState()
         {
             Ctx.PlayerAnimator.SetTrigger("Jump");
-            Ctx.PlayerAnimator.SetFloat("LandEffect", (float)_eJumpAnim.Jump);
+            Ctx.PlayerAnimator.SetFloat("JSIndex", (float)_eJumpAnim.Jump);
             AddJumpForce();
             Debug.Log("Jumping");
         }
