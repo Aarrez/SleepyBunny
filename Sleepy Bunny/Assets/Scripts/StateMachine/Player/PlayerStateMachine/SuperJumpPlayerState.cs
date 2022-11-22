@@ -14,7 +14,6 @@ namespace PlayerStM.SuperState
         {
             IsRootState = true;
             InitializeSubState();
-            AnimationFunctionManager.LandAnimation += CheckSwitchState;
         }
 
         public override void CheckSwitchState()
@@ -27,6 +26,7 @@ namespace PlayerStM.SuperState
         {
             Ctx.PlayerAnimator.SetTrigger("Jump");
             Ctx.PlayerAnimator.SetFloat("JSIndex", (float)_eJumpAnim.Jump);
+            AnimationFunctionManager.LandAnimation += CheckSwitchState;
             AddJumpForce();
             Debug.Log("Jumping");
         }
