@@ -199,6 +199,10 @@ namespace PlayerStM.BaseStates
             _playerAnimator = GetComponentInChildren<Animator>();
             _rb = GetComponentInParent<Rigidbody>();
 
+            _stateFactory = new StateFactory(this);
+            _currentSuper = _stateFactory.SuperGrounded();
+            _currentSuper.EnterState();
+
             _mainCamera = Camera.main;
         }
 
@@ -207,9 +211,6 @@ namespace PlayerStM.BaseStates
             Physics.gravity = new Vector3(0, -9.82F, 0);
 
             //set state
-            _stateFactory = new StateFactory(this);
-            _currentSuper = _stateFactory.SuperGrounded();
-            _currentSuper.EnterState();
         }
 
         private void OnEnable()

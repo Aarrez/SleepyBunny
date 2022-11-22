@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grounded : MonoBehaviour
 {
     [SerializeField] private bool _grounded;
+
     private static Action<bool> _isGroundedEvent;
 
     private float totalTimeInAir, time;

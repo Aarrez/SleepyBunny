@@ -31,8 +31,8 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("GSIndex",
-                        (float)_eGroundAnim.Walking);
+            Ctx.PlayerAnimator.SetFloat("AnimIndex",
+                        (float)_eAnim.Walk);
         }
 
         public override void ExitState()

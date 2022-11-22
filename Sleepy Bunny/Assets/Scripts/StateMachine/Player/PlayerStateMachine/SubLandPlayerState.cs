@@ -15,7 +15,6 @@ namespace PlayerStM.SubStates
             StateFactory factory) :
             base(ctx, factory)
         {
-            AnimationFunctionManager.LandAnimation += CheckSwitchState;
         }
 
         //This should be called in UpdateState to consistenly
@@ -28,11 +27,10 @@ namespace PlayerStM.SubStates
         //Called when this state is switched to
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("GSIndex",
-                (float)_eGroundAnim.Land);
+            AnimationFunctionManager.LandAnimation += CheckSwitchState;
 
-            Ctx.PlayerAnimator.SetFloat("JSIndex",
-                (float)_eJumpAnim.Land);
+            Ctx.PlayerAnimator.SetFloat("AnimIndex",
+            (float)_eAnim.Land);
 
             Ctx.PlayerAnimator.SetFloat("LandEffect",
                 (float)_eLandAnim.LandSoft);
@@ -46,7 +44,7 @@ namespace PlayerStM.SubStates
         //When switching to another state this method will be called
         public override void ExitState()
         {
-            Ctx.LandAnimationDone = false;
+            AnimationFunctionManager.LandAnimation -= CheckSwitchState;
         }
 
         //Do not use if a Sub- or minorstate

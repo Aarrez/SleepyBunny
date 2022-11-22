@@ -1,5 +1,3 @@
-using System.Data.Common;
-using System.Runtime.InteropServices.WindowsRuntime;
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
 using UnityEngine;
@@ -21,18 +19,19 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (!Ctx.IsGrounded) { return; }
-
+            if (Ctx.IsGrounded)
+            {
+                Debug.Log("returning");
+                return;
+            }
+            Debug.Log("Switching");
             SwitchState(Factory.SubLand());
         }
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("GSIndex",
-            (float)_eGroundAnim.Falling);
-
-            Ctx.PlayerAnimator.SetFloat("JSIndex",
-                (float)_eJumpAnim.Falling);
+            Ctx.PlayerAnimator.SetFloat("AnimIndex",
+            (float)_eAnim.Falling);
         }
 
         public override void UpdateState()

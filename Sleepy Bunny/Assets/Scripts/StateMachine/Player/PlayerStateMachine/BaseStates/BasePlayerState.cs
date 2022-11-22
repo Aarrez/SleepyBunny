@@ -12,6 +12,8 @@ namespace PlayerStM.BaseStates
 
         private Vector3 _ctxMoveVector;
 
+        private Vector3 _cameraDirection;
+
         private Vector3 _moveDirection;
 
         protected RaycastHit Hit;
@@ -25,26 +27,26 @@ namespace PlayerStM.BaseStates
         // Gain accsess to all the states for switching or other stuff
         protected StateFactory Factory;
 
-        internal enum _eGroundAnim : long
+        /// <summary>
+        /// Idle = 0, Walk = 1, <br></br>
+        /// Jump = 2, Falling = 3, Land(Leads to a blendtree) = 4.
+        /// </summary>
+        internal enum _eAnim : long
         {
             Idle = 0,
 
-            Walking = 1,
+            Walk = 1,
 
-            Falling = 2,
+            Jump = 2,
 
-            Land = 3
+            Falling = 3,
+
+            Land = 4
         }
 
-        internal enum _eJumpAnim : long
-        {
-            Jump = 0,
-
-            Falling = 1,
-
-            Land = 2
-        }
-
+        /// <summary>
+        /// LandSoft = 0, LandHard = 1 and LandDead = 2.
+        /// </summary>
         internal enum _eLandAnim : long
         {
             LandSoft = 0,
@@ -137,8 +139,8 @@ namespace PlayerStM.BaseStates
                        new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
                     break;
             }
-            Vector3 tempV3 = Ctx.MainCamera.transform.TransformDirection(_moveVector);
-            _moveDirection = new Vector3(tempV3.x, 0f, tempV3.z);
+            _cameraDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
+            _moveDirection = new Vector3(_cameraDirection.x, 0f, _cameraDirection.z);
         }
 
         private void GrabClimb()

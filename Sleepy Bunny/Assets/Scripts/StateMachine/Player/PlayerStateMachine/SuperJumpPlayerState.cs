@@ -18,22 +18,20 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            Debug.Log("Is happeing");
             SwitchState(Factory.SuperGrounded());
         }
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetTrigger("Jump");
-            Ctx.PlayerAnimator.SetFloat("JSIndex", (float)_eJumpAnim.Jump);
             AnimationFunctionManager.LandAnimation += CheckSwitchState;
+            Ctx.PlayerAnimator.SetFloat("AnimIndex",
+                (float)_eAnim.Jump);
             AddJumpForce();
             Debug.Log("Jumping");
         }
 
         public override void ExitState()
         {
-            Ctx.PlayerAnimator.ResetTrigger("Jump");
             AnimationFunctionManager.LandAnimation -= CheckSwitchState;
         }
 

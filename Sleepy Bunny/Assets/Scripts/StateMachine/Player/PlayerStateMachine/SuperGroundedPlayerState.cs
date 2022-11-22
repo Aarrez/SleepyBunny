@@ -36,13 +36,11 @@ namespace PlayerStM.SuperState
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetBool("Grounded", Ctx.IsGrounded);
             Debug.Log("Grounded");
         }
 
         public override void ExitState()
         {
-            Ctx.PlayerAnimator.SetBool("Grounded", Ctx.IsGrounded);
         }
 
         public override void InitializeSubState()
