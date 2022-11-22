@@ -1,80 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5839518601592398746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Steps 2D
-  m_EditorClassIdentifier: 
-  Path: event:/Steps 2D
-  Guid:
-    Data1: 164687614
-    Data2: 1091765358
-    Data3: -1859584872
-    Data4: 2003517254
-  Banks:
-  - {fileID: 298343566777049700}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1500
---- !u!114 &-2723288812146416784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638047234515100956
-  FileSizes:
-  - Name: Desktop
-    Value: 892
-  Exists: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: -2723288812146416784}
-  - {fileID: 298343566777049700}
-  EditorEvents:
-  - {fileID: 2998838238300904231}
-  - {fileID: 8662467502142223871}
-  - {fileID: 7365560433076697812}
-  - {fileID: -5839518601592398746}
-  EditorParameters: []
-  MasterBanks:
-  - {fileID: 298343566777049700}
-  StringsBanks:
-  - {fileID: -2723288812146416784}
-  cacheTime: 638047234515100956
-  cacheVersion: 131593
---- !u!114 &298343566777049700
+--- !u!114 &-9052895305766884621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,61 +20,7 @@ MonoBehaviour:
   - Name: Desktop
     Value: 16384
   Exists: 1
---- !u!114 &2998838238300904231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/LightSwitch
-  m_EditorClassIdentifier: 
-  Path: event:/LightSwitch
-  Guid:
-    Data1: -1526358187
-    Data2: 1246930190
-    Data3: 1998700705
-    Data4: 1872212122
-  Banks:
-  - {fileID: 298343566777049700}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &7365560433076697812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Steps 3D
-  m_EditorClassIdentifier: 
-  Path: event:/Steps 3D
-  Guid:
-    Data1: -505795730
-    Data2: 1312379979
-    Data3: 484885399
-    Data4: -1556301432
-  Banks:
-  - {fileID: 298343566777049700}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1486
---- !u!114 &8662467502142223871
+--- !u!114 &-133575360608263343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,7 +39,135 @@ MonoBehaviour:
     Data3: -414848891
     Data4: 1253961940
   Banks:
-  - {fileID: 298343566777049700}
+  - {fileID: -9052895305766884621}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 8434268345023444124}
+  - {fileID: -9052895305766884621}
+  EditorEvents:
+  - {fileID: 9170452287986253028}
+  - {fileID: -133575360608263343}
+  - {fileID: 9064753188368418287}
+  - {fileID: 4895763115194820287}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: -9052895305766884621}
+  StringsBanks:
+  - {fileID: 8434268345023444124}
+  cacheTime: 638047234515100956
+  cacheVersion: 131593
+--- !u!114 &4895763115194820287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Steps 2D
+  m_EditorClassIdentifier: 
+  Path: event:/Steps 2D
+  Guid:
+    Data1: 164687614
+    Data2: 1091765358
+    Data3: -1859584872
+    Data4: 2003517254
+  Banks:
+  - {fileID: -9052895305766884621}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1500
+--- !u!114 &8434268345023444124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638047234515100956
+  FileSizes:
+  - Name: Desktop
+    Value: 892
+  Exists: 1
+--- !u!114 &9064753188368418287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Steps 3D
+  m_EditorClassIdentifier: 
+  Path: event:/Steps 3D
+  Guid:
+    Data1: -505795730
+    Data2: 1312379979
+    Data3: 484885399
+    Data4: -1556301432
+  Banks:
+  - {fileID: -9052895305766884621}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1486
+--- !u!114 &9170452287986253028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LightSwitch
+  m_EditorClassIdentifier: 
+  Path: event:/LightSwitch
+  Guid:
+    Data1: -1526358187
+    Data2: 1246930190
+    Data3: 1998700705
+    Data4: 1872212122
+  Banks:
+  - {fileID: -9052895305766884621}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
