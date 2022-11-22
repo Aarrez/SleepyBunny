@@ -42,10 +42,6 @@ namespace PlayerStM.BaseStates
             Jump = 0,
 
             Falling = 1,
-
-            LandSoft = 2,
-
-            LandHard = 3
         }
 
         internal enum _eLandAnim : long
