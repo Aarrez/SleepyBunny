@@ -21,7 +21,7 @@ namespace PlayerStM.SubStates
             {
                 SwitchState(Factory.SubMovement());
             }
-            else if (Ctx.Rb.velocity.y < 0f)
+            else if (Ctx.Rb.velocity.y < -1f)
             {
                 SwitchState(Factory.SubFalling());
             }

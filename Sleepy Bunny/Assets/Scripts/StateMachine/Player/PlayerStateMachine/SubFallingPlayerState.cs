@@ -11,17 +11,19 @@ namespace PlayerStM.SubStates
 
     public class SubFallingPlayerState : BasePlayerState
     {
-        public SubFallingPlayerState(PlayerStateMachine currentContext
-            , StateFactory stateFactory)
+        public SubFallingPlayerState
+            (
+            PlayerStateMachine currentContext
+            , StateFactory stateFactory
+            )
             : base(currentContext, stateFactory)
         {
         }
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsGrounded)
+            if (!Ctx.IsGrounded)
             {
-                Debug.Log("returning");
                 return;
             }
             Debug.Log("Switching");
