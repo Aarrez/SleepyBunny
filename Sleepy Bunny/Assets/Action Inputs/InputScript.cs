@@ -50,13 +50,13 @@ public class InputScript : MonoBehaviour
 
         #region Grab Input
 
-        cPlayer.Grab.performed += ctx =>
+        cPlayer.Interact.performed += ctx =>
         {
             grabCtx = delegate () { return ctx; };
             doGrab?.Invoke();
         };
 
-        cPlayer.Grab.canceled += ctx =>
+        cPlayer.Interact.canceled += ctx =>
         {
             grabCtx = delegate () { return ctx; };
             doGrab?.Invoke();

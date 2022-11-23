@@ -41,13 +41,15 @@ public class Grounded : MonoBehaviour
     private void OnEnable()
     {
         _player.Jump += GroundedRaycast;
-        AnimationFunctionManager.FallAnimation += GroundedRaycast;
+
+        //AnimationFunctionManager.FallAnimation += GroundedRaycast;
     }
 
     private void OnDisable()
     {
         _player.Jump -= GroundedRaycast;
-        AnimationFunctionManager.FallAnimation -= GroundedRaycast;
+
+        //AnimationFunctionManager.FallAnimation -= GroundedRaycast;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,6 +57,14 @@ public class Grounded : MonoBehaviour
         if (!other.CompareTag("Ground")) return;
 
         _grounded = true;
+        _isGroundedEvent?.Invoke(_grounded);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Ground")) return;
+
+        _grounded = false;
         _isGroundedEvent?.Invoke(_grounded);
     }
 
@@ -71,7 +81,7 @@ public class Grounded : MonoBehaviour
                 distance = Vector3.Distance(transform.position, hit.transform.position);
                 if (distance < 1)
                 {
-                    _grounded = true;
+                    _grounded = false;
                     _isGroundedEvent?.Invoke(_grounded);
                 }
                 break;

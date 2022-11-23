@@ -250,13 +250,13 @@ namespace PlayerStM.BaseStates
 
             #region Grab Input
 
-            _cPlayer.Grab.performed += ctx =>
+            _cPlayer.Interact.performed += ctx =>
             {
                 _grab?.Invoke();
                 _grabCtx = ctx;
             };
 
-            _cPlayer.Grab.canceled += ctx =>
+            _cPlayer.Interact.canceled += ctx =>
             {
                 _grab?.Invoke();
                 _grabCtx = ctx;
