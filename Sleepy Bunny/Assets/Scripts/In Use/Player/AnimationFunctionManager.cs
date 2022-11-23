@@ -5,7 +5,7 @@ using FMODUnity;
 public class AnimationFunctionManager
     : MonoBehaviour
 {
-    public static event Action LandAnimation;
+    public static event Action LandAnimation, FallAnimation;
 
     [SerializeField] private EventReference _inputSound;
 
@@ -22,5 +22,10 @@ public class AnimationFunctionManager
     public void SwitchFromFallingState()
     {
         LandAnimation?.Invoke();
+    }
+
+    public void FallingGrounded()
+    {
+        FallAnimation?.Invoke();
     }
 }
