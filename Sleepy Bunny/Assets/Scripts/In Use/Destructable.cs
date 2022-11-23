@@ -7,7 +7,8 @@ public class Destructable : MonoBehaviour
     public GameObject destroidVersion;
     public GameObject surface;
     public GameObject softSurface;
-    public AudioSource breakingSound;
+
+    //public AudioSource breakingSound;
     public Transform CatchingSurface;
 
     private void Start()
@@ -21,7 +22,7 @@ public class Destructable : MonoBehaviour
         if (collision.collider.gameObject == surface)
         {
             Instantiate(destroidVersion, transform.position, transform.rotation);
-            breakingSound.Play();
+            //breakingSound.Play();
             Destroy(gameObject);
         }
         else if (collision.collider.gameObject == softSurface)

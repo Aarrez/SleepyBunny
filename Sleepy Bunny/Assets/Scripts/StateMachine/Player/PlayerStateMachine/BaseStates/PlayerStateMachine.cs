@@ -346,5 +346,12 @@ namespace PlayerStM.BaseStates
                 }
             }
         }
+
+        private void PlayFootsteps()
+        {
+            _playerSounds.PlayFootsteps();
+        }
+            
+        
     }
 }

@@ -45648,6 +45648,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _walkingSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 386347527170828116, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
       propertyPath: m_Layer
@@ -46350,11 +46354,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _footsteps:
     Guid:
-      Data1: 164687614
-      Data2: 1091765358
-      Data3: -1859584872
-      Data4: 2003517254
-    Path: event:/Steps 2D
+      Data1: -505795730
+      Data2: 1312379979
+      Data3: 484885399
+      Data4: -1556301432
+    Path: event:/Steps 3D
 --- !u!4 &1236016863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2019761581691322811, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
