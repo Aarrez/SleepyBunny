@@ -27,6 +27,8 @@ namespace PlayerStM.BaseStates
         // Gain accsess to all the states for switching or other stuff
         protected StateFactory Factory;
 
+        public Vector3 MoveDirection => _moveDirection;
+
         /// <summary>
         /// Idle = 0, Walk = 1, <br></br>
         /// Jump = 2, Falling = 3, Land(Leads to a blendtree) = 4.
@@ -55,8 +57,6 @@ namespace PlayerStM.BaseStates
 
             LandDead = 2
         }
-
-        public Vector3 MoveDirection => _moveDirection;
 
         public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
         {

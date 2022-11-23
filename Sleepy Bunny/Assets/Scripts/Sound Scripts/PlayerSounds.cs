@@ -20,7 +20,8 @@ public class PlayerSounds : MonoBehaviour
     {
         if(footsteps.isValid())
         {
-            FMODUnity.RuntimeManager.AttachInstanceToGameObject(footsteps, transform);
+            //FMODUnity.RuntimeManager.AttachInstanceToGameObject(footsteps, transform);
+            footsteps.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform.position));
             footsteps.start();
         }
     }

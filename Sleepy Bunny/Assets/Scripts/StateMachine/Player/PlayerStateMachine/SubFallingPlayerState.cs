@@ -22,12 +22,9 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (!Ctx.IsGrounded)
-            {
-                return;
-            }
-            Debug.Log("Switching");
-            SwitchState(Factory.SubLand());
+            if (!Ctx.IsGrounded) { return; }
+
+            SwitchState(Factory.SubIdle());
         }
 
         public override void EnterState()

@@ -18,6 +18,7 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
+            if (!Ctx.IsGrounded) { return; }
             SwitchState(Factory.SuperGrounded());
         }
 
@@ -46,6 +47,7 @@ namespace PlayerStM.SuperState
 
         public override void UpdateState()
         {
+            CheckSwitchState();
         }
 
         //First half determines jumpheight
