@@ -17,9 +17,14 @@ namespace PlayerStM.BaseStates
         private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
             _pauseCtx, _crouchCtx;
 
+        // Player Sounds
+        [SerializeField] private PlayerSounds _playerSounds;
+        
         [SerializeField] private AudioSource _painNoise;
 
         [SerializeField] private AudioSource _sizzle;
+
+
 
         private Rigidbody _rb;
 
