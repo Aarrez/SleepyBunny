@@ -13,21 +13,13 @@ public class AnimationFunctionManager
 
     private bool playerIsMoving;
 
-    [SerializeField]
-    private float _walkingSpeed;
+    private void OnEnable()
+    {
+        InputScript.doGrab += FootstepSounds;
+    }
 
     public void FootstepSounds()
     {
         RuntimeManager.PlayOneShot(_steps);
-    }
-
-    public void SwitchFromFallingState()
-    {
-        LandAnimation?.Invoke();
-    }
-
-    public void FallingGrounded()
-    {
-        FallAnimation?.Invoke();
     }
 }

@@ -154,7 +154,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""id"": ""968829e0-5ead-4985-a406-24e9fc77b8ca"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=1000,y=50)"",
+                    ""processors"": ""ScaleVector2(x=100,y=50)"",
                     ""groups"": ""XboxController"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
