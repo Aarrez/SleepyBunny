@@ -21,5 +21,8 @@ public class AnimationFunctionManager
     public void FootstepSounds()
     {
         RuntimeManager.PlayOneShot(_steps);
+        //FMOD.Studio.EventInstance _steps = FMODUnity.RuntimeManager.CreateInstance();
+        //_steps.start();
+        //_steps.release();
     }
 }
