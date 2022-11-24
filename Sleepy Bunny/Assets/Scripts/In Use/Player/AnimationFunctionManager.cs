@@ -7,7 +7,9 @@ public class AnimationFunctionManager
 {
     public static event Action LandAnimation, FallAnimation;
 
-    [SerializeField] private EventReference _inputSound;
+    [SerializeField] private EventReference _steps;
+    [SerializeField] private EventReference _climb;
+    [SerializeField] private EventReference _X;
 
     private bool playerIsMoving;
 
@@ -16,7 +18,7 @@ public class AnimationFunctionManager
 
     public void FootstepSounds()
     {
-        RuntimeManager.PlayOneShot(_inputSound);
+        RuntimeManager.PlayOneShot(_steps);
     }
 
     public void SwitchFromFallingState()
