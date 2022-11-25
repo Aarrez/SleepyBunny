@@ -27,7 +27,7 @@ namespace PlayerStM.SubStates
         //Called when this state is switched to
         public override void EnterState()
         {
-            AnimationFunctionManager.LandAnimation += CheckSwitchState;
+            
 
             Ctx.PlayerAnimator.SetFloat("AnimIndex",
             (float)_eAnim.Land);
@@ -44,7 +44,7 @@ namespace PlayerStM.SubStates
         //When switching to another state this method will be called
         public override void ExitState()
         {
-            AnimationFunctionManager.LandAnimation -= CheckSwitchState;
+            
         }
 
         //Do not use if a Sub- or minorstate

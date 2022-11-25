@@ -5,7 +5,7 @@ using FMODUnity;
 public class AnimationFunctionManager
     : MonoBehaviour
 {
-    public static event Action LandAnimation, FallAnimation;
+    
 
     [SerializeField] private EventReference _steps;
     [SerializeField] private EventReference _climb;

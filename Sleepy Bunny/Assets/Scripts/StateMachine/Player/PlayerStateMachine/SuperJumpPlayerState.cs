@@ -24,7 +24,7 @@ namespace PlayerStM.SuperState
 
         public override void EnterState()
         {
-            AnimationFunctionManager.LandAnimation += CheckSwitchState;
+            
             Ctx.PlayerAnimator.SetFloat("AnimIndex",
                 (float)_eAnim.Jump);
             AddJumpForce();
@@ -33,7 +33,7 @@ namespace PlayerStM.SuperState
 
         public override void ExitState()
         {
-            AnimationFunctionManager.LandAnimation -= CheckSwitchState;
+            
         }
 
         public override void InitializeSubState()

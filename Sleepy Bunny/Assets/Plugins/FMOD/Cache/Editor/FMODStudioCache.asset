@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638049047554152275
+  lastModified: 638048981478719802
   FileSizes:
   - Name: Desktop
     Value: 15936
@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638048993094501777
+  lastModified: 638048914266350563
   FileSizes:
   - Name: Desktop
     Value: 892
@@ -213,5 +213,5 @@ MonoBehaviour:
   - {fileID: -8838939354570265537}
   StringsBanks:
   - {fileID: -6358821989920892564}
-  cacheTime: 638049047554152275
+  cacheTime: 638048981478719802
   cacheVersion: 131593
