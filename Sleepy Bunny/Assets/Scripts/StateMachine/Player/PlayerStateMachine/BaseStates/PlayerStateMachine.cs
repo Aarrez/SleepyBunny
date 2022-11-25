@@ -20,9 +20,9 @@ namespace PlayerStM.BaseStates
         // Player Sounds
         [SerializeField] private PlayerSounds _playerSounds;
         
-        [SerializeField] private AudioSource _painNoise;
+        //[SerializeField] private AudioSource _painNoise;
 
-        [SerializeField] private AudioSource _sizzle;
+        //[SerializeField] private AudioSource _sizzle;
 
 
 
