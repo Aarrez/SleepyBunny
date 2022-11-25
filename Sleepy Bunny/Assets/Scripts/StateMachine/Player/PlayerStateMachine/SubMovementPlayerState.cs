@@ -19,7 +19,7 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (Ctx.MoveCtx.ReadValue<Vector2>() == Vector2.zero)
+            if (Ctx.TheInput.MoveCtx.ReadValue<Vector2>() == Vector2.zero)
             {
                 SwitchState(Factory.SubIdle());
             }

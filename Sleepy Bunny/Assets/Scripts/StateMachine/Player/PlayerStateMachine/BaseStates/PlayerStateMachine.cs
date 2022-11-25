@@ -10,21 +10,13 @@ namespace PlayerStM.BaseStates
         #region Script Refrences
 
         //Input value storage
-        private Action _moveing, _jump, _grab, _pause, _crouch, _climb;
+
+        private InputScript _theInput;
 
         private Action _landAnimationDoneEvent;
 
-        private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
-            _pauseCtx, _crouchCtx;
-
         // Player Sounds
         [SerializeField] private PlayerSounds _playerSounds;
-        
-        [SerializeField] private AudioSource _painNoise;
-
-        [SerializeField] private AudioSource _sizzle;
-
-
 
         private Rigidbody _rb;
 
@@ -90,42 +82,14 @@ namespace PlayerStM.BaseStates
 
         #region Get and set
 
+        public InputScript TheInput => _theInput;
+
         public Rigidbody Rb { get => _rb; set => _rb = value; }
 
         public Action LandAnimationDoneEvent
         {
             get => _landAnimationDoneEvent;
             set => _landAnimationDoneEvent = value;
-        }
-
-        public event Action Moveing
-        {
-            add => _moveing += value;
-            remove => _moveing -= value;
-        }
-
-        public event Action Jump
-        {
-            add => _jump += value;
-            remove => _jump -= value;
-        }
-
-        public event Action Grab
-        {
-            add => _grab += value;
-            remove => _grab -= value;
-        }
-
-        public event Action Pause
-        {
-            add => _grab += value;
-            remove => _grab -= value;
-        }
-
-        public event Action Crouch
-        {
-            add => _crouch += value;
-            remove => _crouch -= value;
         }
 
         public BasePlayerState CurrentSuper
@@ -169,16 +133,6 @@ namespace PlayerStM.BaseStates
             set => _landAnimationDone = value;
         }
 
-        public InputAction.CallbackContext MoveCtx => _moveCtx;
-
-        public InputAction.CallbackContext JumpCtx => _jumpCtx;
-
-        public InputAction.CallbackContext GrabCtx => _grabCtx;
-
-        public InputAction.CallbackContext PauseCtx => _pauseCtx;
-
-        public InputAction.CallbackContext CrouchCtx => _crouchCtx;
-
         /// <summary>
         /// When setting GSIndex(Integer)
         /// <br></br>
@@ -197,9 +151,7 @@ namespace PlayerStM.BaseStates
 
         private void Awake()
         {
-            thePlayerInput = new ControllAction();
-            _cPlayer = thePlayerInput.CustomPlayer;
-            _cUI = thePlayerInput.CustomUI;
+            _theInput = FindObjectOfType<InputScript>();
 
             _playerAnimator = GetComponentInChildren<Animator>();
             _rb = GetComponentInParent<Rigidbody>();
@@ -225,82 +177,8 @@ namespace PlayerStM.BaseStates
             // Gets all the inputs from the InputActionMap and Invokes events
             // when a button/stick is interacted with
 
-            #region Input Stuff
-
-            #region Movement Input
-
-            _cPlayer.Movement.performed += ctx =>
-            {
-                _moveing?.Invoke();
-                _moveCtx = ctx;
-            };
-
-            _cPlayer.Movement.canceled += ctx =>
-            {
-                _moveing?.Invoke();
-                _moveCtx = ctx;
-            };
-
-            #endregion Movement Input
-
-            #region Jump Input
-
-            _cPlayer.Jump.performed += ctx =>
-            {
-                _jump?.Invoke();
-                _jumpCtx = ctx;
-            };
-
-            #endregion Jump Input
-
-            #region Grab Input
-
-            _cPlayer.Interact.performed += ctx =>
-            {
-                _grab?.Invoke();
-                _grabCtx = ctx;
-            };
-
-            _cPlayer.Interact.canceled += ctx =>
-            {
-                _grab?.Invoke();
-                _grabCtx = ctx;
-            };
-
-            #endregion Grab Input
-
-            #region Pause Input
-
-            _cUI.Pause.performed += ctx =>
-            {
-                _pause?.Invoke();
-                _pauseCtx = ctx;
-            };
-
-            #endregion Pause Input
-
-            #region Crouch Input
-
-            _cPlayer.Crouch.performed += ctx =>
-            {
-                _crouch?.Invoke();
-                _crouchCtx = ctx;
-            };
-
-            _cPlayer.Crouch.canceled += ctx =>
-            {
-                _crouch?.Invoke();
-                _crouchCtx = ctx;
-            };
-
-            #endregion Crouch Input
 
             _cPlayer.DebugState.performed += ctx => GetCurrentState();
-
-            _cPlayer.Enable();
-            _cUI.Enable();
-
-            #endregion Input Stuff
 
             Grounded.IsGroundedEvent += CheckGrounded;
         }

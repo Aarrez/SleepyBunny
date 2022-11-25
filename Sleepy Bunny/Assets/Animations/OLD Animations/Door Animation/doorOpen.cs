@@ -10,14 +10,19 @@ public class doorOpen : MonoBehaviour
     private bool holdDoorHandle = false;
     public GameObject player;
 
+    private InputScript _theInput;
+
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        _theInput = FindObjectOfType<InputScript>();
+
     }
 
     public void OnTriggerStay(Collider collision)
     {
-        if (collision.tag == "Player" && InputScript.grabCtx().performed)
+        if (collision.tag == "Player" && _theInput.GrabCtx.performed)
         {
             holdDoorHandle = true;
             Debug.Log("By the handle");

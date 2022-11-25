@@ -13,11 +13,6 @@ public class AnimationFunctionManager
 
     private bool playerIsMoving;
 
-    private void OnEnable()
-    {
-        InputScript.doGrab += FootstepSounds;
-    }
-
     public void FootstepSounds()
     {
         RuntimeManager.PlayOneShot(_steps);

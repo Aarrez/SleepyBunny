@@ -6,6 +6,8 @@ public class TheThirdPerson : PlayerRaycast
 {
     #region Varibales
 
+    private InputScript _theInput;
+
     private Rigidbody _rb;
 
     #region refrence scripts
@@ -51,21 +53,23 @@ public class TheThirdPerson : PlayerRaycast
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+
+        _theInput = FindObjectOfType<InputScript>();
     }
 
     //Invokes when object is enabled
     private void OnEnable()
     {
-        InputScript.doMove += M_Movement;
+        InputScript.Moveing += M_Movement;
 
-        InputScript.doGrab += PClimb;
+        InputScript.Grab += PClimb;
     }
 
     //Invokes when object is disable
     private void OnDisable()
     {
-        InputScript.doMove -= M_Movement;
-        InputScript.doGrab -= PClimb;
+        InputScript.Moveing -= M_Movement;
+        InputScript.Grab -= PClimb;
     }
 
     public void Start()
@@ -80,7 +84,7 @@ public class TheThirdPerson : PlayerRaycast
     {
         _movementDirection = Camera.main.transform.TransformDirection(_movement);
         //Gets the input
-        Vector2 tempV2 = InputScript.moveCtx().ReadValue<Vector2>();
+        Vector2 tempV2 = _theInput.MoveCtx.ReadValue<Vector2>();
         if (!_climbing)
         {
             Debug.Log("normal movement");

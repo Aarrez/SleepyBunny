@@ -12,7 +12,7 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (!Ctx.CrouchCtx.ReadValueAsButton())
+            if (!Ctx.TheInput.CrouchCtx.ReadValueAsButton())
             {
                 ExitState();
             }
