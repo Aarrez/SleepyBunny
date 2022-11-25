@@ -11,9 +11,16 @@ public class InputScript : MonoBehaviour
     private ControllAction.CustomPlayerActions cPlayer;
     private ControllAction.CustomUIActions cUI;
 
-    public static event Action doMove, doJump, doGrab, doPause;
+    public static Action Moveing, Jump, Grab, Pause, Crouch, Climb;
 
-    public static Func<InputAction.CallbackContext> moveCtx, grabCtx, pauseCtx, jumpCtx;
+    private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
+            _pauseCtx, _crouchCtx;
+
+    public InputAction.CallbackContext MoveCtx { get => _moveCtx; set => _moveCtx = value; }
+    public InputAction.CallbackContext JumpCtx { get => _jumpCtx; set => _jumpCtx = value; }
+    public InputAction.CallbackContext GrabCtx { get => _grabCtx; set => _grabCtx = value; }
+    public InputAction.CallbackContext PauseCtx { get => _pauseCtx; set => _pauseCtx = value; }
+    public InputAction.CallbackContext CrouchCtx { get => _crouchCtx; set => _crouchCtx = value; }
 
     private void Awake()
     {
@@ -24,27 +31,31 @@ public class InputScript : MonoBehaviour
 
     private void OnEnable()
     {
+        #region Input Stuff
+
         #region Movement Input
 
         cPlayer.Movement.performed += ctx =>
         {
-            moveCtx = delegate () { return ctx; };
-            moveCtx?.Invoke();
-            doMove?.Invoke();
+            Moveing?.Invoke();
+            MoveCtx = ctx;
         };
 
         cPlayer.Movement.canceled += ctx =>
         {
-            moveCtx = delegate () { return ctx; };
-            moveCtx?.Invoke();
-            doMove?.Invoke();
+            Moveing?.Invoke();
+            MoveCtx = ctx;
         };
 
         #endregion Movement Input
 
         #region Jump Input
 
-        cPlayer.Jump.performed += ctx => doJump?.Invoke();
+        cPlayer.Jump.performed += ctx =>
+        {
+            Jump?.Invoke();
+            JumpCtx = ctx;
+        };
 
         #endregion Jump Input
 
@@ -52,14 +63,14 @@ public class InputScript : MonoBehaviour
 
         cPlayer.Interact.performed += ctx =>
         {
-            grabCtx = delegate () { return ctx; };
-            doGrab?.Invoke();
+            Grab?.Invoke();
+            GrabCtx = ctx;
         };
 
         cPlayer.Interact.canceled += ctx =>
         {
-            grabCtx = delegate () { return ctx; };
-            doGrab?.Invoke();
+            Grab?.Invoke();
+            GrabCtx = ctx;
         };
 
         #endregion Grab Input
@@ -68,11 +79,32 @@ public class InputScript : MonoBehaviour
 
         cUI.Pause.performed += ctx =>
         {
-            pauseCtx = delegate () { return ctx; };
-            doPause?.Invoke();
+            Pause?.Invoke();
+            _pauseCtx = ctx;
         };
 
         #endregion Pause Input
+
+        #region Crouch Input
+
+        cPlayer.Crouch.performed += ctx =>
+        {
+            Crouch?.Invoke();
+            _crouchCtx = ctx;
+        };
+
+        cPlayer.Crouch.canceled += ctx =>
+        {
+            Crouch?.Invoke();
+            _crouchCtx = ctx;
+        };
+
+        #endregion Crouch Input 
+
+        cPlayer.Enable();
+        cUI.Enable();
+
+        #endregion Input Stuff
 
         cPlayer.Enable();
         cUI.Enable();

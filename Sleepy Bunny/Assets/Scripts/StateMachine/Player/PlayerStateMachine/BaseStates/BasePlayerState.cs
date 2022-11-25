@@ -62,8 +62,8 @@ namespace PlayerStM.BaseStates
         {
             this.Ctx = ctx;
             this.Factory = factory;
-            Ctx.Moveing += GetMoveCtx;
-            ctx.Grab += GrabClimb;
+            InputScript.Moveing += GetMoveCtx;
+            InputScript.Grab += GrabClimb;
         }
 
         public abstract void EnterState();
@@ -116,7 +116,7 @@ namespace PlayerStM.BaseStates
 
         private void GetMoveCtx()
         {
-            _ctxMoveVector = Ctx.MoveCtx.ReadValue<Vector2>();
+            _ctxMoveVector = Ctx.TheInput.MoveCtx.ReadValue<Vector2>();
 
             switch (Ctx.CurrentSuper)
             {

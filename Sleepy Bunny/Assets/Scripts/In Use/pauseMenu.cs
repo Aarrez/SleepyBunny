@@ -11,12 +11,12 @@ public class pauseMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        InputScript.doPause += m_PauseGame;
+        InputScript.Pause += m_PauseGame;
     }
 
     private void OnDisable()
     {
-        InputScript.doPause -= m_PauseGame;
+        InputScript.Pause -= m_PauseGame;
     }
 
     private void m_PauseGame()

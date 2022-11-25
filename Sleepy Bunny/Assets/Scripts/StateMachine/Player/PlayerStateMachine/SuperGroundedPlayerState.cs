@@ -21,7 +21,7 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            if (Ctx.JumpCtx.ReadValueAsButton())
+            if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
             {
                 SwitchState(Factory.SuperJump());
             }
@@ -45,7 +45,7 @@ namespace PlayerStM.SuperState
 
         public override void InitializeSubState()
         {
-            if (Ctx.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
+            if (Ctx.TheInput.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
             {
                 SetSubState(Factory.SubMovement());
             }

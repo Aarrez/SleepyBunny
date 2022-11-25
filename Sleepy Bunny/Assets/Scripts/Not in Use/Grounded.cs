@@ -40,14 +40,14 @@ public class Grounded : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.Jump += GroundedRaycast;
+        InputScript.Jump += GroundedRaycast;
 
         //AnimationFunctionManager.FallAnimation += GroundedRaycast;
     }
 
     private void OnDisable()
     {
-        _player.Jump -= GroundedRaycast;
+        InputScript.Jump -= GroundedRaycast;
 
         //AnimationFunctionManager.FallAnimation -= GroundedRaycast;
     }
