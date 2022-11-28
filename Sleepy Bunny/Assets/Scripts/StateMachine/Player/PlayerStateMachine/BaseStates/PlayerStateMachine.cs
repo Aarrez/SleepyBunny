@@ -10,13 +10,21 @@ namespace PlayerStM.BaseStates
         #region Script Refrences
 
         //Input value storage
-
-        private InputScript _theInput;
+        private Action _moveing, _jump, _grab, _pause, _crouch, _climb;
 
         private Action _landAnimationDoneEvent;
 
+        private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
+            _pauseCtx, _crouchCtx;
+
         // Player Sounds
         [SerializeField] private PlayerSounds _playerSounds;
+        
+        //[SerializeField] private AudioSource _painNoise;
+
+        //[SerializeField] private AudioSource _sizzle;
+
+
 
         private Rigidbody _rb;
 
@@ -82,14 +90,42 @@ namespace PlayerStM.BaseStates
 
         #region Get and set
 
-        public InputScript TheInput => _theInput;
-
         public Rigidbody Rb { get => _rb; set => _rb = value; }
 
         public Action LandAnimationDoneEvent
         {
             get => _landAnimationDoneEvent;
             set => _landAnimationDoneEvent = value;
+        }
+
+        public event Action Moveing
+        {
+            add => _moveing += value;
+            remove => _moveing -= value;
+        }
+
+        public event Action Jump
+        {
+            add => _jump += value;
+            remove => _jump -= value;
+        }
+
+        public event Action Grab
+        {
+            add => _grab += value;
+            remove => _grab -= value;
+        }
+
+        public event Action Pause
+        {
+            add => _grab += value;
+            remove => _grab -= value;
+        }
+
+        public event Action Crouch
+        {
+            add => _crouch += value;
+            remove => _crouch -= value;
         }
 
         public BasePlayerState CurrentSuper
@@ -133,6 +169,16 @@ namespace PlayerStM.BaseStates
             set => _landAnimationDone = value;
         }
 
+        public InputAction.CallbackContext MoveCtx => _moveCtx;
+
+        public InputAction.CallbackContext JumpCtx => _jumpCtx;
+
+        public InputAction.CallbackContext GrabCtx => _grabCtx;
+
+        public InputAction.CallbackContext PauseCtx => _pauseCtx;
+
+        public InputAction.CallbackContext CrouchCtx => _crouchCtx;
+
         /// <summary>
         /// When setting GSIndex(Integer)
         /// <br></br>
@@ -151,7 +197,9 @@ namespace PlayerStM.BaseStates
 
         private void Awake()
         {
-            _theInput = FindObjectOfType<InputScript>();
+            thePlayerInput = new ControllAction();
+            _cPlayer = thePlayerInput.CustomPlayer;
+            _cUI = thePlayerInput.CustomUI;
 
             thePlayerInput = new ControllAction();
 
@@ -181,6 +229,11 @@ namespace PlayerStM.BaseStates
             // when a button/stick is interacted with
 
             _cPlayer.DebugState.performed += ctx => GetCurrentState();
+
+            _cPlayer.Enable();
+            _cUI.Enable();
+
+            #endregion Input Stuff
 
             Grounded.IsGroundedEvent += CheckGrounded;
         }
