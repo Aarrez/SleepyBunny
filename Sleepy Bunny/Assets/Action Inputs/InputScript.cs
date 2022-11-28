@@ -11,12 +11,15 @@ public class InputScript : MonoBehaviour
     private ControllAction.CustomPlayerActions cPlayer;
     private ControllAction.CustomUIActions cUI;
 
-    public static Action Moveing, Jump, Grab, Pause, Crouch, Climb;
-
     private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
             _pauseCtx, _crouchCtx;
 
+    // Static so u easily can subscribe to these Actions.
+    public static Action Moveing, Jump, Grab, Pause, Crouch, Climb;
+
+    // This is for when you are using InputScript in another script.
     public InputAction.CallbackContext MoveCtx { get => _moveCtx; set => _moveCtx = value; }
+
     public InputAction.CallbackContext JumpCtx { get => _jumpCtx; set => _jumpCtx = value; }
     public InputAction.CallbackContext GrabCtx { get => _grabCtx; set => _grabCtx = value; }
     public InputAction.CallbackContext PauseCtx { get => _pauseCtx; set => _pauseCtx = value; }
@@ -99,15 +102,12 @@ public class InputScript : MonoBehaviour
             _crouchCtx = ctx;
         };
 
-        #endregion Crouch Input 
+        #endregion Crouch Input
 
         cPlayer.Enable();
         cUI.Enable();
 
         #endregion Input Stuff
-
-        cPlayer.Enable();
-        cUI.Enable();
     }
 
     private void OnDisable()
