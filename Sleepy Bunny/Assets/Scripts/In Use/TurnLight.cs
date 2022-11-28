@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class TurnLight : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class TurnLight : MonoBehaviour
     public GameObject objectToChange;
     public Renderer objectToRender;
 
+     [SerializeField] private EventReference _LightSwitch;
 
 
     // Use this for initialization
@@ -34,7 +36,7 @@ public class TurnLight : MonoBehaviour
                 LightSwitch.SetActive(true);
                 on = true;
                 
-
+                RuntimeManager.PlayOneShot(_LightSwitch);
 
             }
 
@@ -42,6 +44,8 @@ public class TurnLight : MonoBehaviour
             {
                 LightSwitch.SetActive(false);
                 on = false;
+
+                RuntimeManager.PlayOneShot(_LightSwitch);
             }
         }
     }
@@ -50,6 +54,7 @@ public class TurnLight : MonoBehaviour
     {
         if(collision.tag == "Player")
             triggered = true;
+            
     }
     public void OnTriggerExit(Collider collision)
     {
