@@ -153,6 +153,11 @@ namespace PlayerStM.BaseStates
         {
             _theInput = FindObjectOfType<InputScript>();
 
+            thePlayerInput = new ControllAction();
+
+            _cPlayer = thePlayerInput.CustomPlayer;
+            _cUI = thePlayerInput.CustomUI;
+
             _playerAnimator = GetComponentInChildren<Animator>();
             _rb = GetComponentInParent<Rigidbody>();
 
@@ -166,8 +171,6 @@ namespace PlayerStM.BaseStates
         private void Start()
         {
             Physics.gravity = new Vector3(0, -9.82F, 0);
-
-            //set state
         }
 
         private void OnEnable()
@@ -176,7 +179,6 @@ namespace PlayerStM.BaseStates
 
             // Gets all the inputs from the InputActionMap and Invokes events
             // when a button/stick is interacted with
-
 
             _cPlayer.DebugState.performed += ctx => GetCurrentState();
 
@@ -229,7 +231,5 @@ namespace PlayerStM.BaseStates
         {
             _playerSounds.PlayFootsteps();
         }
-            
-        
     }
 }

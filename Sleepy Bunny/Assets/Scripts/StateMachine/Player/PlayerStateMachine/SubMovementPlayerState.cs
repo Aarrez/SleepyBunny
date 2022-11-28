@@ -23,7 +23,7 @@ namespace PlayerStM.SubStates
             {
                 SwitchState(Factory.SubIdle());
             }
-            else if (Ctx.Rb.velocity.y > 0)
+            else if (Ctx.Rb.velocity.y < -0.5f)
             {
                 SwitchState(Factory.SubFalling());
             }

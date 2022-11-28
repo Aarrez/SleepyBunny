@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 using PlayerStM.BaseStates;
-using PlayerStM.SuperState;
 
 namespace PlayerStM.SubStates
 {
@@ -27,8 +22,6 @@ namespace PlayerStM.SubStates
         //Called when this state is switched to
         public override void EnterState()
         {
-            
-
             Ctx.PlayerAnimator.SetFloat("AnimIndex",
             (float)_eAnim.Land);
 
@@ -44,7 +37,6 @@ namespace PlayerStM.SubStates
         //When switching to another state this method will be called
         public override void ExitState()
         {
-            
         }
 
         //Do not use if a Sub- or minorstate
