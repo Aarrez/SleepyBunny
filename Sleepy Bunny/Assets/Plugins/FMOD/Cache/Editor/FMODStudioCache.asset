@@ -15,11 +15,38 @@ MonoBehaviour:
   Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638048981478719802
+  lastModified: 638052392493722876
   FileSizes:
   - Name: Desktop
-    Value: 15936
+    Value: 16864
   Exists: 1
+--- !u!114 &-7711967296380901479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LightSwitch 2D
+  m_EditorClassIdentifier: 
+  Path: event:/LightSwitch 2D
+  Guid:
+    Data1: -2062793895
+    Data2: 1180526562
+    Data3: 1903873722
+    Data4: -1394632921
+  Banks:
+  - {fileID: -8838939354570265537}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-7550102991349647243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,10 +89,10 @@ MonoBehaviour:
   Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638048914266350563
+  lastModified: 638052392493732862
   FileSizes:
   - Name: Desktop
-    Value: 892
+    Value: 936
   Exists: 1
 --- !u!114 &-5360712193458811674
 MonoBehaviour:
@@ -208,10 +235,11 @@ MonoBehaviour:
   - {fileID: -4405780630338070063}
   - {fileID: -7550102991349647243}
   - {fileID: -5360712193458811674}
+  - {fileID: -7711967296380901479}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8838939354570265537}
   StringsBanks:
   - {fileID: -6358821989920892564}
-  cacheTime: 638048981478719802
+  cacheTime: 638052392493732862
   cacheVersion: 131593

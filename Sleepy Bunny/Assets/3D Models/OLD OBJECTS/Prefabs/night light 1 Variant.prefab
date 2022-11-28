@@ -313,6 +313,13 @@ MonoBehaviour:
   materialOn: {fileID: 0}
   objectToChange: {fileID: 0}
   objectToRender: {fileID: 0}
+  _LightSwitch:
+    Guid:
+      Data1: -2062793895
+      Data2: 1180526562
+      Data3: 1903873722
+      Data4: -1394632921
+    Path: event:/LightSwitch 2D
 --- !u!1001 &1985272733676349008
 PrefabInstance:
   m_ObjectHideFlags: 0
