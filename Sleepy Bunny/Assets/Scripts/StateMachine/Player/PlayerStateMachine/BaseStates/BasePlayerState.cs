@@ -33,7 +33,7 @@ namespace PlayerStM.BaseStates
         /// Idle = 0, Walk = 1, <br></br>
         /// Jump = 2, Falling = 3, Land(Leads to a blendtree) = 4.
         /// </summary>
-        internal enum _eAnim : long
+        internal enum _eAnim : uint
         {
             Idle = 0,
 
@@ -49,7 +49,7 @@ namespace PlayerStM.BaseStates
         /// <summary>
         /// LandSoft = 0, LandHard = 1 and LandDead = 2.
         /// </summary>
-        internal enum _eLandAnim : long
+        internal enum _eLandAnim : uint
         {
             LandSoft = 0,
 
@@ -63,7 +63,7 @@ namespace PlayerStM.BaseStates
             this.Ctx = ctx;
             this.Factory = factory;
             InputScript.Moveing += GetMoveCtx;
-            InputScript.Grab += GrabClimb;
+            InputScript.Interact += GrabClimb;
         }
 
         public abstract void EnterState();

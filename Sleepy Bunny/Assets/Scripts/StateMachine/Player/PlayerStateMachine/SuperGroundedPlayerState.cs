@@ -27,10 +27,8 @@ namespace PlayerStM.SuperState
             }
             else if (Ctx.IsClimbing)
             {
+                Debug.Log("Climb from gournded");
                 SwitchState(Factory.SuperClimb());
-            }
-            else if (Ctx.IsGrabing)
-            {
             }
         }
 

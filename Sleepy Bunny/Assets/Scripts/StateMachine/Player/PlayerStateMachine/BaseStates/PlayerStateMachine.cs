@@ -215,19 +215,12 @@ namespace PlayerStM.BaseStates
                 if (hit.transform.gameObject.CompareTag("Climb"))
                 {
                     Debug.Log("Hit climbable object");
-                    _isClimbing = true;
                 }
                 else if (hit.transform.gameObject.CompareTag("Move_Object"))
                 {
                     Debug.Log("Hit movable object");
-                    _isGrabing = true;
                 }
             }
-        }
-
-        private void PlayFootsteps()
-        {
-            _playerSounds.PlayFootsteps();
         }
     }
 }

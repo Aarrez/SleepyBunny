@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerRaycast : MonoBehaviour
 {
-    private InputScript _theInput;
-    
+    internal InputScript _theInput;
+
     private Rigidbody _grabObject;
     private HingeJoint _tether;
 
@@ -27,12 +27,10 @@ public class PlayerRaycast : MonoBehaviour
 
     private void OnEnable()
     {
-        //InputScript.doGrab += PickUp;
     }
 
     private void OnDisable()
     {
-        //InputScript.doGrab -= PickUp;
     }
 
     public void Climbing()
@@ -51,7 +49,7 @@ public class PlayerRaycast : MonoBehaviour
 
     public void PickUp()
     {
-        if (_theInput.GrabCtx.performed)
+        if (_theInput.InteractCtx.performed)
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, _range))
@@ -61,7 +59,6 @@ public class PlayerRaycast : MonoBehaviour
                 _tether.connectedBody = _grabObject;
             }
         }
-        
     }
 
     //Fall Damage Soft

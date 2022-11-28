@@ -1,11 +1,9 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnLight : MonoBehaviour
 {
-    
     public GameObject LightSwitch;
     public bool on = false;
     private bool triggered;
@@ -13,16 +11,13 @@ public class TurnLight : MonoBehaviour
     public GameObject objectToChange;
     public Renderer objectToRender;
 
-
-
     // Use this for initialization
 
     public void Start()
     {
-       
-       //GetComponent<GameObject>
-        
+        //GetComponent<GameObject>
     }
+
     public void Update()
     {
         if (triggered == true)
@@ -33,11 +28,7 @@ public class TurnLight : MonoBehaviour
             {
                 LightSwitch.SetActive(true);
                 on = true;
-                
-
-
             }
-
             else if (Input.GetKeyDown(KeyCode.E) && on)
             {
                 LightSwitch.SetActive(false);
@@ -48,13 +39,13 @@ public class TurnLight : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
             triggered = true;
     }
+
     public void OnTriggerExit(Collider collision)
     {
         if (collision.tag == "Player")
             triggered = false;
     }
-
 }

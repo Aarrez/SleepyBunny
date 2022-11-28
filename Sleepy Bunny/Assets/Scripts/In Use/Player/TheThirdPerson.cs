@@ -6,8 +6,6 @@ public class TheThirdPerson : PlayerRaycast
 {
     #region Varibales
 
-    private InputScript _theInput;
-
     private Rigidbody _rb;
 
     #region refrence scripts
@@ -53,8 +51,6 @@ public class TheThirdPerson : PlayerRaycast
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-
-        _theInput = FindObjectOfType<InputScript>();
     }
 
     //Invokes when object is enabled
@@ -62,14 +58,14 @@ public class TheThirdPerson : PlayerRaycast
     {
         InputScript.Moveing += M_Movement;
 
-        InputScript.Grab += PClimb;
+        InputScript.Interact += PClimb;
     }
 
     //Invokes when object is disable
     private void OnDisable()
     {
         InputScript.Moveing -= M_Movement;
-        InputScript.Grab -= PClimb;
+        InputScript.Interact -= PClimb;
     }
 
     public void Start()
@@ -168,7 +164,7 @@ public class TheThirdPerson : PlayerRaycast
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Movement and rotation
         PMoveDirectionOfCamera();

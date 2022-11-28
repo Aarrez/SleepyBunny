@@ -18,22 +18,28 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            if (!Ctx.IsGrounded) { return; }
-            SwitchState(Factory.SuperGrounded());
+            if (Ctx.IsGrounded)
+            {
+                SwitchState(Factory.SuperGrounded());
+            }
+
+            if (Ctx.IsClimbing)
+            {
+                Debug.Log("climb from jump");
+                SwitchState(Factory.SuperClimb());
+            }
         }
 
         public override void EnterState()
         {
-            
-            Ctx.PlayerAnimator.SetFloat("AnimIndex",
-                (float)_eAnim.Jump);
+            Ctx.PlayerAnimator.SetInteger("Index",
+                (int)_eAnim.Jump);
             AddJumpForce();
             Debug.Log("Jumping");
         }
 
         public override void ExitState()
         {
-            
         }
 
         public override void InitializeSubState()

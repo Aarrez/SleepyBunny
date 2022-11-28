@@ -26,6 +26,11 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
+            if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
+            {
+                PushAwayFromClimb();
+                SwitchState(Factory.SuperJump());
+            }
         }
 
         //If the state is a sub or minor state this method will be called
@@ -48,6 +53,11 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
             CheckSwitchState();
+        }
+
+        private void PushAwayFromClimb()
+        {
+            Ctx.Rb.AddExplosionForce(10f, Vector3.forward, 1f);
         }
     }
 }

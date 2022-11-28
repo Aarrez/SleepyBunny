@@ -29,8 +29,7 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("AnimIndex",
-            (float)_eAnim.Falling);
+            Ctx.PlayerAnimator.SetInteger("Index", (int)_eAnim.Falling);
         }
 
         public override void UpdateState()

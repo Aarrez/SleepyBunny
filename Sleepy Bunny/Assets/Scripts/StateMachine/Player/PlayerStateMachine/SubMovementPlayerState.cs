@@ -23,7 +23,7 @@ namespace PlayerStM.SubStates
             {
                 SwitchState(Factory.SubIdle());
             }
-            else if (Ctx.Rb.velocity.y < -0.5f)
+            else if (Ctx.Rb.velocity.y < -1f)
             {
                 SwitchState(Factory.SubFalling());
             }
@@ -31,8 +31,8 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("AnimIndex",
-                        (float)_eAnim.Walk);
+            Ctx.PlayerAnimator.SetInteger("Index",
+                        (int)_eAnim.Walk);
         }
 
         public override void ExitState()

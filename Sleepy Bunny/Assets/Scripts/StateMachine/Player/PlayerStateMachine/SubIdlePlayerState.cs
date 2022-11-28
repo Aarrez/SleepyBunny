@@ -29,8 +29,9 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("AnimIndex",
-                (float)_eAnim.Idle);
+            if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
+            Ctx.PlayerAnimator.SetInteger("Index",
+                (int)_eAnim.Idle);
         }
 
         public override void UpdateState()

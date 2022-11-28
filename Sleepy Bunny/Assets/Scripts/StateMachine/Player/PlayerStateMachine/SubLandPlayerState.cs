@@ -22,8 +22,8 @@ namespace PlayerStM.SubStates
         //Called when this state is switched to
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetFloat("AnimIndex",
-            (float)_eAnim.Land);
+            Ctx.PlayerAnimator.SetInteger("Index",
+            (int)_eAnim.Land);
 
             Ctx.PlayerAnimator.SetFloat("LandEffect",
                 (float)_eLandAnim.LandSoft);

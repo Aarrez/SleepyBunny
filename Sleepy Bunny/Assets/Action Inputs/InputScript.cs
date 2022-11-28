@@ -11,19 +11,18 @@ public class InputScript : MonoBehaviour
     private ControllAction.CustomPlayerActions cPlayer;
     private ControllAction.CustomUIActions cUI;
 
-    private InputAction.CallbackContext _moveCtx, _jumpCtx, _grabCtx,
-            _pauseCtx, _crouchCtx;
+    private InputAction.CallbackContext _moveCtx, _jumpCtx, _interactCtx,
+            _pauseCtx;
 
     // Static so u easily can subscribe to these Actions.
-    public static Action Moveing, Jump, Grab, Pause, Crouch, Climb;
+    public static Action Moveing, Jump, Interact, Pause;
 
     // This is for when you are using InputScript in another script.
     public InputAction.CallbackContext MoveCtx { get => _moveCtx; set => _moveCtx = value; }
 
     public InputAction.CallbackContext JumpCtx { get => _jumpCtx; set => _jumpCtx = value; }
-    public InputAction.CallbackContext GrabCtx { get => _grabCtx; set => _grabCtx = value; }
+    public InputAction.CallbackContext InteractCtx { get => _interactCtx; set => _interactCtx = value; }
     public InputAction.CallbackContext PauseCtx { get => _pauseCtx; set => _pauseCtx = value; }
-    public InputAction.CallbackContext CrouchCtx { get => _crouchCtx; set => _crouchCtx = value; }
 
     private void Awake()
     {
@@ -62,21 +61,21 @@ public class InputScript : MonoBehaviour
 
         #endregion Jump Input
 
-        #region Grab Input
+        #region Interact Input
 
         cPlayer.Interact.performed += ctx =>
         {
-            Grab?.Invoke();
-            GrabCtx = ctx;
+            Interact?.Invoke();
+            InteractCtx = ctx;
         };
 
         cPlayer.Interact.canceled += ctx =>
         {
-            Grab?.Invoke();
-            GrabCtx = ctx;
+            Interact?.Invoke();
+            InteractCtx = ctx;
         };
 
-        #endregion Grab Input
+        #endregion Interact Input
 
         #region Pause Input
 
@@ -87,22 +86,6 @@ public class InputScript : MonoBehaviour
         };
 
         #endregion Pause Input
-
-        #region Crouch Input
-
-        cPlayer.Crouch.performed += ctx =>
-        {
-            Crouch?.Invoke();
-            _crouchCtx = ctx;
-        };
-
-        cPlayer.Crouch.canceled += ctx =>
-        {
-            Crouch?.Invoke();
-            _crouchCtx = ctx;
-        };
-
-        #endregion Crouch Input
 
         cPlayer.Enable();
         cUI.Enable();

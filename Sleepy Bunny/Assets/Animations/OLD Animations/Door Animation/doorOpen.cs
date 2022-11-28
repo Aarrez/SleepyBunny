@@ -22,7 +22,7 @@ public class doorOpen : MonoBehaviour
 
     public void OnTriggerStay(Collider collision)
     {
-        if (collision.tag == "Player" && _theInput.GrabCtx.performed)
+        if (collision.tag == "Player" && _theInput.InteractCtx.performed)
         {
             holdDoorHandle = true;
             Debug.Log("By the handle");
