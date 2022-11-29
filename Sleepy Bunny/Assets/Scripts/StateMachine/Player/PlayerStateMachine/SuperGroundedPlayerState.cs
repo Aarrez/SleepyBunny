@@ -62,9 +62,13 @@ namespace PlayerStM.SuperState
         {
         }
 
-        public override void UpdateState()
+        public override void FixedUpdateState()
         {
             CheckSwitchState();
+        }
+
+        public override void UpdateState()
+        {
         }
     }
 }

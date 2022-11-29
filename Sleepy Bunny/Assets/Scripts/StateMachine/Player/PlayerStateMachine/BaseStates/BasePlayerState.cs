@@ -68,6 +68,8 @@ namespace PlayerStM.BaseStates
 
         public abstract void EnterState();
 
+        public abstract void FixedUpdateState();
+
         public abstract void UpdateState();
 
         public abstract void ExitState();
@@ -78,9 +80,18 @@ namespace PlayerStM.BaseStates
 
         public abstract void OnNewSuperState();
 
+        public void FixedUpdateStates()
+        {
+            Ctx.CurrentSuper.FixedUpdateState();
+            if (Ctx.CurrentSub != null)
+            {
+                Ctx.CurrentSub.FixedUpdateState();
+            }
+        }
+
         public void UpdateStates()
         {
-            Ctx.CurrentSuper.UpdateState();
+            Ctx.CurrentSub.UpdateState();
             if (Ctx.CurrentSub != null)
             {
                 Ctx.CurrentSub.UpdateState();

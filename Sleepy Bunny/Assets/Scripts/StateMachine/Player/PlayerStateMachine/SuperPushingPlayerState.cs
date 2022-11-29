@@ -38,6 +38,10 @@ namespace PlayerStM.SubStates
         {
         }
 
+        public override void FixedUpdateState()
+        {
+        }
+
         public override void UpdateState()
         {
         }

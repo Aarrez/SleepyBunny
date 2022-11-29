@@ -47,7 +47,7 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void UpdateState()
+        public override void FixedUpdateState()
         {
             CheckSwitchState();
             PlayerMove();
@@ -85,6 +85,10 @@ namespace PlayerStM.SubStates
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
                 Quaternion.LookRotation(MoveDirection, Vector3.up),
                 Ctx.RotationSpeed);
+        }
+
+        public override void UpdateState()
+        {
         }
     }
 }

@@ -50,7 +50,7 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void UpdateState()
+        public override void FixedUpdateState()
         {
             CheckSwitchState();
         }
@@ -58,6 +58,10 @@ namespace PlayerStM.SubStates
         private void PushAwayFromClimb()
         {
             Ctx.Rb.AddExplosionForce(10f, Vector3.forward, 1f);
+        }
+
+        public override void UpdateState()
+        {
         }
     }
 }

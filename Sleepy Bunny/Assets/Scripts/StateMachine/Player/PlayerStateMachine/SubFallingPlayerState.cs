@@ -1,5 +1,6 @@
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerStM.SubStates
@@ -32,9 +33,14 @@ namespace PlayerStM.SubStates
             Ctx.PlayerAnimator.SetInteger("Index", (int)_eAnim.Falling);
         }
 
-        public override void UpdateState()
+        public override void FixedUpdateState()
         {
             CheckSwitchState();
+        }
+
+        public override void UpdateState()
+        {
+            Ctx.GroundedRaycast();
         }
 
         public override void ExitState()

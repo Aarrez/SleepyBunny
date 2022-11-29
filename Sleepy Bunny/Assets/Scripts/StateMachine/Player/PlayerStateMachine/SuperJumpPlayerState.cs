@@ -22,8 +22,7 @@ namespace PlayerStM.SuperState
             {
                 SwitchState(Factory.SuperGrounded());
             }
-
-            if (Ctx.IsClimbing)
+            else if (Ctx.IsClimbing)
             {
                 Debug.Log("climb from jump");
                 SwitchState(Factory.SuperClimb());
@@ -35,11 +34,14 @@ namespace PlayerStM.SuperState
             Ctx.PlayerAnimator.SetInteger("Index",
                 (int)_eAnim.Jump);
             AddJumpForce();
+            Ctx.IsGrounded = false;
             Debug.Log("Jumping");
         }
 
         public override void ExitState()
         {
+            //Debug.Log(VelocityTest);
+            VelocityTest = 0f;
         }
 
         public override void InitializeSubState()
@@ -51,8 +53,14 @@ namespace PlayerStM.SuperState
         {
         }
 
-        public override void UpdateState()
+        private float VelocityTest = 0f;
+
+        public override void FixedUpdateState()
         {
+            if (Ctx.Rb.velocity.y > VelocityTest)
+            {
+                VelocityTest = Ctx.Rb.velocity.y;
+            }
             CheckSwitchState();
         }
 
@@ -62,6 +70,10 @@ namespace PlayerStM.SuperState
         {
             Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
                 + (MoveDirection * Ctx.DirectionalJumpForce);
+        }
+
+        public override void UpdateState()
+        {
         }
     }
 }

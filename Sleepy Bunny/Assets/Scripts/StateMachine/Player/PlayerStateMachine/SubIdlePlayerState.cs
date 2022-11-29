@@ -34,7 +34,7 @@ namespace PlayerStM.SubStates
                 (int)_eAnim.Idle);
         }
 
-        public override void UpdateState()
+        public override void FixedUpdateState()
         {
             CheckSwitchState();
         }
@@ -48,6 +48,10 @@ namespace PlayerStM.SubStates
         }
 
         public override void OnNewSuperState()
+        {
+        }
+
+        public override void UpdateState()
         {
         }
     }

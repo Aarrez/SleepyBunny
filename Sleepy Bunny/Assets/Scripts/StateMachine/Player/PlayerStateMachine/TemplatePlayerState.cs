@@ -14,43 +14,48 @@ namespace PlayerStM.SubStates
 
     public class TemplatePlayerState : BasePlayerState
     {
-        //The constructor inherits all the non-local variables form the
-        //base class though geters and setters
+        // The constructor inherits all the non-local variables form the
+        // base class though geters and setters
         public TemplatePlayerState(PlayerStateMachine ctx,
             StateFactory factory) :
             base(ctx, factory)
         {
         }
 
-        //This should be called in UpdateState to consistenly
-        //switch between different states
-        //This is a sugestion another way would be to use events
+        // This should be called in UpdateState to consistenly
+        // switch between different states
+        // This is a sugestion another way would be to use events
         public override void CheckSwitchState()
         {
         }
 
-        //Called when this state is switched to
+        // Called when this state is switched to
         public override void EnterState()
         {
         }
 
-        //Runs on FixedUpdate
-        public override void UpdateState()
+        // Runs on FixedUpdate()
+        public override void FixedUpdateState()
         {
             CheckSwitchState();
         }
 
-        //When switching to another state this method will be called
+        // Runs on Update()
+        public override void UpdateState()
+        {
+        }
+
+        // When switching to another state this method will be called
         public override void ExitState()
         {
         }
 
-        //Do not use if a Sub- or minorstate
+        // Do not use if a Sub- or minorstate
         public override void InitializeSubState()
         {
         }
 
-        //When a new superstate is set this medtod is called
+        // When a new superstate is set this method is called
         public override void OnNewSuperState()
         {
         }
