@@ -139,15 +139,26 @@ namespace PlayerStM.BaseStates
         public BasePlayerState CurrentMinor => _currentMinor;
 
         public float MovmentForce
-        { get => _movmentForce; set => _movmentForce = value; }
+        {
+            get => _movmentForce;
+            set => _movmentForce = value;
+        }
 
         public float JumpHeight
-        { get => _jumpHeight; set => _jumpHeight = value; }
+        {
+            get => _jumpHeight;
+            set => _jumpHeight = value;
+        }
+
+        public float DirectionalJumpForce
+        {
+            get => _directionalJumpForce;
+            set => _directionalJumpForce = value;
+        }
 
         public float RotationSpeed => _rotationSpeed;
 
-        public float DirectionalJumpForce
-        { get => _directionalJumpForce; set => _directionalJumpForce = value; }
+        public float ClimbSpeed => _climbSpeed;
 
         public bool IsGrounded
         {

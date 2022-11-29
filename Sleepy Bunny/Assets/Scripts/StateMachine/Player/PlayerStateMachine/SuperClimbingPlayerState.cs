@@ -72,9 +72,5 @@ namespace PlayerStM.SubStates
         }
 
         // Use in UpdateState()
-        private void PlayerClimb()
-        {
-            Ctx.transform.Translate(Ctx.transform.position + MoveVector, Space.World);
-        }
     }
 }

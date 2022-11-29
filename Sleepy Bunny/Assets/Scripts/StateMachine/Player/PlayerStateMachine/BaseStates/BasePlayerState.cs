@@ -137,7 +137,7 @@ namespace PlayerStM.BaseStates
             {
                 case SuperClimbingPlayerState:
                     _moveVector
-                        = new Vector3(_ctxMoveVector.x, _ctxMoveVector.y, 0f);
+                        = new Vector3(0f, _ctxMoveVector.y, _ctxMoveVector.x);
                     break;
 
                 case SuperPushingPlayerState:

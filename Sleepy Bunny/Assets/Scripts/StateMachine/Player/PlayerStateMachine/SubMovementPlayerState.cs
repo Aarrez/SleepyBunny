@@ -58,7 +58,9 @@ namespace PlayerStM.SubStates
         {
             switch (Ctx.CurrentSuper)
             {
-                case SuperClimbingPlayerState: break;
+                case SuperClimbingPlayerState:
+                    PlayerClimb();
+                    break;
 
                 case SuperPushingPlayerState: break;
 
@@ -76,6 +78,12 @@ namespace PlayerStM.SubStates
         {
             Debug.Log("Movement should be happeing");
             Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce
+                * Time.fixedDeltaTime;
+        }
+
+        private void PlayerClimb()
+        {
+            Ctx.Rb.velocity = MoveVector * Ctx.ClimbSpeed
                 * Time.fixedDeltaTime;
         }
 
