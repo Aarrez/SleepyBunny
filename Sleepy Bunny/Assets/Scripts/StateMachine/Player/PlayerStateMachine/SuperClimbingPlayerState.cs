@@ -21,7 +21,6 @@ namespace PlayerStM.SubStates
         {
             IsRootState = true;
             InitializeSubState();
-            Climbhit = base.Hit;
         }
 
         public override void CheckSwitchState()
@@ -31,11 +30,28 @@ namespace PlayerStM.SubStates
                 PushAwayFromClimb();
                 SwitchState(Factory.SuperJump());
             }
+            else if (Ctx.IsGrounded)
+            {
+                SwitchState(Factory.SuperGrounded());
+            }
         }
 
         //If the state is a sub or minor state this method will be called
         public override void EnterState()
         {
+            Debug.Log("Climbing");
+            Ctx.Rb.useGravity = false;
+            Ctx.Rb.velocity = Vector3.zero;
+        }
+
+        public override void FixedUpdateState()
+        {
+        }
+
+        public override void UpdateState()
+        {
+            CheckSwitchState();
+            PlayerClimb();
         }
 
         public override void ExitState()
@@ -50,18 +66,15 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void FixedUpdateState()
-        {
-            CheckSwitchState();
-        }
-
         private void PushAwayFromClimb()
         {
             Ctx.Rb.AddExplosionForce(10f, Vector3.forward, 1f);
         }
 
-        public override void UpdateState()
+        // Use in UpdateState()
+        private void PlayerClimb()
         {
+            Ctx.transform.Translate(Ctx.transform.position + MoveVector, Space.World);
         }
     }
 }

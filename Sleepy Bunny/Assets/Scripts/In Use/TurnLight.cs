@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,60 +5,27 @@ using FMODUnity;
 
 public class TurnLight : MonoBehaviour
 {
-    
-    public GameObject LightSwitch;
-    public bool on = false;
-    private bool triggered;
-    public Material materialOn;
-    public GameObject objectToChange;
-    public Renderer objectToRender;
+    [SerializeField] private GameObject _lightSwitch;
 
-     [SerializeField] private EventReference _LightSwitch;
+    [SerializeField] private EventReference _LightSwitch;
 
-
-    // Use this for initialization
-
-    public void Start()
+    /// <summary>
+    /// Used in PlayerStateMachine In the GrabClimbInteract Method <br></br>
+    /// if this method has no overloads it reatruns the state of the light
+    /// </summary>
+    public void TheLight(bool letBeLight)
     {
-       
-       //GetComponent<GameObject>
-        
-    }
-    public void Update()
-    {
-        if (triggered == true)
-        {
-            Debug.Log("Light Is On");
+        _lightSwitch.SetActive(letBeLight);
 
-            if (Input.GetKeyDown(KeyCode.E) && !on)
-            {
-                LightSwitch.SetActive(true);
-                on = true;
-                
-                RuntimeManager.PlayOneShot(_LightSwitch);
-
-            }
-
-            else if (Input.GetKeyDown(KeyCode.E) && on)
-            {
-                LightSwitch.SetActive(false);
-                on = false;
-
-                RuntimeManager.PlayOneShot(_LightSwitch);
-            }
-        }
+        RuntimeManager.PlayOneShot(_LightSwitch);
     }
 
-    public void OnTriggerEnter(Collider collision)
+    /// <summary>
+    /// Used in PlayerStateMachine In the GrabClimbInteract Method <br></br>
+    /// if this method has no overloads it reatruns the state of the light
+    /// </summary>
+    public bool TheLight()
     {
-        if(collision.tag == "Player")
-            triggered = true;
-            
+        return _lightSwitch.activeInHierarchy;
     }
-    public void OnTriggerExit(Collider collision)
-    {
-        if (collision.tag == "Player")
-            triggered = false;
-    }
-
 }

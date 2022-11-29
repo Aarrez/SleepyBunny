@@ -5,6 +5,11 @@ using PlayerStM.SuperState;
 
 namespace PlayerStM.BaseStates
 {
+    /// <summary>
+    ///
+    /// More info of the override methods in
+    /// TemplatePlayerState.cs
+    /// </summary>
     public abstract class BasePlayerState
     {
         // Varibales for movment
@@ -16,8 +21,6 @@ namespace PlayerStM.BaseStates
 
         private Vector3 _moveDirection;
 
-        protected RaycastHit Hit;
-
         // Bool used to check if state is Super of sub
         protected bool IsRootState = false;
 
@@ -26,6 +29,8 @@ namespace PlayerStM.BaseStates
 
         // Gain accsess to all the states for switching or other stuff
         protected StateFactory Factory;
+
+        public Vector3 MoveVector => _moveVector;
 
         public Vector3 MoveDirection => _moveDirection;
 
@@ -63,7 +68,6 @@ namespace PlayerStM.BaseStates
             this.Ctx = ctx;
             this.Factory = factory;
             InputScript.Moveing += GetMoveCtx;
-            InputScript.Interact += GrabClimb;
         }
 
         public abstract void EnterState();
@@ -141,22 +145,14 @@ namespace PlayerStM.BaseStates
                         new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
                     break;
 
-                case SuperJumpPlayerState:
-
-                    goto default;
-
                 default:
                     _moveVector =
                        new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
                     break;
             }
+
             _cameraDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
             _moveDirection = new Vector3(_cameraDirection.x, 0f, _cameraDirection.z);
-        }
-
-        private void GrabClimb()
-        {
-            Ctx.ClimbGrab(Hit);
         }
     }
 }

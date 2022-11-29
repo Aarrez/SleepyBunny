@@ -32342,6 +32342,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 516028d89e489bf49984d955dc6a3d92,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 516028d89e489bf49984d955dc6a3d92,
+        type: 3}
       propertyPath: m_TagString
       value: Climb
       objectReference: {fileID: 0}
@@ -45909,6 +45914,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
+      propertyPath: _climbGrabMask.m_Bits
+      value: 768
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
+        type: 3}
       propertyPath: _directionalJumpForce
       value: 1
       objectReference: {fileID: 0}
@@ -46407,10 +46417,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 298405800079799743}
     m_Modifications:
+    - target: {fileID: 1082307393149705666, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153335489735824436, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1678843039801481985, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
         type: 3}
       propertyPath: m_Name
       value: night light 1 Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1678843039801481985, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2019761581691322811, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
         type: 3}
@@ -46482,6 +46507,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4101390013493271737, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992215899812808430, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661152062640667078, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381424457219627971, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9110276867372556848, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: _lightSwitch
+      value: 
+      objectReference: {fileID: 1388447970}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84bc6f4b2c82b24c9acbdb48fd28a61, type: 3}
 --- !u!4 &1238509178 stripped
@@ -51325,6 +51375,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -2484921068739079471, guid: c733079ebd4812e4abb2f9a69cc59180,
     type: 3}
   m_PrefabInstance: {fileID: 1079953595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1388447970 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8381424457219627971, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237102686}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1389756939 stripped
 Transform:
@@ -57689,10 +57745,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 298405800079799743}
     m_Modifications:
+    - target: {fileID: 1153335489735824436, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1678843039801481985, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
         type: 3}
       propertyPath: m_Name
       value: night light 1 Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1678843039801481985, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2019761581691322811, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
         type: 3}
@@ -57763,6 +57829,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101390013493271737, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992215899812808430, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661152062640667078, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381424457219627971, guid: d84bc6f4b2c82b24c9acbdb48fd28a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84bc6f4b2c82b24c9acbdb48fd28a61, type: 3}
@@ -93940,11 +94026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c8e6685df9b0f4f97b14c769347eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LightSwitch: {fileID: 298405801260623236}
-  on: 0
-  materialOn: {fileID: 0}
-  objectToChange: {fileID: 0}
-  objectToRender: {fileID: 0}
+  _lightSwitch: {fileID: 0}
   _LightSwitch:
     Guid:
       Data1: 0
@@ -95510,7 +95592,7 @@ GameObject:
   - component: {fileID: 1344680958}
   - component: {fileID: 1344680956}
   - component: {fileID: 1344680957}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SofaTowl
   m_TagString: Climb
   m_Icon: {fileID: 0}
@@ -95617,9 +95699,9 @@ GameObject:
   - component: {fileID: 5630176839580423585}
   - component: {fileID: 4261643205420697982}
   - component: {fileID: 298405800603671170}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Cube
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -95732,7 +95814,7 @@ GameObject:
   - component: {fileID: 9177630737373447947}
   - component: {fileID: 3407839044219174903}
   - component: {fileID: 298405800137054707}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Cube.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95993,7 +96075,7 @@ GameObject:
   - component: {fileID: 8183989913189611674}
   - component: {fileID: 8138324093157979855}
   - component: {fileID: 298405800733460478}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Cube.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103609,6 +103691,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: curtain
       objectReference: {fileID: 0}
+    - target: {fileID: 7767544958537670556, guid: 779d93c3bfb724de991e9f9ef8b30c59,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 779d93c3bfb724de991e9f9ef8b30c59, type: 3}
 --- !u!4 &7451980790657872435
@@ -104507,7 +104594,7 @@ GameObject:
   - component: {fileID: 3306326325885661281}
   - component: {fileID: 8264401238541301884}
   - component: {fileID: 298405801502255057}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Cube.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105520,17 +105607,17 @@ PrefabInstance:
     - target: {fileID: 8916875052777114972, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1176865
+      value: 0.11768651
       objectReference: {fileID: 0}
     - target: {fileID: 8916875052777114972, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000012489833
+      value: 0.00001249357
       objectReference: {fileID: 0}
     - target: {fileID: 8916875052777114972, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000014800975
+      value: -0.0000014805404
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e517476e42dc4c489ae6b7b5f89fdc4, type: 3}
@@ -105736,7 +105823,7 @@ GameObject:
   - component: {fileID: 2982560654225974321}
   - component: {fileID: 8042374121448914336}
   - component: {fileID: 298405801893376353}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}

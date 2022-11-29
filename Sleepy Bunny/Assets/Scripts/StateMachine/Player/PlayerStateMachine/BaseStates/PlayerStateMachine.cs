@@ -70,14 +70,29 @@ namespace PlayerStM.BaseStates
             "\n" + "0 = 0 degres(Strait down), 1 = 90 degres")]
         [SerializeField, Range(0, 1)] private float _vectorAngle = 0.5f;
 
+        [Tooltip("Changes the angle between forward ray and the rays around it" +
+            "\n" + "0 = 0 degres(Strait forward), 1 = 90 degres")]
+        [SerializeField, Range(0, 1)] private float _forwardVAngel = 0.3f;
+
         [Tooltip("Only change if debuging!" + "\n" +
             "Default layermask is Ground")]
         [SerializeField] private LayerMask _rayHitLayerMask;
 
         private Vector3[] _halfVectors = new Vector3[9];
 
-        [Header("Raycast to climb")]
+        private Vector3[] _forwardVector = new Vector3[5];
+
+        [Header("Raycast to climb/grab")]
         [SerializeField, Range(0, 1.5f)] private float _rCRange = 1;
+
+        [Tooltip("The layer the climb ray will hit")]
+        [SerializeField] private LayerMask _climbMask;
+
+        [Tooltip("The layer grab ray will hit")]
+        [SerializeField] private LayerMask _grabMask;
+
+        [Tooltip("The layer in witch rays do the interact thing")]
+        [SerializeField] private LayerMask _interactLayer;
 
         private Animator _playerAnimator;
 
@@ -140,13 +155,19 @@ namespace PlayerStM.BaseStates
             set => _isGrounded = value;
         }
 
-        public bool IsClimbing => _isClimbing;
+        public bool IsClimbing
+        {
+            get => _isClimbing;
+            set => _isClimbing = value;
+        }
 
         public bool IsFalling => _isFalling;
 
-        public bool IsCrouching => _isCrouching;
-
-        public bool IsGrabing => _isGrabing;
+        public bool IsGrabing
+        {
+            get => _isGrabing;
+            set => _isGrabing = value;
+        }
 
         public bool LandAnimationDone
         {
@@ -190,7 +211,10 @@ namespace PlayerStM.BaseStates
 
         private void Start()
         {
-            _rayHitLayerMask = LayerMask.GetMask("Ground");
+            _rayHitLayerMask = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
+            _climbMask = LayerMask.GetMask("Climbable");
+            _grabMask = LayerMask.GetMask("Grabable");
+            _interactLayer = LayerMask.GetMask("Interactable");
             SetRaycastVectors();
 
             Physics.gravity = new Vector3(0, -9.82F, 0);
@@ -200,16 +224,20 @@ namespace PlayerStM.BaseStates
         {
             thePlayerInput.CustomPlayer.DebugState.performed += ctx => GetCurrentState();
 
+            InputScript.Interact += ClimbGrabInteract;
+
             thePlayerInput.Enable();
 
-            Grounded.IsGroundedEvent += CheckGrounded;
+            Grounded.IsGroundedEvent += GroundedRaycast;
         }
 
         private void OnDisable()
         {
             thePlayerInput.Enable();
 
-            Grounded.IsGroundedEvent -= CheckGrounded;
+            InputScript.Interact += ClimbGrabInteract;
+
+            Grounded.IsGroundedEvent -= GroundedRaycast;
         }
 
         private void FixedUpdate()
@@ -233,21 +261,6 @@ namespace PlayerStM.BaseStates
             Debug.Log("SubState: " + CurrentSub);
         }
 
-        public void ClimbGrab(RaycastHit hit)
-        {
-            if (Physics.Raycast(transform.position, transform.forward, out hit, _rCRange))
-            {
-                if (hit.transform.gameObject.CompareTag("Climb"))
-                {
-                    Debug.Log("Hit climbable object");
-                }
-                else if (hit.transform.gameObject.CompareTag("Move_Object"))
-                {
-                    Debug.Log("Hit movable object");
-                }
-            }
-        }
-
         private void SetRaycastVectors()
         {
             _halfVectors[0] = Vector3.down;
@@ -259,9 +272,55 @@ namespace PlayerStM.BaseStates
             _halfVectors[6] = Vector3.Lerp(_halfVectors[2], _halfVectors[4], _vectorAngle);
             _halfVectors[7] = Vector3.Lerp(_halfVectors[1], _halfVectors[3], _vectorAngle);
             _halfVectors[8] = Vector3.Lerp(_halfVectors[1], _halfVectors[4], _vectorAngle);
+
+            _forwardVector[0] = Vector3.forward;
+            _forwardVector[1] = Vector3.Lerp(Vector3.forward, Vector3.up, _forwardVAngel);
+            _forwardVector[2] = Vector3.Lerp(Vector3.forward, Vector3.down, _forwardVAngel);
+            _forwardVector[3] = Vector3.Lerp(Vector3.forward, Vector3.right, _forwardVAngel);
+            _forwardVector[4] = Vector3.Lerp(Vector3.forward, Vector3.left, _forwardVAngel);
         }
 
-        private float testFloat;
+        /// <summary>
+        /// Shoots out Rays and that hits spesific Layers.
+        /// <br></br>
+        /// The layers can be specified in the editor under PlayerStateMachine
+        /// </summary>
+        public void ClimbGrabInteract()
+        {
+            RaycastHit hit;
+            for (int i = 0; i < _forwardVector.Length; i++)
+            {
+                Vector3 tempVector =
+                    Camera.main.transform.TransformDirection(_forwardVector[i]);
+
+                Debug.DrawRay(transform.position, tempVector * _rCRange, Color.green, 2);
+
+                if (Physics.Raycast(transform.position, tempVector, out hit,
+                _rCRange, _climbMask))
+                {
+                    _isClimbing = true;
+                }
+                else if (Physics.Raycast(transform.position, tempVector, out hit,
+                    _rCRange, _grabMask))
+                {
+                    _isGrabing = true;
+                }
+                else if (Physics.Raycast(transform.position, tempVector, out hit,
+                    _rCRange, _interactLayer))
+                {
+                    TurnLight temp = hit.transform.GetComponentInChildren<TurnLight>();
+
+                    if (temp.TheLight())
+                    {
+                        temp.TheLight(false);
+                    }
+                    else
+                    {
+                        temp.TheLight(true);
+                    }
+                }
+            }
+        }
 
         public void GroundedRaycast()
         {
@@ -273,10 +332,6 @@ namespace PlayerStM.BaseStates
                 if (Physics.Raycast(transform.position, _halfVectors[i], out hit,
                     _rayGroundDist, _rayHitLayerMask))
                 {
-                    if (hit.distance > testFloat)
-                    {
-                        testFloat = hit.distance;
-                    }
                     _isGrounded = true;
                     break;
                 }

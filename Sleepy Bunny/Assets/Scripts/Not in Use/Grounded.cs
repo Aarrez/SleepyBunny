@@ -9,9 +9,9 @@ public class Grounded : MonoBehaviour
 
     [SerializeField] private bool _grounded;
 
-    private static Action<bool> _isGroundedEvent;
+    private static Action _isGroundedEvent;
 
-    public static event Action<bool> IsGroundedEvent
+    public static event Action IsGroundedEvent
     {
         add => _isGroundedEvent += value;
         remove => _isGroundedEvent -= value;
@@ -26,19 +26,10 @@ public class Grounded : MonoBehaviour
     {
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (!other.CompareTag("Ground")) return;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
 
-    //    _grounded = true;
-    //    _isGroundedEvent?.Invoke(_grounded);
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (!other.CompareTag("Ground")) return;
-
-    //    _grounded = false;
-    //    _isGroundedEvent?.Invoke(_grounded);
-    //}
+        _isGroundedEvent?.Invoke();
+    }
 }

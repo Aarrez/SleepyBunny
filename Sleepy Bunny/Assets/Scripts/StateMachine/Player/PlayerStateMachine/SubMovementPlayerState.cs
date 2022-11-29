@@ -74,6 +74,7 @@ namespace PlayerStM.SubStates
 
         private void GroundedMovment()
         {
+            Debug.Log("Movement should be happeing");
             Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce
                 * Time.fixedDeltaTime;
         }

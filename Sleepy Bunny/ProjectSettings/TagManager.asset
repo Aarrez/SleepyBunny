@@ -22,9 +22,9 @@ TagManager:
   - UI
   - No Cam Collition
   - Cam Collition
-  - 
-  - 
-  - 
+  - Grabable
+  - Climbable
+  - Interactable
   - 
   - 
   - 
