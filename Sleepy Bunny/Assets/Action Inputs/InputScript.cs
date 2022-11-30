@@ -96,20 +96,20 @@ public class InputScript : MonoBehaviour
 
         cPlayer.LeftButtonMouse.performed += ctx =>
         {
-            MouseLeft(ctx);
+            MouseLeft?.Invoke(ctx);
         };
         cPlayer.LeftButtonMouse.canceled += ctx =>
         {
-            MouseLeft(ctx);
+            MouseLeft?.Invoke(ctx);
         };
 
         cPlayer.RightButtonMouse.performed += ctx =>
         {
-            MouseRight(ctx);
+            MouseRight?.Invoke(ctx);
         };
         cPlayer.RightButtonMouse.canceled += ctx =>
         {
-            MouseRight(ctx);
+            MouseRight?.Invoke(ctx);
         };
 
         #endregion Mouse Input
