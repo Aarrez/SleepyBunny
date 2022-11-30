@@ -114,7 +114,7 @@ ModelImporter:
       name: New_Falling
       takeName: JUMP
       internalID: 0
-      firstFrame: 60
+      firstFrame: 40
       lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
@@ -172,8 +172,8 @@ ModelImporter:
       name: New_JUMP
       takeName: JUMP
       internalID: 0
-      firstFrame: 40
-      lastFrame: 80
+      firstFrame: 20
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -44,7 +44,7 @@ namespace PlayerStM.BaseStates
 
         #endregion Script Refrences
 
-        #region Variables
+        #region Serialized Variables
 
         [Header("Movement related variables")]
         [Tooltip("Determines how speedy the character is")]
@@ -75,24 +75,31 @@ namespace PlayerStM.BaseStates
         [SerializeField, Range(0, 1)] private float _forwardVAngel = 0.3f;
 
         [Tooltip("Only change if debuging!" + "\n" +
-            "Default layermask is Ground")]
-        [SerializeField] private LayerMask _rayHitLayerMask;
-
-        private Vector3[] _halfVectors = new Vector3[9];
-
-        private Vector3[] _forwardVector = new Vector3[5];
+           "Inital layermask is Default and Ground")]
+        [SerializeField] private LayerMask _groundLayer;
 
         [Header("Raycast to climb/grab")]
         [SerializeField, Range(0, 1.5f)] private float _rCRange = 1;
 
-        [Tooltip("The layer the climb ray will hit")]
-        [SerializeField] private LayerMask _climbMask;
+        [Tooltip("The layer the climb ray will hit." +
+            "\n" + "Will automaticly have Climbable layer")]
+        [SerializeField] private LayerMask _climbLayer;
 
-        [Tooltip("The layer grab ray will hit")]
-        [SerializeField] private LayerMask _grabMask;
+        [Tooltip("The layer grab ray will hit." +
+            "\n" + "Will automaticly have Grabable layer")]
+        [SerializeField] private LayerMask _grabLayer;
 
-        [Tooltip("The layer in witch rays do the interact thing")]
+        [Tooltip("The layer in witch rays do the interact functionality." +
+            "\n" + "Will automaticly have Interactable layer")]
         [SerializeField] private LayerMask _interactLayer;
+
+        #endregion Serialized Variables
+
+        #region Private Variables
+
+        private Vector3[] _halfVectors = new Vector3[9];
+
+        private Vector3[] _forwardVector = new Vector3[5];
 
         private Animator _playerAnimator;
 
@@ -110,7 +117,7 @@ namespace PlayerStM.BaseStates
 
         private bool _landAnimationDone = false;
 
-        #endregion Variables
+        #endregion Private Variables
 
         #region Get and set
 
@@ -222,9 +229,9 @@ namespace PlayerStM.BaseStates
 
         private void Start()
         {
-            _rayHitLayerMask = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
-            _climbMask = LayerMask.GetMask("Climbable");
-            _grabMask = LayerMask.GetMask("Grabable");
+            _groundLayer = LayerMask.GetMask("Ground") + 0;
+            _climbLayer = LayerMask.GetMask("Climbable");
+            _grabLayer = LayerMask.GetMask("Grabable");
             _interactLayer = LayerMask.GetMask("Interactable");
             SetRaycastVectors();
 
@@ -306,28 +313,26 @@ namespace PlayerStM.BaseStates
 
                 Debug.DrawRay(transform.position, tempVector * _rCRange, Color.green, 2);
 
-                if (Physics.Raycast(transform.position, tempVector, out hit,
-                _rCRange, _climbMask))
+                if (Physics.Raycast(transform.position, tempVector,
+                _rCRange, _climbLayer))
                 {
                     _isClimbing = true;
                 }
-                else if (Physics.Raycast(transform.position, tempVector, out hit,
-                    _rCRange, _grabMask))
+                else if (Physics.Raycast(transform.position, tempVector,
+                    _rCRange, _grabLayer))
                 {
                     _isGrabing = true;
                 }
                 else if (Physics.Raycast(transform.position, tempVector, out hit,
                     _rCRange, _interactLayer))
                 {
-                    TurnLight temp = hit.transform.GetComponentInChildren<TurnLight>();
-
-                    if (temp.TheLight())
+                    try
                     {
-                        temp.TheLight(false);
+                        hit.transform.gameObject.GetComponent<InteractObject>().Interacted.Invoke();
                     }
-                    else
+                    catch (Exception)
                     {
-                        temp.TheLight(true);
+                        hit.transform.gameObject.GetComponentInChildren<InteractObject>().Interacted.Invoke();
                     }
                 }
             }
@@ -341,7 +346,7 @@ namespace PlayerStM.BaseStates
                 Debug.DrawRay(transform.position, _halfVectors[i] * _rayGroundDist,
                         Color.red, 1);
                 if (Physics.Raycast(transform.position, _halfVectors[i], out hit,
-                    _rayGroundDist, _rayHitLayerMask))
+                    _rayGroundDist, _groundLayer))
                 {
                     _isGrounded = true;
                     break;

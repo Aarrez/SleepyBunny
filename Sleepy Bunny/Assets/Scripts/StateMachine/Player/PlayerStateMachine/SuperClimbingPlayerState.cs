@@ -27,8 +27,8 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
             {
-                PushAwayFromClimb();
                 SwitchState(Factory.SuperJump());
+                Debug.Log("ishappinge");
             }
             else if (Ctx.IsGrounded)
             {
@@ -46,15 +46,17 @@ namespace PlayerStM.SubStates
 
         public override void FixedUpdateState()
         {
+            CheckSwitchState();
         }
 
         public override void UpdateState()
         {
-            CheckSwitchState();
         }
 
         public override void ExitState()
         {
+            Ctx.Rb.useGravity = true;
+            Ctx.IsClimbing = false;
         }
 
         public override void InitializeSubState()
@@ -67,7 +69,7 @@ namespace PlayerStM.SubStates
 
         private void PushAwayFromClimb()
         {
-            Ctx.Rb.AddExplosionForce(10f, Vector3.forward, 1f);
+            Ctx.Rb.AddForce(-Ctx.transform.forward);
         }
 
         // Use in UpdateState()

@@ -11,8 +11,8 @@ TagManager:
   - Move_Object
   - CCPoint
   - Bones
-  - Tether
   - CMFreeLookCam
+  - Light
   layers:
   - Default
   - TransparentFX

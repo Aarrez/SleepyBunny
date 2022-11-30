@@ -9,6 +9,7 @@ public class InputScript : MonoBehaviour
     private ControllAction thePlayerInput;
 
     private ControllAction.CustomPlayerActions cPlayer;
+
     private ControllAction.CustomUIActions cUI;
 
     private InputAction.CallbackContext _moveCtx, _jumpCtx, _interactCtx,
@@ -21,7 +22,9 @@ public class InputScript : MonoBehaviour
     public InputAction.CallbackContext MoveCtx { get => _moveCtx; set => _moveCtx = value; }
 
     public InputAction.CallbackContext JumpCtx { get => _jumpCtx; set => _jumpCtx = value; }
+
     public InputAction.CallbackContext InteractCtx { get => _interactCtx; set => _interactCtx = value; }
+
     public InputAction.CallbackContext PauseCtx { get => _pauseCtx; set => _pauseCtx = value; }
 
     private void Awake()
@@ -40,13 +43,13 @@ public class InputScript : MonoBehaviour
         cPlayer.Movement.performed += ctx =>
         {
             Moveing?.Invoke();
-            MoveCtx = ctx;
+            _moveCtx = ctx;
         };
 
         cPlayer.Movement.canceled += ctx =>
         {
             Moveing?.Invoke();
-            MoveCtx = ctx;
+            _moveCtx = ctx;
         };
 
         #endregion Movement Input
@@ -56,7 +59,7 @@ public class InputScript : MonoBehaviour
         cPlayer.Jump.performed += ctx =>
         {
             Jump?.Invoke();
-            JumpCtx = ctx;
+            _jumpCtx = ctx;
         };
 
         #endregion Jump Input
@@ -66,13 +69,13 @@ public class InputScript : MonoBehaviour
         cPlayer.Interact.performed += ctx =>
         {
             Interact?.Invoke();
-            InteractCtx = ctx;
+            _interactCtx = ctx;
         };
 
         cPlayer.Interact.canceled += ctx =>
         {
             Interact?.Invoke();
-            InteractCtx = ctx;
+            _interactCtx = ctx;
         };
 
         #endregion Interact Input

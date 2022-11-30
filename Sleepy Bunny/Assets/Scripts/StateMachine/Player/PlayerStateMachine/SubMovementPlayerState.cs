@@ -31,8 +31,19 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetInteger("Index",
+            switch (Ctx.CurrentSuper)
+            {
+                case SuperClimbingPlayerState: break;
+
+                case SuperPushingPlayerState: break;
+
+                case SuperJumpPlayerState: break;
+
+                default:
+                    Ctx.PlayerAnimator.SetInteger("Index",
                         (int)_eAnim.Walk);
+                    break;
+            }
         }
 
         public override void ExitState()

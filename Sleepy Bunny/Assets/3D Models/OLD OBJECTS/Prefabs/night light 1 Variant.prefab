@@ -258,8 +258,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2397624442889674664}
-  - component: {fileID: 3886742514793457671}
-  - component: {fileID: 9110276867372556848}
   m_Layer: 0
   m_Name: Night Light Light Switch
   m_TagString: Untagged
@@ -283,43 +281,6 @@ Transform:
   m_Father: {fileID: 7801960927933477046}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3886742514793457671
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8381424457219627971}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.38427073, y: 0.6398614, z: 0.24507293}
-  m_Center: {x: 0.026009712, y: -0.1681339, z: 0.00646568}
---- !u!114 &9110276867372556848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8381424457219627971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6c8e6685df9b0f4f97b14c769347eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LightSwitch: {fileID: 5992215899812808430}
-  on: 0
-  materialOn: {fileID: 0}
-  objectToChange: {fileID: 0}
-  objectToRender: {fileID: 0}
-  _LightSwitch:
-    Guid:
-      Data1: -2062793895
-      Data2: 1180526562
-      Data3: 1903873722
-      Data4: -1394632921
-    Path: event:/LightSwitch 2D
 --- !u!1001 &1985272733676349008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -407,6 +368,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: night light 1 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6faf8b930d8200c42a344af591d79294,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6faf8b930d8200c42a344af591d79294,
+        type: 3}
+      propertyPath: m_TagString
+      value: Light
+      objectReference: {fileID: 0}
     - target: {fileID: 6317578925029434746, guid: 6faf8b930d8200c42a344af591d79294,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -414,6 +385,44 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4d8e480577000814eae92b8f28c02614, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6faf8b930d8200c42a344af591d79294, type: 3}
+--- !u!1 &1678843039801481985 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6faf8b930d8200c42a344af591d79294,
+    type: 3}
+  m_PrefabInstance: {fileID: 1985272733676349008}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1248091634314925548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678843039801481985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d019b42f9a3fdc2479e283f15c4e32f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _LightSwitch:
+    Guid:
+      Data1: -2062793895
+      Data2: 1180526562
+      Data3: 1903873722
+      Data4: -1394632921
+    Path: event:/LightSwitch 2D
+--- !u!65 &965135457078038436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678843039801481985}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.5, z: 0.37}
+  m_Center: {x: -0.03, y: 0, z: 0}
 --- !u!4 &7801960927933477046 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8632055958874330854, guid: 6faf8b930d8200c42a344af591d79294,

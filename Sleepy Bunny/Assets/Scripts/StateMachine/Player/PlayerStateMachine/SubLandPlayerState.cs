@@ -1,4 +1,5 @@
 using PlayerStM.BaseStates;
+using System.Threading.Tasks;
 
 namespace PlayerStM.SubStates
 {
@@ -16,17 +17,11 @@ namespace PlayerStM.SubStates
         //switch between different states
         public override void CheckSwitchState()
         {
-            SwitchState(Factory.SubIdle());
         }
 
         //Called when this state is switched to
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetInteger("Index",
-            (int)_eAnim.Land);
-
-            Ctx.PlayerAnimator.SetFloat("LandEffect",
-                (float)_eLandAnim.LandSoft);
         }
 
         //Runs on FixedUpdate
