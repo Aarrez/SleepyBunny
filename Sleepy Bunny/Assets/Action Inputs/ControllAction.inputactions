@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LeftButtonMouse",
+                    "type": "Button",
+                    "id": "895b4c4e-f878-4bca-8027-78e31c8b91ba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightButtonMouse",
+                    "type": "Button",
+                    "id": "107e323c-7e94-48b2-9bfd-d70a730bec53",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -223,6 +241,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "DebugState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de0a6b4b-3142-4dc1-91c3-0fb2b3ba6008",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "LeftButtonMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cdf9c0f6-efb1-4484-b090-51daf206c253",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "RightButtonMouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

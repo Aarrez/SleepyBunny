@@ -47,10 +47,6 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void OnNewSuperState()
-        {
-        }
-
         public override void UpdateState()
         {
         }

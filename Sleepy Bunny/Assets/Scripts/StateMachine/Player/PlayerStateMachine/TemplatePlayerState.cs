@@ -54,10 +54,5 @@ namespace PlayerStM.SubStates
         public override void InitializeSubState()
         {
         }
-
-        // When a new superstate is set this method is called
-        public override void OnNewSuperState()
-        {
-        }
     }
 }

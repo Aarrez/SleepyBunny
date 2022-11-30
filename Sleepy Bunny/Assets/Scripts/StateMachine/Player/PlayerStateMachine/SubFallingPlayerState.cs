@@ -51,9 +51,5 @@ namespace PlayerStM.SubStates
         public override void InitializeSubState()
         {
         }
-
-        public override void OnNewSuperState()
-        {
-        }
     }
 }

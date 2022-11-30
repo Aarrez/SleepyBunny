@@ -82,8 +82,6 @@ namespace PlayerStM.BaseStates
 
         public abstract void InitializeSubState();
 
-        public abstract void OnNewSuperState();
-
         public void FixedUpdateStates()
         {
             Ctx.CurrentSuper.FixedUpdateState();
@@ -153,6 +151,24 @@ namespace PlayerStM.BaseStates
 
             _cameraDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
             _moveDirection = new Vector3(_cameraDirection.x, 0f, _cameraDirection.z);
+        }
+
+        internal void MovePulledObject(Transform transformToPull, Rigidbody rigidbodyOfObject)
+        {
+            Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
+            Vector3 normalizedDirection = pullDirection.normalized;
+            float distance = Vector3.Distance(Ctx.transform.position, transformToPull.position);
+            Debug.Log(distance);
+            if (distance > 5)
+            {
+                Ctx.IsGrabing = false;
+                return;
+            }
+            if (distance < 1)
+            {
+                return;
+            }
+            rigidbodyOfObject.velocity += normalizedDirection * Ctx.PullForce * Time.fixedDeltaTime;
         }
     }
 }

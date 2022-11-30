@@ -54,10 +54,6 @@ namespace PlayerStM.SubStates
         {
         }
 
-        public override void OnNewSuperState()
-        {
-        }
-
         public override void FixedUpdateState()
         {
             CheckSwitchState();
@@ -73,7 +69,9 @@ namespace PlayerStM.SubStates
                     PlayerClimb();
                     break;
 
-                case SuperPushingPlayerState: break;
+                case SuperPushingPlayerState:
+                    PullingMovement();
+                    break;
 
                 // SuperJump should always be blank so no movment
                 // can be done when jumping
@@ -87,8 +85,13 @@ namespace PlayerStM.SubStates
 
         private void GroundedMovment()
         {
-            Debug.Log("Movement should be happeing");
             Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce
+                * Time.fixedDeltaTime;
+        }
+
+        private void PullingMovement()
+        {
+            Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce / 2
                 * Time.fixedDeltaTime;
         }
 

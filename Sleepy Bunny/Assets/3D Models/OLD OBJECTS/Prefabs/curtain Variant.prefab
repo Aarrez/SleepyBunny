@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 516028d89e489bf49984d955dc6a3d92,
         type: 3}
       propertyPath: m_Name
-      value: curtain
+      value: curtain Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 516028d89e489bf49984d955dc6a3d92,
         type: 3}
@@ -3244,7 +3244,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 24be694cb6e0ddb459d0baf7aa9eb2ef, type: 2}
+  - {fileID: -876546973899608171, guid: e910863205829b94a8e5da2149cd2df3, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

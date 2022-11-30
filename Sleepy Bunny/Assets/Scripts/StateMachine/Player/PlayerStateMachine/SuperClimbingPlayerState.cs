@@ -62,16 +62,5 @@ namespace PlayerStM.SubStates
         public override void InitializeSubState()
         {
         }
-
-        public override void OnNewSuperState()
-        {
-        }
-
-        private void PushAwayFromClimb()
-        {
-            Ctx.Rb.AddForce(-Ctx.transform.forward);
-        }
-
-        // Use in UpdateState()
     }
 }

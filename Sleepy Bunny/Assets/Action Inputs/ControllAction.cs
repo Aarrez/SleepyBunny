@@ -80,6 +80,24 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftButtonMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""895b4c4e-f878-4bca-8027-78e31c8b91ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightButtonMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""107e323c-7e94-48b2-9bfd-d70a730bec53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -247,6 +265,28 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""action"": ""DebugState"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de0a6b4b-3142-4dc1-91c3-0fb2b3ba6008"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""LeftButtonMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cdf9c0f6-efb1-4484-b090-51daf206c253"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""RightButtonMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -317,6 +357,8 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         m_CustomPlayer_Crouch = m_CustomPlayer.FindAction("Crouch", throwIfNotFound: true);
         m_CustomPlayer_Look = m_CustomPlayer.FindAction("Look", throwIfNotFound: true);
         m_CustomPlayer_DebugState = m_CustomPlayer.FindAction("DebugState", throwIfNotFound: true);
+        m_CustomPlayer_LeftButtonMouse = m_CustomPlayer.FindAction("LeftButtonMouse", throwIfNotFound: true);
+        m_CustomPlayer_RightButtonMouse = m_CustomPlayer.FindAction("RightButtonMouse", throwIfNotFound: true);
         // CustomUI
         m_CustomUI = asset.FindActionMap("CustomUI", throwIfNotFound: true);
         m_CustomUI_Pause = m_CustomUI.FindAction("Pause", throwIfNotFound: true);
@@ -385,6 +427,8 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_CustomPlayer_Crouch;
     private readonly InputAction m_CustomPlayer_Look;
     private readonly InputAction m_CustomPlayer_DebugState;
+    private readonly InputAction m_CustomPlayer_LeftButtonMouse;
+    private readonly InputAction m_CustomPlayer_RightButtonMouse;
     public struct CustomPlayerActions
     {
         private @ControllAction m_Wrapper;
@@ -395,6 +439,8 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_CustomPlayer_Crouch;
         public InputAction @Look => m_Wrapper.m_CustomPlayer_Look;
         public InputAction @DebugState => m_Wrapper.m_CustomPlayer_DebugState;
+        public InputAction @LeftButtonMouse => m_Wrapper.m_CustomPlayer_LeftButtonMouse;
+        public InputAction @RightButtonMouse => m_Wrapper.m_CustomPlayer_RightButtonMouse;
         public InputActionMap Get() { return m_Wrapper.m_CustomPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -422,6 +468,12 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @DebugState.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnDebugState;
                 @DebugState.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnDebugState;
                 @DebugState.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnDebugState;
+                @LeftButtonMouse.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnLeftButtonMouse;
+                @LeftButtonMouse.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnLeftButtonMouse;
+                @LeftButtonMouse.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnLeftButtonMouse;
+                @RightButtonMouse.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRightButtonMouse;
+                @RightButtonMouse.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRightButtonMouse;
+                @RightButtonMouse.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRightButtonMouse;
             }
             m_Wrapper.m_CustomPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -444,6 +496,12 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @DebugState.started += instance.OnDebugState;
                 @DebugState.performed += instance.OnDebugState;
                 @DebugState.canceled += instance.OnDebugState;
+                @LeftButtonMouse.started += instance.OnLeftButtonMouse;
+                @LeftButtonMouse.performed += instance.OnLeftButtonMouse;
+                @LeftButtonMouse.canceled += instance.OnLeftButtonMouse;
+                @RightButtonMouse.started += instance.OnRightButtonMouse;
+                @RightButtonMouse.performed += instance.OnRightButtonMouse;
+                @RightButtonMouse.canceled += instance.OnRightButtonMouse;
             }
         }
     }
@@ -507,6 +565,8 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnDebugState(InputAction.CallbackContext context);
+        void OnLeftButtonMouse(InputAction.CallbackContext context);
+        void OnRightButtonMouse(InputAction.CallbackContext context);
     }
     public interface ICustomUIActions
     {

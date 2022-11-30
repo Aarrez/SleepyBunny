@@ -27,8 +27,11 @@ namespace PlayerStM.SuperState
             }
             else if (Ctx.IsClimbing)
             {
-                Debug.Log("Climb from gournded");
                 SwitchState(Factory.SuperClimb());
+            }
+            else if (Ctx.IsGrabing)
+            {
+                SwitchState(Factory.SuperPushing());
             }
         }
 
@@ -56,10 +59,6 @@ namespace PlayerStM.SuperState
             //{
             //    SetSubState(Factory.SubFalling());
             //}
-        }
-
-        public override void OnNewSuperState()
-        {
         }
 
         public override void FixedUpdateState()

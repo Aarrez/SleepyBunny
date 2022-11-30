@@ -38,8 +38,6 @@ namespace PlayerStM.BaseStates
 
         private BasePlayerState _currentSub;
 
-        private BasePlayerState _currentMinor;
-
         private StateFactory _stateFactory;
 
         #endregion Script Refrences
@@ -78,20 +76,30 @@ namespace PlayerStM.BaseStates
            "Inital layermask is Default and Ground")]
         [SerializeField] private LayerMask _groundLayer;
 
-        [Header("Raycast to climb/grab")]
-        [SerializeField, Range(0, 1.5f)] private float _rCRange = 1;
-
+        [Header("Other raycast variables")]
         [Tooltip("The layer the climb ray will hit." +
             "\n" + "Will automaticly have Climbable layer")]
         [SerializeField] private LayerMask _climbLayer;
+
+        [Tooltip("Default 0.5")]
+        [SerializeField] private float _climbRayLength = 0.5f;
 
         [Tooltip("The layer grab ray will hit." +
             "\n" + "Will automaticly have Grabable layer")]
         [SerializeField] private LayerMask _grabLayer;
 
+        [Tooltip("Default 1")]
+        [SerializeField] private float _grabRayLength = 1f;
+
+        [Tooltip("")]
+        [SerializeField] private float _pullForce = 2f;
+
         [Tooltip("The layer in witch rays do the interact functionality." +
             "\n" + "Will automaticly have Interactable layer")]
         [SerializeField] private LayerMask _interactLayer;
+
+        [Tooltip("Default 1")]
+        [SerializeField] private float _interactRayLength = 1f;
 
         #endregion Serialized Variables
 
@@ -103,27 +111,43 @@ namespace PlayerStM.BaseStates
 
         private Animator _playerAnimator;
 
-        public bool ShouldRespawn = false;
-
         private bool _isGrounded = false;
 
         private bool _isClimbing = false;
 
         private bool _isFalling = false;
 
-        private bool _isCrouching = false;
-
         private bool _isGrabing = false;
 
         private bool _landAnimationDone = false;
+
+        private Transform _transformPulled;
+
+        private Rigidbody _rigidbodyPulled;
 
         #endregion Private Variables
 
         #region Get and set
 
+        public Transform TransformPulled
+        {
+            get => _transformPulled;
+            set => _transformPulled = value;
+        }
+
         public InputScript TheInput => _theInput;
 
-        public Rigidbody Rb { get => _rb; set => _rb = value; }
+        public Rigidbody Rb
+        {
+            get => _rb;
+            set => _rb = value;
+        }
+
+        public Rigidbody RigidbodyPulled
+        {
+            get => _rigidbodyPulled;
+            set => _rigidbodyPulled = value;
+        }
 
         public Action LandAnimationDoneEvent
         {
@@ -142,8 +166,6 @@ namespace PlayerStM.BaseStates
             get { return _currentSub; }
             set { _currentSub = value; }
         }
-
-        public BasePlayerState CurrentMinor => _currentMinor;
 
         public float MovmentForce
         {
@@ -166,6 +188,12 @@ namespace PlayerStM.BaseStates
         public float RotationSpeed => _rotationSpeed;
 
         public float ClimbSpeed => _climbSpeed;
+
+        public float PullForce
+        {
+            get => _pullForce;
+            set => _pullForce = value;
+        }
 
         public bool IsGrounded
         {
@@ -229,7 +257,7 @@ namespace PlayerStM.BaseStates
 
         private void Start()
         {
-            _groundLayer = LayerMask.GetMask("Ground") + 0;
+            _groundLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
             _climbLayer = LayerMask.GetMask("Climbable");
             _grabLayer = LayerMask.GetMask("Grabable");
             _interactLayer = LayerMask.GetMask("Interactable");
@@ -240,18 +268,22 @@ namespace PlayerStM.BaseStates
 
         private void OnEnable()
         {
-            thePlayerInput.CustomPlayer.DebugState.performed += ctx => GetCurrentState();
-
-            InputScript.Interact += ClimbGrabInteract;
+            thePlayerInput.CustomPlayer.DebugState.performed
+                += ctx => GetCurrentState();
 
             thePlayerInput.Enable();
+
+            InputScript.Interact += ClimbGrabInteract;
 
             Grounded.IsGroundedEvent += GroundedRaycast;
         }
 
         private void OnDisable()
         {
-            thePlayerInput.Enable();
+            thePlayerInput.CustomPlayer.DebugState.performed
+                -= ctx => GetCurrentState();
+
+            thePlayerInput.Disable();
 
             InputScript.Interact += ClimbGrabInteract;
 
@@ -311,29 +343,41 @@ namespace PlayerStM.BaseStates
                 Vector3 tempVector =
                     Camera.main.transform.TransformDirection(_forwardVector[i]);
 
-                Debug.DrawRay(transform.position, tempVector * _rCRange, Color.green, 2);
+                Debug.DrawRay(transform.position, tempVector * 1, Color.green, 2);
 
+                //Climb ray
                 if (Physics.Raycast(transform.position, tempVector,
-                _rCRange, _climbLayer))
+                _climbRayLength, _climbLayer))
                 {
                     _isClimbing = true;
+                    break;
                 }
-                else if (Physics.Raycast(transform.position, tempVector,
-                    _rCRange, _grabLayer))
-                {
-                    _isGrabing = true;
-                }
+
+                //Grab ray
                 else if (Physics.Raycast(transform.position, tempVector, out hit,
-                    _rCRange, _interactLayer))
+                    _climbRayLength, _grabLayer))
+                {
+                    _transformPulled = hit.transform;
+                    _rigidbodyPulled = hit.transform.GetComponent<Rigidbody>();
+                    _isGrabing = true;
+                    break;
+                }
+
+                // Interaction Ray
+                else if (Physics.Raycast(transform.position, tempVector, out hit,
+                    _interactRayLength, _interactLayer))
                 {
                     try
                     {
-                        hit.transform.gameObject.GetComponent<InteractObject>().Interacted.Invoke();
+                        hit.transform.gameObject.GetComponent<InteractObject>()
+                            .Interacted.Invoke();
                     }
                     catch (Exception)
                     {
-                        hit.transform.gameObject.GetComponentInChildren<InteractObject>().Interacted.Invoke();
+                        hit.transform.gameObject.GetComponentInChildren<InteractObject>()
+                            .Interacted.Invoke();
                     }
+                    break;
                 }
             }
         }

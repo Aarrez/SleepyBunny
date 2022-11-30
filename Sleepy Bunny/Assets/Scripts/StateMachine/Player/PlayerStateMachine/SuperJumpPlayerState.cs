@@ -49,10 +49,6 @@ namespace PlayerStM.SuperState
             SetSubState(Factory.SubFalling());
         }
 
-        public override void OnNewSuperState()
-        {
-        }
-
         private float VelocityTest = 0f;
 
         public override void FixedUpdateState()

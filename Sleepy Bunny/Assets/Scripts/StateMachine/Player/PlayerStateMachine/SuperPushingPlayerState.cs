@@ -20,6 +20,21 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
+            if (!Ctx.IsGrabing)
+            {
+                SwitchState(Factory.SuperGrounded());
+            }
+        }
+
+        public override void FixedUpdateState()
+        {
+            CheckSwitchState();
+
+            MovePulledObject(Ctx.TransformPulled, Ctx.RigidbodyPulled);
+        }
+
+        public override void UpdateState()
+        {
         }
 
         public override void EnterState()
@@ -28,22 +43,20 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
+            Ctx.TransformPulled = null;
+            Ctx.RigidbodyPulled = null;
         }
 
         public override void InitializeSubState()
         {
-        }
-
-        public override void OnNewSuperState()
-        {
-        }
-
-        public override void FixedUpdateState()
-        {
-        }
-
-        public override void UpdateState()
-        {
+            if (Ctx.TheInput.MoveCtx.ReadValueAsButton())
+            {
+                SetSubState(Factory.SubMovement());
+            }
+            else
+            {
+                SetSubState(Factory.SubIdle());
+            }
         }
     }
 }

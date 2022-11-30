@@ -40,9 +40,6 @@ namespace PlayerStM.SubStates
         }
 
         //When a new superstate is set this medtod is called
-        public override void OnNewSuperState()
-        {
-        }
 
         public override void UpdateState()
         {
