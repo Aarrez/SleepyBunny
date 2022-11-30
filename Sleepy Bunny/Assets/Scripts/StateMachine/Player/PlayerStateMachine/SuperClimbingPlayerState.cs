@@ -51,7 +51,6 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
             CheckSwitchState();
-            PlayerClimb();
         }
 
         public override void ExitState()
