@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.11768, g: 324.74365, b: 429.81006, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -514,9 +514,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
+--- !u!54 &54319219
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54319211}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &60667409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2238,9 +2252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!138 &142099004
 FixedJoint:
   m_ObjectHideFlags: 0
@@ -11690,9 +11702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!114 &610232447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12296,9 +12306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &679778990
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12590,9 +12598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &710851899
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32340,7 +32346,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 24be694cb6e0ddb459d0baf7aa9eb2ef, type: 2}
+  - {fileID: -876546973899608171, guid: 53ef5a7b3ddc5ec4d84a378fab6315d6, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -36614,7 +36620,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
-  m_LocalRotation: {x: 0.08457465, y: 0.000012613969, z: -0.0000010706581, w: 0.99641716}
+  m_LocalRotation: {x: 0.08457465, y: 0.000012545391, z: -0.0000010648371, w: 0.99641716}
   m_LocalPosition: {x: -4.628013, y: 10.076116, z: 0.19122648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45849,6 +45855,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
+      propertyPath: _pullForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
+        type: 3}
       propertyPath: _climbSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -45871,6 +45882,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _rayGroundDist
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
+        type: 3}
+      propertyPath: _rotationSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
@@ -54337,9 +54353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!114 &1576776490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54823,9 +54837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!114 &1618821878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57092,9 +57104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &1699040817
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57192,9 +57202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!4 &1718562875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8324988658727561576, guid: 9e4796eb3a7359049a49ced1447c82f7,
@@ -58711,9 +58719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &1875857166
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -58996,9 +59002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &1894251156
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -62938,9 +62942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &2011970956
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71153,7 +71155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2650174475014833325}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 3.153823, y: -1.734, z: -5.344}
+  m_LocalPosition: {x: 3.153823, y: -1.734, z: 3.871}
   m_LocalScale: {x: -49.817593, y: -23.717901, z: -10.212501}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96302,7 +96304,7 @@ GameObject:
   - component: {fileID: 1708344449}
   - component: {fileID: 1708344450}
   - component: {fileID: 1708344454}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: PILLOW
   m_TagString: Move_Object
   m_Icon: {fileID: 0}
@@ -103577,11 +103579,6 @@ PrefabInstance:
       propertyPath: m_SphereColliders.Array.data[0].second
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 477361346, guid: 779d93c3bfb724de991e9f9ef8b30c59, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: -3846018093981099296, guid: ec11691b39388f645a0d8cb9a44008da,
-        type: 3}
     - target: {fileID: 6953571365957125414, guid: 779d93c3bfb724de991e9f9ef8b30c59,
         type: 3}
       propertyPath: m_RootOrder
@@ -104425,9 +104422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &8123822984225746874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -104764,9 +104759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &8183989913896540627
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -104962,9 +104955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &8264401237905529145
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -105277,9 +105268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &8736646764449570155
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -105493,12 +105482,12 @@ PrefabInstance:
     - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000012545907
+      value: 0.000012511618
       objectReference: {fileID: 0}
     - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000010648077
+      value: -0.0000010618974
       objectReference: {fileID: 0}
     - target: {fileID: 8916875052486592168, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
@@ -105558,17 +105547,17 @@ PrefabInstance:
     - target: {fileID: 8916875052777114972, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1176865
+      value: 0.117686495
       objectReference: {fileID: 0}
     - target: {fileID: 8916875052777114972, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000012489833
+      value: 0.000012474652
       objectReference: {fileID: 0}
     - target: {fileID: 8916875052777114972, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000014800975
+      value: -0.0000014782983
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e517476e42dc4c489ae6b7b5f89fdc4, type: 3}
@@ -105734,9 +105723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &9003353129386639084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -105870,9 +105857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
-  rc: {fileID: 0}
+  Grabed: 0
 --- !u!65 &9175077149163061754
 BoxCollider:
   m_ObjectHideFlags: 0

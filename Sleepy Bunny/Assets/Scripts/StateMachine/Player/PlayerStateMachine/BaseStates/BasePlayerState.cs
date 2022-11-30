@@ -6,7 +6,6 @@ using PlayerStM.SuperState;
 namespace PlayerStM.BaseStates
 {
     /// <summary>
-    ///
     /// More info of the override methods in
     /// TemplatePlayerState.cs
     /// </summary>
@@ -148,9 +147,13 @@ namespace PlayerStM.BaseStates
                        new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
                     break;
             }
+        }
 
+        internal void MoveCameraDirection()
+        {
             _cameraDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
             _moveDirection = new Vector3(_cameraDirection.x, 0f, _cameraDirection.z);
+            Debug.Log(_moveDirection);
         }
 
         internal void MovePulledObject(Transform transformToPull, Rigidbody rigidbodyOfObject)

@@ -1,6 +1,7 @@
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
 using UnityEngine;
+using UnityEngine.iOS;
 
 namespace PlayerStM.SubStates
 {
@@ -57,8 +58,13 @@ namespace PlayerStM.SubStates
         public override void FixedUpdateState()
         {
             CheckSwitchState();
-            PlayerMove();
+            MoveCameraDirection();
             RotateToMovment();
+            PlayerMove();
+        }
+
+        public override void UpdateState()
+        {
         }
 
         private void PlayerMove()
@@ -85,6 +91,7 @@ namespace PlayerStM.SubStates
 
         private void GroundedMovment()
         {
+            Debug.Log(MoveDirection);
             Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce
                 * Time.fixedDeltaTime;
         }
@@ -108,10 +115,6 @@ namespace PlayerStM.SubStates
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
                 Quaternion.LookRotation(MoveDirection, Vector3.up),
                 Ctx.RotationSpeed);
-        }
-
-        public override void UpdateState()
-        {
         }
     }
 }
