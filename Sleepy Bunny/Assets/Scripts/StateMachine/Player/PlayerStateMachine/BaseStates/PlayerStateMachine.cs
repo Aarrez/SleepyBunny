@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using PlayerStM.SubStates;
 
 namespace PlayerStM.BaseStates
@@ -117,9 +117,9 @@ namespace PlayerStM.BaseStates
 
         private Transform _pointHit;
 
-        private Vector3[] _halfVectors = new Vector3[9];
+        private List<Vector3> _downVectors = new List<Vector3>();
 
-        private Vector3[] _forwardVector = new Vector3[5];
+        private List<Vector3> _forwardVector = new List<Vector3>();
 
         private Animator _playerAnimator;
 
@@ -130,6 +130,10 @@ namespace PlayerStM.BaseStates
         private bool _isFalling = false;
 
         private bool _isGrabing = false;
+
+        private bool _isPushing = false;
+
+        private bool _isPulling = false;
 
         private bool _landAnimationDone = false;
 
@@ -252,6 +256,18 @@ namespace PlayerStM.BaseStates
             set => _isGrabing = value;
         }
 
+        public bool IsPushing
+        {
+            get => _isPushing;
+            set => _isPushing = value;
+        }
+
+        public bool IsPulling
+        {
+            get => _isPulling;
+            set => _isPulling = value;
+        }
+
         public bool LandAnimationDone
         {
             get => _landAnimationDone;
@@ -365,21 +381,56 @@ namespace PlayerStM.BaseStates
 
         private void SetRaycastVectors()
         {
-            _halfVectors[0] = Vector3.down;
-            _halfVectors[1] = Vector3.Lerp(Vector3.down, Vector3.back, _vectorAngle);
-            _halfVectors[2] = Vector3.Lerp(Vector3.down, Vector3.forward, _vectorAngle);
-            _halfVectors[3] = Vector3.Lerp(Vector3.down, Vector3.right, _vectorAngle);
-            _halfVectors[4] = Vector3.Lerp(Vector3.down, Vector3.left, _vectorAngle);
-            _halfVectors[5] = Vector3.Lerp(_halfVectors[2], _halfVectors[3], _vectorAngle);
-            _halfVectors[6] = Vector3.Lerp(_halfVectors[2], _halfVectors[4], _vectorAngle);
-            _halfVectors[7] = Vector3.Lerp(_halfVectors[1], _halfVectors[3], _vectorAngle);
-            _halfVectors[8] = Vector3.Lerp(_halfVectors[1], _halfVectors[4], _vectorAngle);
+            // Cardinal directions are relative to the players rotation
+            //
+            //0
+            _downVectors.Add(Vector3.down);
 
-            _forwardVector[0] = Vector3.forward;
-            _forwardVector[1] = Vector3.Lerp(Vector3.forward, Vector3.up, _forwardVAngel);
-            _forwardVector[2] = Vector3.Lerp(Vector3.forward, Vector3.down, _forwardVAngel);
-            _forwardVector[3] = Vector3.Lerp(Vector3.forward, Vector3.right, _forwardVAngel);
-            _forwardVector[4] = Vector3.Lerp(Vector3.forward, Vector3.left, _forwardVAngel);
+            //1 south
+            _downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.back, _vectorAngle));
+
+            //2 north
+            _downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.forward, _vectorAngle));
+
+            //3 east
+            _downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.right, _vectorAngle));
+
+            //4 west
+            _downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.left, _vectorAngle));
+
+            //5 north east
+            _downVectors.Add(Vector3.Lerp
+                (_downVectors[2], _downVectors[3], _vectorAngle));
+
+            //6 north west
+            _downVectors.Add(Vector3.Lerp
+                (_downVectors[2], _downVectors[4], _vectorAngle));
+
+            //7 south east
+            _downVectors.Add(Vector3.Lerp
+                (_downVectors[1], _downVectors[3], _vectorAngle));
+
+            //8 south west
+            _downVectors.Add(Vector3.Lerp
+                (_downVectors[1], _downVectors[4], _vectorAngle));
+
+            _forwardVector.Add(Vector3.forward);
+
+            _forwardVector.Add(Vector3.Lerp
+                (Vector3.forward, Vector3.up, _forwardVAngel));
+
+            _forwardVector.Add(Vector3.Lerp
+                (Vector3.forward, Vector3.down, _forwardVAngel));
+
+            _forwardVector.Add(Vector3.Lerp
+                (Vector3.forward, Vector3.right, _forwardVAngel));
+
+            _forwardVector.Add(Vector3.Lerp
+                (Vector3.forward, Vector3.left, _forwardVAngel));
         }
 
         /// <summary>
@@ -389,8 +440,12 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public void ClimbGrabInteract()
         {
+            if (_isGrabing || _isClimbing) { return; }
+
+            // The forloop shoots out rays in all direction unitl
+            // one hits a object with the correct layer
             RaycastHit hit;
-            for (int i = 0; i < _forwardVector.Length; i++)
+            for (int i = 0; i < _forwardVector.Count; i++)
             {
                 Vector3 tempVector =
                     Camera.main.transform.TransformDirection(_forwardVector[i]);
@@ -409,6 +464,9 @@ namespace PlayerStM.BaseStates
                 else if (Physics.Raycast(transform.position, tempVector, out hit,
                     _climbRayLength, _grabLayer))
                 {
+                    float distance =
+                        Vector3.Distance(transform.position, hit.transform.position);
+
                     _transformPulled = hit.transform;
                     _rigidbodyPulled = hit.transform.GetComponent<Rigidbody>();
 
@@ -418,6 +476,16 @@ namespace PlayerStM.BaseStates
                     _pointHit = hitPoint.transform;
 
                     _isGrabing = true;
+
+                    if (distance > 0.5f)
+                    {
+                        _isPushing = true;
+                    }
+                    else if (distance < _pullDistance)
+                    {
+                        _isPulling = true;
+                    }
+
                     break;
                 }
 
@@ -443,11 +511,11 @@ namespace PlayerStM.BaseStates
         public void GroundedRaycast()
         {
             RaycastHit hit;
-            for (int i = 0; i < _halfVectors.Length; i++)
+            for (int i = 0; i < _downVectors.Count; i++)
             {
-                Debug.DrawRay(transform.position, _halfVectors[i] * _rayGroundDist,
+                Debug.DrawRay(transform.position, _downVectors[i] * _rayGroundDist,
                         Color.red, 1);
-                if (Physics.Raycast(transform.position, _halfVectors[i], out hit,
+                if (Physics.Raycast(transform.position, _downVectors[i], out hit,
                     _rayGroundDist, _groundLayer))
                 {
                     _isGrounded = true;

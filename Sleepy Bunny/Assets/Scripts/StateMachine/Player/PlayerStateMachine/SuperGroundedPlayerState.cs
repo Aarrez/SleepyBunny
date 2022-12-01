@@ -31,7 +31,7 @@ namespace PlayerStM.SuperState
             }
             else if (Ctx.IsGrabing)
             {
-                SwitchState(Factory.SuperPushing());
+                SwitchState(Factory.SuperGrab());
             }
         }
 

@@ -24,7 +24,7 @@ namespace PlayerStM.BaseStates
 
         SubFalling,
 
-        SuperPushing,
+        SuperGrab,
     }
 
     public class StateFactory
@@ -42,7 +42,7 @@ namespace PlayerStM.BaseStates
             _states[eStates.SubMovement] = new SubMovementPlayerState(_context, this);
             _states[eStates.SubIdle] = new SubIdlePlayerState(_context, this);
             _states[eStates.SubFalling] = new SubFallingPlayerState(_context, this);
-            _states[eStates.SuperPushing] = new SuperPushingPlayerState(_context, this);
+            _states[eStates.SuperGrab] = new SuperGrabPlayerState(_context, this);
             _states[eStates.SuperClimb] = new SuperClimbingPlayerState(_context, this);
             _states[eStates.SuperJump] = new SuperJumpPlayerState(_context, this);
             _states[eStates.SuperGrounded] = new SuperGroundedPlayerState(_context, this);
@@ -58,9 +58,9 @@ namespace PlayerStM.BaseStates
             return _states[eStates.SuperGrounded];
         }
 
-        public BasePlayerState SuperPushing()
+        public BasePlayerState SuperGrab()
         {
-            return _states[eStates.SuperPushing];
+            return _states[eStates.SuperGrab];
         }
 
         public BasePlayerState SuperClimb()

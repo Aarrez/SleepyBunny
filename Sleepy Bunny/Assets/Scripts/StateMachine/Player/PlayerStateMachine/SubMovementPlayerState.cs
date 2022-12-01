@@ -36,7 +36,7 @@ namespace PlayerStM.SubStates
             {
                 case SuperClimbingPlayerState: break;
 
-                case SuperPushingPlayerState: break;
+                case SuperGrabPlayerState: break;
 
                 case SuperJumpPlayerState: break;
 
@@ -75,7 +75,7 @@ namespace PlayerStM.SubStates
                     PlayerClimb();
                     break;
 
-                case SuperPushingPlayerState:
+                case SuperGrabPlayerState:
                     PullingMovement();
                     break;
 

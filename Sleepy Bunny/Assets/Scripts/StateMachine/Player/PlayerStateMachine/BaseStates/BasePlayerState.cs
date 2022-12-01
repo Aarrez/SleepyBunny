@@ -11,6 +11,13 @@ namespace PlayerStM.BaseStates
     /// </summary>
     public abstract class BasePlayerState
     {
+        public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
+        {
+            this.Ctx = ctx;
+            this.Factory = factory;
+            InputScript.Moveing += GetMoveCtx;
+        }
+
         // Varibales for movment
         private Vector3 _moveVector = Vector3.zero;
 
@@ -60,13 +67,6 @@ namespace PlayerStM.BaseStates
             LandHard = 1,
 
             LandDead = 2
-        }
-
-        public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
-        {
-            this.Ctx = ctx;
-            this.Factory = factory;
-            InputScript.Moveing += GetMoveCtx;
         }
 
         public abstract void EnterState();
@@ -137,7 +137,7 @@ namespace PlayerStM.BaseStates
                         = new Vector3(0f, _ctxMoveVector.y, _ctxMoveVector.x);
                     break;
 
-                case SuperPushingPlayerState:
+                case SuperGrabPlayerState:
                     _moveVector =
                         new Vector3(_ctxMoveVector.x, 0f, _ctxMoveVector.y);
                     break;
@@ -159,15 +159,15 @@ namespace PlayerStM.BaseStates
         /// This medthod pulls an object towards the object with the PlayerStateMachine
         /// script on it.
         ///<br></br>
-        /// <param name="transformToPull">The transform of the object being pulled</param>
+        /// "transformToPull" The transform of the object being pulled
         /// <br></br>
-        /// <param name="rigidbodyOfObject">The rigidbody of the object being pulled</param>
+        /// "rigidbodyOfObject" The rigidbody of the object being pulled
         /// <br></br>
-        /// <param name="pullPoint">Where the ray hit the grabable target</param>
+        /// "pullPointWhere" the ray hit the grabable target
         /// <br></br>
-        /// <param name="breakDistance">Is X units away then sever connection</param>
+        /// "breakDistance" Is X units away then sever connection
         /// <br></br>
-        /// <param name="pullDistance">If object is X units away pull on object</param>
+        /// "pullDistance" If object is X units away pull on object
         /// </summary>
         internal void MovePulledObject(Transform transformToPull,
             Rigidbody rigidbodyOfObject, Transform pullPoint,
@@ -188,12 +188,8 @@ namespace PlayerStM.BaseStates
             Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
             Vector3 normalizedDirection = pullDirection.normalized;
 
-            Debug.Log(pullPoint);
-
             rigidbodyOfObject.AddForceAtPosition
                 ((normalizedDirection * Ctx.PullForce * Time.fixedDeltaTime), pullPoint.position);
-
-            //rigidbodyOfObject.velocity += normalizedDirection * Ctx.PullForce * Time.fixedDeltaTime;
         }
 
         internal void MovePushedObject(Transform transformToPush, Rigidbody rigidbodyOfObject)

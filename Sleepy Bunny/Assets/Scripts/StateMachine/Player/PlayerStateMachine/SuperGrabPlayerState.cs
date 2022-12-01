@@ -8,9 +8,9 @@ namespace PlayerStM.SubStates
     /// A super state that tells it's sub state they are pushing something
     /// will handle the push funciton when implememented
     /// </summary>
-    public class SuperPushingPlayerState : BasePlayerState
+    public class SuperGrabPlayerState : BasePlayerState
     {
-        public SuperPushingPlayerState(PlayerStateMachine ctx
+        public SuperGrabPlayerState(PlayerStateMachine ctx
             , StateFactory factory)
             : base(ctx, factory)
         {
