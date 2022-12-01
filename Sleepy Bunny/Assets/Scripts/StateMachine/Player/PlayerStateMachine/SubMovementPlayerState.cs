@@ -91,7 +91,6 @@ namespace PlayerStM.SubStates
 
         private void GroundedMovment()
         {
-            Debug.Log(MoveDirection);
             Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce
                 * Time.fixedDeltaTime;
         }

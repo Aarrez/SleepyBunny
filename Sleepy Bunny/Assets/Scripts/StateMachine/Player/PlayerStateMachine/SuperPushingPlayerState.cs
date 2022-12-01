@@ -30,7 +30,8 @@ namespace PlayerStM.SubStates
         {
             CheckSwitchState();
 
-            MovePulledObject(Ctx.TransformPulled, Ctx.RigidbodyPulled);
+            MovePulledObject(Ctx.TransformPulled, Ctx.RigidbodyPulled,
+                Ctx.PointHit, Ctx.BreakDistance, Ctx.PullDistance);
         }
 
         public override void UpdateState()

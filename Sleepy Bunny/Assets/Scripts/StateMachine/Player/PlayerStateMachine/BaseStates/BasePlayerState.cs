@@ -153,25 +153,51 @@ namespace PlayerStM.BaseStates
         {
             _cameraDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
             _moveDirection = new Vector3(_cameraDirection.x, 0f, _cameraDirection.z);
-            Debug.Log(_moveDirection);
         }
 
-        internal void MovePulledObject(Transform transformToPull, Rigidbody rigidbodyOfObject)
+        /// <summary>
+        /// This medthod pulls an object towards the object with the PlayerStateMachine
+        /// script on it.
+        ///<br></br>
+        /// <param name="transformToPull">The transform of the object being pulled</param>
+        /// <br></br>
+        /// <param name="rigidbodyOfObject">The rigidbody of the object being pulled</param>
+        /// <br></br>
+        /// <param name="pullPoint">Where the ray hit the grabable target</param>
+        /// <br></br>
+        /// <param name="breakDistance">Is X units away then sever connection</param>
+        /// <br></br>
+        /// <param name="pullDistance">If object is X units away pull on object</param>
+        /// </summary>
+        internal void MovePulledObject(Transform transformToPull,
+            Rigidbody rigidbodyOfObject, Transform pullPoint,
+            float breakDistance, float pullDistance)
         {
-            Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
-            Vector3 normalizedDirection = pullDirection.normalized;
             float distance = Vector3.Distance(Ctx.transform.position, transformToPull.position);
-            Debug.Log(distance);
-            if (distance > 5)
+            if (distance > breakDistance)
             {
                 Ctx.IsGrabing = false;
+                Debug.Log("Connection Break");
                 return;
             }
-            if (distance < 1)
+            if (distance < pullDistance)
             {
                 return;
             }
-            rigidbodyOfObject.velocity += normalizedDirection * Ctx.PullForce * Time.fixedDeltaTime;
+
+            Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
+            Vector3 normalizedDirection = pullDirection.normalized;
+
+            Debug.Log(pullPoint);
+
+            rigidbodyOfObject.AddForceAtPosition
+                ((normalizedDirection * Ctx.PullForce * Time.fixedDeltaTime), pullPoint.position);
+
+            //rigidbodyOfObject.velocity += normalizedDirection * Ctx.PullForce * Time.fixedDeltaTime;
+        }
+
+        internal void MovePushedObject(Transform transformToPush, Rigidbody rigidbodyOfObject)
+        {
         }
     }
 }

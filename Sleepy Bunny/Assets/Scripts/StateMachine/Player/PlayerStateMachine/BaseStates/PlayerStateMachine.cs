@@ -72,6 +72,10 @@ namespace PlayerStM.BaseStates
             "\n" + "0 = 0 degres(Strait forward), 1 = 90 degres")]
         [SerializeField, Range(0, 1)] private float _forwardVAngel = 0.3f;
 
+        [Tooltip("If true the uses already set layers." + "\n"
+            + "If false you can set custom layers")]
+        [SerializeField] private bool _useDefaultLayers = true;
+
         [Tooltip("Only change if debuging!" + "\n" +
            "Inital layermask is Default and Ground")]
         [SerializeField] private LayerMask _groundLayer;
@@ -91,8 +95,9 @@ namespace PlayerStM.BaseStates
         [Tooltip("Default 1")]
         [SerializeField] private float _grabRayLength = 1f;
 
-        [Tooltip("")]
         [SerializeField] private float _pullForce = 2f;
+
+        [SerializeField] private float _pushForce = 2f;
 
         [Tooltip("The layer in witch rays do the interact functionality." +
             "\n" + "Will automaticly have Interactable layer")]
@@ -101,9 +106,16 @@ namespace PlayerStM.BaseStates
         [Tooltip("Default 1")]
         [SerializeField] private float _interactRayLength = 1f;
 
+        [Header("Push and pull variables")]
+        [SerializeField] private float _breakDistance = 10f;
+
+        [SerializeField] private float _pullDistance = 1f;
+
         #endregion Serialized Variables
 
         #region Private Variables
+
+        private Transform _pointHit;
 
         private Vector3[] _halfVectors = new Vector3[9];
 
@@ -129,6 +141,7 @@ namespace PlayerStM.BaseStates
 
         #region Get and set
 
+        //Miscellaneous Get and set
         public Transform TransformPulled
         {
             get => _transformPulled;
@@ -167,6 +180,13 @@ namespace PlayerStM.BaseStates
             set { _currentSub = value; }
         }
 
+        public Transform PointHit
+        {
+            get => _pointHit;
+            set => _pointHit = value;
+        }
+
+        // Get and set floats
         public float MovmentForce
         {
             get => _movmentForce;
@@ -185,16 +205,35 @@ namespace PlayerStM.BaseStates
             set => _directionalJumpForce = value;
         }
 
-        public float RotationSpeed => _rotationSpeed;
-
-        public float ClimbSpeed => _climbSpeed;
-
         public float PullForce
         {
             get => _pullForce;
             set => _pullForce = value;
         }
 
+        public float PushForce
+        {
+            get => _pushForce;
+            set => _pushForce = value;
+        }
+
+        public float RotationSpeed => _rotationSpeed;
+
+        public float ClimbSpeed => _climbSpeed;
+
+        public float BreakDistance
+        {
+            get => _breakDistance;
+            set => _breakDistance = value;
+        }
+
+        public float PullDistance
+        {
+            get => _pullDistance;
+            set => _pullDistance = value;
+        }
+
+        //Get and set bools
         public bool IsGrounded
         {
             get => _isGrounded;
@@ -207,8 +246,6 @@ namespace PlayerStM.BaseStates
             set => _isClimbing = value;
         }
 
-        public bool IsFalling => _isFalling;
-
         public bool IsGrabing
         {
             get => _isGrabing;
@@ -220,6 +257,8 @@ namespace PlayerStM.BaseStates
             get => _landAnimationDone;
             set => _landAnimationDone = value;
         }
+
+        public bool IsFalling => _isFalling;
 
         /// <summary>
         /// When setting GSIndex(Integer)
@@ -257,13 +296,20 @@ namespace PlayerStM.BaseStates
 
         private void Start()
         {
-            _groundLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
-            _climbLayer = LayerMask.GetMask("Climbable");
-            _grabLayer = LayerMask.GetMask("Grabable");
-            _interactLayer = LayerMask.GetMask("Interactable");
             SetRaycastVectors();
 
             Physics.gravity = new Vector3(0, -9.82F, 0);
+        }
+
+        private void OnValidate()
+        {
+            if (_useDefaultLayers)
+            {
+                _groundLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
+                _climbLayer = LayerMask.GetMask("Climbable");
+                _grabLayer = LayerMask.GetMask("Grabable");
+                _interactLayer = LayerMask.GetMask("Interactable");
+            }
         }
 
         private void OnEnable()
@@ -300,6 +346,12 @@ namespace PlayerStM.BaseStates
             _currentSuper.UpdateStates();
         }
 
+        /// <summary>
+        /// Not in use. Old method for checking if something is grounded.
+        /// <br></br>
+        /// Does not work
+        /// </summary>
+        /// <param name="grounded"></param>
         private void CheckGrounded(bool grounded)
         {
             _isGrounded = grounded;
@@ -331,7 +383,7 @@ namespace PlayerStM.BaseStates
         }
 
         /// <summary>
-        /// Shoots out Rays and that hits spesific Layers.
+        /// Shoots out Rays and that hits specific Layers.
         /// <br></br>
         /// The layers can be specified in the editor under PlayerStateMachine
         /// </summary>
@@ -359,6 +411,12 @@ namespace PlayerStM.BaseStates
                 {
                     _transformPulled = hit.transform;
                     _rigidbodyPulled = hit.transform.GetComponent<Rigidbody>();
+
+                    GameObject hitPoint = new GameObject();
+                    hitPoint.transform.position = hit.point;
+                    hitPoint.transform.parent = hit.transform;
+                    _pointHit = hitPoint.transform;
+
                     _isGrabing = true;
                     break;
                 }
