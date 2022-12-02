@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8916875050992293558}
   - component: {fileID: 8916875050992293552}
   - component: {fileID: 8916875050992293555}
+  - component: {fileID: 2704402693372907255}
   m_Layer: 1
   m_Name: CM ThidpersonCamera
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 67.380135
     OrthographicSize: 10
-    NearClipPlane: 0.22
+    NearClipPlane: 0.18
     FarClipPlane: 20
     Dutch: 0
     ModeOverride: 0
@@ -83,7 +84,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 1
     m_SpeedMode: 1
     m_MaxSpeed: 0.001
     m_AccelTime: 0.05
@@ -107,9 +108,9 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 0
+    Value: 90
     m_SpeedMode: 1
-    m_MaxSpeed: 0.01
+    m_MaxSpeed: 0.1
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -141,8 +142,8 @@ MonoBehaviour:
     m_Radius: 0.1
   - m_Height: 0.22
     m_Radius: 1
-  - m_Height: 0
-    m_Radius: 0.1
+  - m_Height: 0.03
+    m_Radius: 0.15
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
   - {fileID: 5061220861487151396}
@@ -194,6 +195,22 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -5822428013130308404, guid: 0ba78ef5d226c524ead725487c564f1b, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &2704402693372907255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8916875050992293559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4700f9f03ad19f94baf0367cb7a9c988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Width: 1
+  m_Damping: 0
+  m_MinFOV: 1
+  m_MaxFOV: 60
 --- !u!1 &8916875051678770159
 GameObject:
   m_ObjectHideFlags: 3
