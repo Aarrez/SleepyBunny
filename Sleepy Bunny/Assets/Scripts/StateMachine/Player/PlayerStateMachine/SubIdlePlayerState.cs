@@ -30,6 +30,31 @@ namespace PlayerStM.SubStates
         public override void EnterState()
         {
             if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
+            switch (Ctx.CurrentSuper)
+            {
+                case SuperClimbingPlayerState:
+                    Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                        (float)_eIdleAnim.IdleClimb);
+                    break;
+
+                case SuperGrabPlayerState:
+                    if (Ctx.IsPulling)
+                    {
+                        Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                            (float)_eIdleAnim.IdlePull);
+                    }
+                    else if (Ctx.IsPushing)
+                    {
+                        Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                            (float)_eIdleAnim.IdlePush);
+                    }
+                    break;
+
+                default:
+                    Ctx.PlayerAnimator.SetFloat("IdleIndex", (float)_eIdleAnim.Idle);
+                    break;
+            }
+
             Ctx.PlayerAnimator.SetInteger("Index",
                 (int)_eAnim.Idle);
         }

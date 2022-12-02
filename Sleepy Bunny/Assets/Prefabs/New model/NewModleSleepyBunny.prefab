@@ -962,14 +962,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5930e957034f547b94c29a1876089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputSound:
+  _steps:
     Guid:
-      Data1: -505795730
-      Data2: 1312379979
-      Data3: 484885399
-      Data4: -1556301432
-    Path: event:/steps
-  _walkingSpeed: 0
+      Data1: 164687614
+      Data2: 1091765358
+      Data3: -1859584872
+      Data4: 2003517254
+    Path: event:/Steps 2D
+  _jump:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  _climb:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &4388743801013530618
 GameObject:
   m_ObjectHideFlags: 0
@@ -2823,7 +2836,6 @@ GameObject:
   - component: {fileID: 8359512614524538521}
   - component: {fileID: 8359512614524538520}
   - component: {fileID: 3470122205737641228}
-  - component: {fileID: 3470122205737641229}
   - component: {fileID: 2689577338028352677}
   m_Layer: 6
   m_Name: NewModleSleepyBunny
@@ -2914,19 +2926,6 @@ MonoBehaviour:
   m_DefaultActionMap: CustomPlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &3470122205737641229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8701972349885150162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc3c151db24cd4bb4ae7f050da2954f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tourchLight: {fileID: 2689577338635950560}
 --- !u!114 &2689577338028352677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2939,15 +2938,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7140de63b5c6f4ebeed6c52e578c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _painNoise: {fileID: 0}
-  _sizzle: {fileID: 0}
   _movmentForce: 70
   _directionalJumpForce: 0.5
   _jumpHeight: 4
   _climbSpeed: 5
   _rotationSpeed: 100
-  _rCRange: 1
-  ShouldRespawn: 0
+  _rayGroundDist: 0.1
+  _vectorAngle: 0.5
+  _forwardVAngel: 0.3
+  _useDefaultLayers: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 9
+  _climbLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  _climbRayLength: 0.5
+  _grabLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _grabRayLength: 1
+  _pullForce: 2
+  _pushForce: 2
+  _interactLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _interactRayLength: 1
+  _breakDistance: 10
+  _pullDistance: 1
 --- !u!1 &9070179661848927906
 GameObject:
   m_ObjectHideFlags: 0

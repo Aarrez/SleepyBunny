@@ -32,19 +32,34 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
+            if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
+
             switch (Ctx.CurrentSuper)
             {
-                case SuperClimbingPlayerState: break;
+                case SuperClimbingPlayerState:
+                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                        (float)_eMoveAnim.Climb); break;
 
-                case SuperGrabPlayerState: break;
-
-                case SuperJumpPlayerState: break;
+                case SuperGrabPlayerState:
+                    if (Ctx.IsPushing)
+                    {
+                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                        (float)_eMoveAnim.Push);
+                    }
+                    else if (Ctx.IsPulling)
+                    {
+                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                        (float)_eMoveAnim.Pull);
+                    }
+                    break;
 
                 default:
-                    Ctx.PlayerAnimator.SetInteger("Index",
-                        (int)_eAnim.Walk);
+                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                        (float)_eMoveAnim.Walk);
                     break;
             }
+            Ctx.PlayerAnimator.SetInteger("Index",
+                        (int)_eAnim.Walk);
         }
 
         public override void ExitState()
@@ -69,6 +84,9 @@ namespace PlayerStM.SubStates
 
         private void PlayerMove()
         {
+            // Player should not move while jumping
+            if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
+
             switch (Ctx.CurrentSuper)
             {
                 case SuperClimbingPlayerState:
@@ -78,10 +96,6 @@ namespace PlayerStM.SubStates
                 case SuperGrabPlayerState:
                     PullingMovement();
                     break;
-
-                // SuperJump should always be blank so no movment
-                // can be done when jumping
-                case SuperJumpPlayerState: break;
 
                 default:
                     GroundedMovment();

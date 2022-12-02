@@ -2,6 +2,7 @@ using PlayerStM.SubStates;
 using UnityEngine;
 using System;
 using PlayerStM.SuperState;
+using OpenCover.Framework.Model;
 
 namespace PlayerStM.BaseStates
 {
@@ -41,8 +42,8 @@ namespace PlayerStM.BaseStates
         public Vector3 MoveDirection => _moveDirection;
 
         /// <summary>
-        /// Idle = 0, Walk = 1, <br></br>
-        /// Jump = 2, Falling = 3, Land(Leads to a blendtree) = 4.
+        /// Idle(BlendTree) = 0, Walk(BlendTree) = 1, <br></br>
+        /// Jump = 2, Falling = 3, Land(BlendTree) = 4
         /// </summary>
         internal enum _eAnim : uint
         {
@@ -58,7 +59,7 @@ namespace PlayerStM.BaseStates
         }
 
         /// <summary>
-        /// LandSoft = 0, LandHard = 1 and LandDead = 2.
+        /// LandSoft = 0, LandHard = 1 and LandDead = 2
         /// </summary>
         internal enum _eLandAnim : uint
         {
@@ -67,6 +68,38 @@ namespace PlayerStM.BaseStates
             LandHard = 1,
 
             LandDead = 2
+        }
+
+        /// <summary>
+        /// Idle = 0, idleClimb = 1,
+        /// <br></br>
+        /// IdlePull = 2, IdlePush = 3
+        /// </summary>
+        internal enum _eIdleAnim : uint
+        {
+            Idle = 0,
+
+            IdleClimb = 1,
+
+            IdlePull = 2,
+
+            IdlePush = 3
+        }
+
+        /// <summary>
+        /// Walk = 0, Climb = 1,
+        /// <br></br>
+        /// Pull = 2, Puhs = 3
+        /// </summary>
+        internal enum _eMoveAnim : uint
+        {
+            Walk = 0,
+
+            Climb = 1,
+
+            Pull = 2,
+
+            Push = 3
         }
 
         public abstract void EnterState();

@@ -31,6 +31,7 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
+            Ctx.PlayerAnimator.ResetTrigger("Landed");
             Ctx.PlayerAnimator.SetInteger("Index", (int)_eAnim.Falling);
         }
 
@@ -46,6 +47,7 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
+            Ctx.PlayerAnimator.SetTrigger("Landed");
         }
 
         public override void InitializeSubState()
