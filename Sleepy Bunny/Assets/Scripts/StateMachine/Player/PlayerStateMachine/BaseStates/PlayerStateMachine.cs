@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerStM.SubStates;
+using Unity.VisualScripting;
 
 namespace PlayerStM.BaseStates
 {
@@ -9,27 +10,19 @@ namespace PlayerStM.BaseStates
     {
         #region Script Refrences
 
+        private OtherGrab _otherGrab;
+
         private InputScript _theInput;
 
         //Input value storage
 
-        private Action _landAnimationDoneEvent;
-
-        //[SerializeField] private AudioSource _painNoise;
-
-        //[SerializeField] private AudioSource _sizzle;
-
         private Rigidbody _rb;
+
+        private RaycastHit hit;
 
         private GameMaster _gm;
 
         private ControllAction thePlayerInput;
-
-        private ControllAction.CustomPlayerActions _cPlayer;
-
-        private ControllAction.CustomUIActions _cUI;
-
-        private Collider _collider;
 
         private Camera _mainCamera;
 
@@ -107,9 +100,9 @@ namespace PlayerStM.BaseStates
         [SerializeField] private float _interactRayLength = 1f;
 
         [Header("Push and pull variables")]
-        [SerializeField] private float _breakDistance = 10f;
+        [SerializeField] private float _breakDistance = 3f;
 
-        [SerializeField] private float _pullDistance = 1f;
+        [SerializeField] private float _pullDistance = 0.5f;
 
         #endregion Serialized Variables
 
@@ -137,19 +130,19 @@ namespace PlayerStM.BaseStates
 
         private bool _landAnimationDone = false;
 
-        private Transform _transformPulled;
+        private Transform _transformGrabed;
 
-        private Rigidbody _rigidbodyPulled;
+        private Rigidbody _rigidbodyGrabed;
 
         #endregion Private Variables
 
         #region Get and set
 
         //Miscellaneous Get and set
-        public Transform TransformPulled
+        public Transform TransformGrabed
         {
-            get => _transformPulled;
-            set => _transformPulled = value;
+            get => _transformGrabed;
+            set => _transformGrabed = value;
         }
 
         public InputScript TheInput => _theInput;
@@ -160,16 +153,10 @@ namespace PlayerStM.BaseStates
             set => _rb = value;
         }
 
-        public Rigidbody RigidbodyPulled
+        public Rigidbody RigidbodyGrabed
         {
-            get => _rigidbodyPulled;
-            set => _rigidbodyPulled = value;
-        }
-
-        public Action LandAnimationDoneEvent
-        {
-            get => _landAnimationDoneEvent;
-            set => _landAnimationDoneEvent = value;
+            get => _rigidbodyGrabed;
+            set => _rigidbodyGrabed = value;
         }
 
         public BasePlayerState CurrentSuper
@@ -298,8 +285,6 @@ namespace PlayerStM.BaseStates
 
             thePlayerInput = new ControllAction();
 
-            _cPlayer = thePlayerInput.CustomPlayer;
-
             _playerAnimator = GetComponentInChildren<Animator>();
             _rb = GetComponentInParent<Rigidbody>();
 
@@ -330,10 +315,7 @@ namespace PlayerStM.BaseStates
 
         private void OnEnable()
         {
-            thePlayerInput.CustomPlayer.DebugState.performed
-                += ctx => GetCurrentState();
-
-            thePlayerInput.Enable();
+            InputScript.DebugState += GetCurrentState;
 
             InputScript.Interact += ClimbGrabInteract;
 
@@ -342,12 +324,9 @@ namespace PlayerStM.BaseStates
 
         private void OnDisable()
         {
-            thePlayerInput.CustomPlayer.DebugState.performed
-                -= ctx => GetCurrentState();
+            InputScript.DebugState -= GetCurrentState;
 
-            thePlayerInput.Disable();
-
-            InputScript.Interact += ClimbGrabInteract;
+            InputScript.Interact -= ClimbGrabInteract;
 
             Grounded.IsGroundedEvent -= GroundedRaycast;
         }
@@ -440,11 +419,19 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public void ClimbGrabInteract()
         {
-            if (_isGrabing || _isClimbing) { return; }
+            if (_isGrabing || _isClimbing)
+            {
+                _isGrabing = false;
+                _isClimbing = false;
+                _isPulling = false;
+                _isPushing = false;
+                hit.IsUnityNull();
+
+                return;
+            }
 
             // The forloop shoots out rays in all direction unitl
             // one hits a object with the correct layer
-            RaycastHit hit;
             for (int i = 0; i < _forwardVector.Count; i++)
             {
                 Vector3 tempVector =
@@ -467,17 +454,15 @@ namespace PlayerStM.BaseStates
                     float distance =
                         Vector3.Distance(transform.position, hit.transform.position);
 
-                    _transformPulled = hit.transform;
-                    _rigidbodyPulled = hit.transform.GetComponent<Rigidbody>();
+                    _transformGrabed = hit.transform;
+                    _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
 
                     GameObject hitPoint = new GameObject();
                     hitPoint.transform.position = hit.point;
                     hitPoint.transform.parent = hit.transform;
                     _pointHit = hitPoint.transform;
 
-                    _isGrabing = true;
-
-                    if (distance > 0.5f)
+                    if (distance > _pullDistance)
                     {
                         _isPushing = true;
                     }
@@ -485,6 +470,8 @@ namespace PlayerStM.BaseStates
                     {
                         _isPulling = true;
                     }
+
+                    _isGrabing = true;
 
                     break;
                 }

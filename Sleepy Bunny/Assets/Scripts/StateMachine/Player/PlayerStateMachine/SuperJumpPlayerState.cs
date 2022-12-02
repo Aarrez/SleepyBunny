@@ -33,6 +33,7 @@ namespace PlayerStM.SuperState
         {
             Ctx.PlayerAnimator.SetInteger("Index",
                 (int)_eAnim.Jump);
+            AnimationFunctionManager.OnJumpEvent?.Invoke(Ctx.transform.position);
             AddJumpForce();
             Ctx.IsGrounded = false;
             Debug.Log("Jumping");

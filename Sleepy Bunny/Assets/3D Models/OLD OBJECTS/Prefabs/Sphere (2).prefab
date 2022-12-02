@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 8630972517447115745}
   - component: {fileID: 8630972517447115747}
   - component: {fileID: 8630972517447115756}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere (2)
-  m_TagString: pudhobject
+  m_TagString: Move_Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,8 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09a260f0133eca47b26aff09c5685e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: 0
-  holdParent: {fileID: 0}
+  Grabed: 0
 --- !u!65 &8630972517447115756
 BoxCollider:
   m_ObjectHideFlags: 0

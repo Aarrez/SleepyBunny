@@ -169,11 +169,12 @@ namespace PlayerStM.BaseStates
         /// <br></br>
         /// "pullDistance" If object is X units away pull on object
         /// </summary>
-        internal void MovePulledObject(Transform transformToPull,
-            Rigidbody rigidbodyOfObject, Transform pullPoint,
-            float breakDistance, float pullDistance)
+        internal void MovePulledObject(Transform playerTransform, Transform transformToPull,
+            Rigidbody rigidbodyToPull, Transform pullPoint,
+            float breakDistance, float pullDistance, float pullForce)
         {
-            float distance = Vector3.Distance(Ctx.transform.position, transformToPull.position);
+            float distance = Vector3.Distance(playerTransform.position,
+                transformToPull.position);
             if (distance > breakDistance)
             {
                 Ctx.IsGrabing = false;
@@ -188,12 +189,30 @@ namespace PlayerStM.BaseStates
             Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
             Vector3 normalizedDirection = pullDirection.normalized;
 
-            rigidbodyOfObject.AddForceAtPosition
-                ((normalizedDirection * Ctx.PullForce * Time.fixedDeltaTime), pullPoint.position);
+            rigidbodyToPull.AddForceAtPosition
+                ((normalizedDirection * pullForce *
+                Time.fixedDeltaTime), pullPoint.position);
         }
 
-        internal void MovePushedObject(Transform transformToPush, Rigidbody rigidbodyOfObject)
+        internal void MovePushedObject(Transform playerTransform,
+            Transform transformToPush, Rigidbody rigidbodyToPush,
+            float pushForce)
         {
+            Vector3 directionToPush = Vector3.Project(
+                playerTransform.position, transformToPush.position);
+
+            rigidbodyToPush.AddForce(directionToPush * pushForce);
+        }
+
+        internal void MovePushedObject(Transform playerTransform,
+            Transform transformToPush, Rigidbody rigidbodyToPush,
+            Transform pushPoint, float pushForce)
+        {
+            Vector3 directionToPush = Vector3.Project(
+                playerTransform.position * Time.fixedDeltaTime, transformToPush.position);
+
+            rigidbodyToPush.AddForceAtPosition(
+                directionToPush * pushForce * Time.fixedDeltaTime, pushPoint.position);
         }
     }
 }

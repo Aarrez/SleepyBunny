@@ -16,7 +16,7 @@ public class InputScript : MonoBehaviour
             _pauseCtx;
 
     // Static so u easily can subscribe to these Actions.
-    public static Action Moveing, Jump, Interact, Pause;
+    public static Action Moveing, Jump, Interact, Pause, DebugState;
 
     public static event Action<InputAction.CallbackContext> MouseLeft, MouseRight;
 
@@ -74,11 +74,11 @@ public class InputScript : MonoBehaviour
             _interactCtx = ctx;
         };
 
-        cPlayer.Interact.canceled += ctx =>
-        {
-            Interact?.Invoke();
-            _interactCtx = ctx;
-        };
+        //cPlayer.Interact.canceled += ctx =>
+        //{
+        //    Interact?.Invoke();
+        //    _interactCtx = ctx;
+        //};
 
         #endregion Interact Input
 
@@ -113,6 +113,12 @@ public class InputScript : MonoBehaviour
         };
 
         #endregion Mouse Input
+
+        #region Debug Input
+
+        cPlayer.DebugState.performed += ctx => DebugState?.Invoke();
+
+        #endregion Debug Input
 
         cPlayer.Enable();
         cUI.Enable();

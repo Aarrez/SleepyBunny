@@ -30,8 +30,16 @@ namespace PlayerStM.SubStates
         {
             CheckSwitchState();
 
-            MovePulledObject(Ctx.TransformPulled, Ctx.RigidbodyPulled,
-                Ctx.PointHit, Ctx.BreakDistance, Ctx.PullDistance);
+            if (Ctx.IsPulling)
+            {
+                MovePulledObject(Ctx.transform, Ctx.TransformGrabed, Ctx.RigidbodyGrabed,
+                Ctx.PointHit, Ctx.BreakDistance, Ctx.PullDistance, Ctx.PullForce);
+            }
+            else if (Ctx.IsPushing)
+            {
+                MovePushedObject(Ctx.transform, Ctx.TransformGrabed, Ctx.RigidbodyGrabed,
+                    Ctx.PushForce);
+            }
         }
 
         public override void UpdateState()
@@ -44,8 +52,8 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            Ctx.TransformPulled = null;
-            Ctx.RigidbodyPulled = null;
+            Ctx.TransformGrabed = null;
+            Ctx.RigidbodyGrabed = null;
         }
 
         public override void InitializeSubState()
