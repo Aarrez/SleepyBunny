@@ -6,6 +6,16 @@ using Unity.VisualScripting;
 
 namespace PlayerStM.BaseStates
 {
+    /// <summary>
+    /// This is the Main class of the player state machine where all the magic happens.
+    /// <br></br>
+    /// If you want more info refer to
+    /// <see href="https://docs.google.com/document/d/1aFpvd6ApL2zObopLuXXM9AEezrWgWXJt30wbKSJnSlc/edit?usp=sharing">
+    /// Programming Design Doc
+    /// </see>.
+    /// <br></br>
+    /// StateFactory.cs and BasePlayerState.cs are the other two classes that's important
+    /// </summary>
     public class PlayerStateMachine : MonoBehaviour
     {
         #region Script Refrences
@@ -130,7 +140,7 @@ namespace PlayerStM.BaseStates
 
         private bool _landAnimationDone = false;
 
-        private Transform _transformGrabed;
+        private Transform _transformHit;
 
         private Rigidbody _rigidbodyGrabed;
 
@@ -139,10 +149,10 @@ namespace PlayerStM.BaseStates
         #region Get and set
 
         //Miscellaneous Get and set
-        public Transform TransformGrabed
+        public Transform TransformHit
         {
-            get => _transformGrabed;
-            set => _transformGrabed = value;
+            get => _transformHit;
+            set => _transformHit = value;
         }
 
         public InputScript TheInput => _theInput;
@@ -443,6 +453,7 @@ namespace PlayerStM.BaseStates
                 if (Physics.Raycast(transform.position, tempVector,
                 _climbRayLength, _climbLayer))
                 {
+                    _transformHit = hit.transform;
                     _isClimbing = true;
                     break;
                 }
@@ -454,7 +465,7 @@ namespace PlayerStM.BaseStates
                     float distance =
                         Vector3.Distance(transform.position, hit.transform.position);
 
-                    _transformGrabed = hit.transform;
+                    _transformHit = hit.transform;
                     _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
 
                     GameObject hitPoint = new GameObject();
@@ -495,6 +506,9 @@ namespace PlayerStM.BaseStates
             }
         }
 
+        /// <summary>
+        /// Shoots a multitude of rays down in a cone
+        /// </summary>
         public void GroundedRaycast()
         {
             RaycastHit hit;

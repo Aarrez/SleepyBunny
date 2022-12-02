@@ -32,12 +32,12 @@ namespace PlayerStM.SubStates
 
             if (Ctx.IsPulling)
             {
-                MovePulledObject(Ctx.transform, Ctx.TransformGrabed, Ctx.RigidbodyGrabed,
+                MovePulledObject(Ctx.transform, Ctx.TransformHit, Ctx.RigidbodyGrabed,
                 Ctx.PointHit, Ctx.BreakDistance, Ctx.PullDistance, Ctx.PullForce);
             }
             else if (Ctx.IsPushing)
             {
-                MovePushedObject(Ctx.transform, Ctx.TransformGrabed, Ctx.RigidbodyGrabed,
+                MovePushedObject(Ctx.transform, Ctx.TransformHit, Ctx.RigidbodyGrabed,
                     Ctx.PushForce);
             }
         }
@@ -52,7 +52,7 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            Ctx.TransformGrabed = null;
+            Ctx.TransformHit = null;
             Ctx.RigidbodyGrabed = null;
         }
 

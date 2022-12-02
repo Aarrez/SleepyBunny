@@ -105,14 +105,20 @@ namespace PlayerStM.SubStates
 
         private void GroundedMovment()
         {
-            Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce
-                * Time.fixedDeltaTime;
+            Vector3 Movement = MoveDirection * Ctx.MovmentForce * Time.fixedDeltaTime;
+            Ctx.Rb.velocity = new Vector3(
+                Movement.x,
+                Ctx.Rb.velocity.y,
+                Movement.z);
         }
 
         private void PullingMovement()
         {
-            Ctx.Rb.velocity = MoveDirection * Ctx.MovmentForce / 2
-                * Time.fixedDeltaTime;
+            Vector3 Movement = MoveDirection * Ctx.MovmentForce / 2 * Time.fixedDeltaTime;
+            Ctx.Rb.velocity = new Vector3(
+                Movement.x,
+                Ctx.Rb.velocity.y,
+                Movement.z);
         }
 
         private void PlayerClimb()
@@ -123,11 +129,12 @@ namespace PlayerStM.SubStates
 
         private void RotateToMovment()
         {
-            if (MoveDirection == Vector3.zero) return;
+            if (MoveDirection == Vector3.zero ||
+                Ctx.CurrentSuper != Factory.SuperGrounded()) return;
 
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
-                Quaternion.LookRotation(MoveDirection, Vector3.up),
-                Ctx.RotationSpeed);
+             Quaternion.LookRotation(MoveDirection, Vector3.up),
+             Ctx.RotationSpeed);
         }
     }
 }

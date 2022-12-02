@@ -41,8 +41,6 @@ namespace PlayerStM.SuperState
 
         public override void ExitState()
         {
-            //Debug.Log(VelocityTest);
-            VelocityTest = 0f;
         }
 
         public override void InitializeSubState()
@@ -50,14 +48,8 @@ namespace PlayerStM.SuperState
             SetSubState(Factory.SubFalling());
         }
 
-        private float VelocityTest = 0f;
-
         public override void FixedUpdateState()
         {
-            if (Ctx.Rb.velocity.y > VelocityTest)
-            {
-                VelocityTest = Ctx.Rb.velocity.y;
-            }
             CheckSwitchState();
         }
 
@@ -65,6 +57,7 @@ namespace PlayerStM.SuperState
         //Second half determines directional distance
         private void AddJumpForce()
         {
+            MoveCameraDirection();
             Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
                 + (MoveDirection * Ctx.DirectionalJumpForce);
         }

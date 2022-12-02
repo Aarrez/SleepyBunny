@@ -62,5 +62,14 @@ namespace PlayerStM.SubStates
         public override void InitializeSubState()
         {
         }
+
+        private void RotateTwoardsTransform(Transform climbTransform)
+        {
+            Quaternion rotateTowards = Quaternion.FromToRotation(Ctx.transform.position,
+                climbTransform.position);
+
+            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
+                rotateTowards, Ctx.RotationSpeed);
+        }
     }
 }
