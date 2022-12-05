@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(InputScript))]
 public class GameMaster : MonoBehaviour
 {
     public EventsScript ev;
