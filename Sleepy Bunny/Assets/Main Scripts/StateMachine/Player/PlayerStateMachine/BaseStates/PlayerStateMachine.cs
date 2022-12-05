@@ -475,7 +475,7 @@ namespace PlayerStM.BaseStates
                 _isPulling = false;
                 _isPushing = false;
                 hit.IsUnityNull();
-
+                Debug.Log("Restet");
                 return;
             }
 
@@ -493,9 +493,6 @@ namespace PlayerStM.BaseStates
                 _climbRayLength, _climbLayer))
                 {
                     _transformHit = hit.transform;
-
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation,
-                        _transformHit.rotation, _rotationSpeed);
                     _isClimbing = true;
                     break;
                 }
@@ -504,7 +501,16 @@ namespace PlayerStM.BaseStates
                 else if (Physics.Raycast(transform.position, tempVector, out hit,
                     _climbRayLength, _grabLayer))
                 {
-                    RayGrab();
+                    _transformHit = hit.transform;
+                    _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
+
+                    GameObject hitPoint = new GameObject();
+                    hitPoint.name = "PullPoint";
+                    hitPoint.transform.position = hit.point;
+                    hitPoint.transform.parent = hit.transform;
+                    _pointHit = hitPoint.transform;
+
+                    _isGrabing = true;
                     break;
                 }
 
@@ -534,7 +540,6 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public void GroundedRaycast()
         {
-            RaycastHit hit;
             for (int i = 0; i < _downVectors.Count; i++)
             {
                 Debug.DrawRay(transform.position, _downVectors[i] * _rayGroundDist,
@@ -550,31 +555,6 @@ namespace PlayerStM.BaseStates
                     _isGrounded = false;
                 }
             }
-        }
-
-        private void RayGrab()
-        {
-            float distance =
-                        Vector3.Distance(transform.position, hit.transform.position);
-
-            _transformHit = hit.transform;
-            _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
-
-            GameObject hitPoint = new GameObject();
-            hitPoint.transform.position = hit.point;
-            hitPoint.transform.parent = hit.transform;
-            _pointHit = hitPoint.transform;
-
-            if (distance > _pullDistance)
-            {
-                _isPushing = true;
-            }
-            else if (distance < _pullDistance)
-            {
-                _isPulling = true;
-            }
-
-            _isGrabing = true;
         }
     }
 }

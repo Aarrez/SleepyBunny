@@ -227,25 +227,25 @@ namespace PlayerStM.BaseStates
                 Time.fixedDeltaTime), pullPoint.position);
         }
 
-        internal void MovePushedObject(Transform playerTransform,
-            Transform transformToPush, Rigidbody rigidbodyToPush,
-            float pushForce)
-        {
-            Vector3 directionToPush = Vector3.Project(
-                playerTransform.position, transformToPush.position);
+        //internal void MovePushedObject(Transform playerTransform,
+        //    Transform transformToPush, Rigidbody rigidbodyToPush,
+        //    float pushForce)
+        //{
+        //    Vector3 directionToPush = Vector3.Project(
+        //        playerTransform.position, transformToPush.position);
 
-            rigidbodyToPush.AddForce(directionToPush * pushForce);
-        }
+        //    rigidbodyToPush.AddForce(directionToPush * pushForce);
+        //}
 
-        internal void MovePushedObject(Transform playerTransform,
-            Transform transformToPush, Rigidbody rigidbodyToPush,
-            Transform pushPoint, float pushForce)
-        {
-            Vector3 directionToPush = Vector3.Project(
-                playerTransform.position * Time.fixedDeltaTime, transformToPush.position);
+        //internal void MovePushedObject(Transform playerTransform,
+        //    Transform transformToPush, Rigidbody rigidbodyToPush,
+        //    Transform pushPoint, float pushForce)
+        //{
+        //    Vector3 directionToPush = Vector3.Project(
+        //        playerTransform.position * Time.fixedDeltaTime, transformToPush.position);
 
-            rigidbodyToPush.AddForceAtPosition(
-                directionToPush * pushForce * Time.fixedDeltaTime, pushPoint.position);
-        }
+        //    rigidbodyToPush.AddForceAtPosition(
+        //        directionToPush * pushForce * Time.fixedDeltaTime, pushPoint.position);
+        //}
     }
 }
