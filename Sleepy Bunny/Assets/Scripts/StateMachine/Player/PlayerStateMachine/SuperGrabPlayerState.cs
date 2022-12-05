@@ -26,6 +26,11 @@ namespace PlayerStM.SubStates
             }
         }
 
+        public override void EnterState()
+        {
+            Debug.Log("Grabing");
+        }
+
         public override void FixedUpdateState()
         {
             CheckSwitchState();
@@ -43,10 +48,6 @@ namespace PlayerStM.SubStates
         }
 
         public override void UpdateState()
-        {
-        }
-
-        public override void EnterState()
         {
         }
 

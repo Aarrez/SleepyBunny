@@ -15,6 +15,8 @@ namespace PlayerStM.SubStates
 
         private float _originalMass;
 
+        private RaycastHit _hit;
+
         public SuperClimbingPlayerState(PlayerStateMachine currentContext
             , StateFactory stateFactory)
             : base(currentContext, stateFactory)
@@ -28,9 +30,8 @@ namespace PlayerStM.SubStates
             if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
             {
                 SwitchState(Factory.SuperJump());
-                Debug.Log("ishappinge");
             }
-            else if (Ctx.IsGrounded)
+            else if (Ctx.IsGrounded || !Ctx.IsClimbing)
             {
                 SwitchState(Factory.SuperGrounded());
             }
@@ -47,6 +48,7 @@ namespace PlayerStM.SubStates
         public override void FixedUpdateState()
         {
             CheckSwitchState();
+            OnEdge();
         }
 
         public override void UpdateState()
@@ -70,6 +72,16 @@ namespace PlayerStM.SubStates
 
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
                 rotateTowards, Ctx.RotationSpeed);
+        }
+
+        private void OnEdge()
+        {
+            if (!Physics.Raycast(Ctx.transform.position, Ctx.transform.forward,
+                 1, Ctx.ClimbLayer))
+            {
+                Ctx.IsClimbing = false;
+                Ctx.IsGrabing = false;
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (!Ctx.IsGrounded) { return; }
+            if (!Ctx.IsGrounded || Ctx.IsClimbing) { return; }
 
             SwitchState(Factory.SubIdle());
         }
@@ -38,16 +38,19 @@ namespace PlayerStM.SubStates
         public override void FixedUpdateState()
         {
             CheckSwitchState();
+            Ctx.GroundedRaycast();
         }
 
         public override void UpdateState()
         {
-            Ctx.GroundedRaycast();
         }
 
         public override void ExitState()
         {
-            Ctx.PlayerAnimator.SetTrigger("Landed");
+            if (Ctx.CurrentSuper != Factory.SuperClimb())
+            {
+                Ctx.PlayerAnimator.SetTrigger("Landed");
+            }
         }
 
         public override void InitializeSubState()

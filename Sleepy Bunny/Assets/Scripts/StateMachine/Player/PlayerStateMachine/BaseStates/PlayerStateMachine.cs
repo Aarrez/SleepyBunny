@@ -48,6 +48,10 @@ namespace PlayerStM.BaseStates
         #region Serialized Variables
 
         [Header("Movement related variables")]
+        [Tooltip("The default gravity setting is -9.82." +
+            "The gravity modifier adds or subtracts from that number")]
+        [SerializeField] private float _gravityModifier = 0f;
+
         [Tooltip("Determines how speedy the character is")]
         [SerializeField] private float _movmentForce = 1f;
 
@@ -63,6 +67,8 @@ namespace PlayerStM.BaseStates
         [SerializeField] private float _rotationSpeed;
 
         [Header("Raycast to ground variables")]
+
+        //
         [Tooltip("How long the ray is that checks for ground" +
             "\n" + "(Should be 0.1 unless debuging)")]
         [SerializeField] private float _rayGroundDist = 0.1f;
@@ -77,13 +83,19 @@ namespace PlayerStM.BaseStates
 
         [Tooltip("If true the uses already set layers." + "\n"
             + "If false you can set custom layers")]
-        [SerializeField] private bool _useDefaultLayers = true;
+        [SerializeField] private bool _useDefaultGroundLayer = true;
 
         [Tooltip("Only change if debuging!" + "\n" +
            "Inital layermask is Default and Ground")]
         [SerializeField] private LayerMask _groundLayer;
 
         [Header("Other raycast variables")]
+
+        //
+        [Tooltip("If true the uses already set layers." + "\n"
+            + "If false you can set custom layers")]
+        [SerializeField] private bool _useDefaultInteractionsLayers = true;
+
         [Tooltip("The layer the climb ray will hit." +
             "\n" + "Will automaticly have Climbable layer")]
         [SerializeField] private LayerMask _climbLayer;
@@ -117,6 +129,8 @@ namespace PlayerStM.BaseStates
         #endregion Serialized Variables
 
         #region Private Variables
+
+        private const float _gravity = -9.82f;
 
         private Transform _pointHit;
 
@@ -155,6 +169,18 @@ namespace PlayerStM.BaseStates
             set => _transformHit = value;
         }
 
+        public Transform PointHit
+        {
+            get => _pointHit;
+            set => _pointHit = value;
+        }
+
+        public LayerMask GroundLayer => _groundLayer;
+
+        public LayerMask ClimbLayer => _climbLayer;
+
+        public LayerMask GrabLayer => _grabLayer;
+
         public InputScript TheInput => _theInput;
 
         public Rigidbody Rb
@@ -179,12 +205,6 @@ namespace PlayerStM.BaseStates
         {
             get { return _currentSub; }
             set { _currentSub = value; }
-        }
-
-        public Transform PointHit
-        {
-            get => _pointHit;
-            set => _pointHit = value;
         }
 
         // Get and set floats
@@ -309,14 +329,18 @@ namespace PlayerStM.BaseStates
         {
             SetRaycastVectors();
 
-            Physics.gravity = new Vector3(0, -9.82F, 0);
+            Physics.gravity = new Vector3(0, _gravity + _gravityModifier, 0);
         }
 
         private void OnValidate()
         {
-            if (_useDefaultLayers)
+            if (_useDefaultGroundLayer)
             {
                 _groundLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
+            }
+
+            if (_useDefaultInteractionsLayers)
+            {
                 _climbLayer = LayerMask.GetMask("Climbable");
                 _grabLayer = LayerMask.GetMask("Grabable");
                 _interactLayer = LayerMask.GetMask("Interactable");
@@ -362,6 +386,11 @@ namespace PlayerStM.BaseStates
             _isGrounded = grounded;
         }
 
+        /// <summary>
+        /// Press the Select(View on xbox controller) button on the gamepad
+        /// <br></br>
+        /// to see the current super- and substate in the console
+        /// </summary>
         private void GetCurrentState()
         {
             Debug.Log("SuperState " + CurrentSuper);
@@ -450,10 +479,13 @@ namespace PlayerStM.BaseStates
                 Debug.DrawRay(transform.position, tempVector * 1, Color.green, 2);
 
                 //Climb ray
-                if (Physics.Raycast(transform.position, tempVector,
+                if (Physics.Raycast(transform.position, tempVector, out hit,
                 _climbRayLength, _climbLayer))
                 {
                     _transformHit = hit.transform;
+
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                        _transformHit.rotation, _rotationSpeed);
                     _isClimbing = true;
                     break;
                 }
@@ -462,28 +494,7 @@ namespace PlayerStM.BaseStates
                 else if (Physics.Raycast(transform.position, tempVector, out hit,
                     _climbRayLength, _grabLayer))
                 {
-                    float distance =
-                        Vector3.Distance(transform.position, hit.transform.position);
-
-                    _transformHit = hit.transform;
-                    _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
-
-                    GameObject hitPoint = new GameObject();
-                    hitPoint.transform.position = hit.point;
-                    hitPoint.transform.parent = hit.transform;
-                    _pointHit = hitPoint.transform;
-
-                    if (distance > _pullDistance)
-                    {
-                        _isPushing = true;
-                    }
-                    else if (distance < _pullDistance)
-                    {
-                        _isPulling = true;
-                    }
-
-                    _isGrabing = true;
-
+                    RayGrab();
                     break;
                 }
 
@@ -507,7 +518,9 @@ namespace PlayerStM.BaseStates
         }
 
         /// <summary>
-        /// Shoots a multitude of rays down in a cone
+        /// Shoots a multitude of rays down in a cone that
+        /// <br></br>
+        /// checks for a object with the grounded layer
         /// </summary>
         public void GroundedRaycast()
         {
@@ -522,13 +535,36 @@ namespace PlayerStM.BaseStates
                     _isGrounded = true;
                     break;
                 }
-
-                //else if (i == _halfVectors.Length - 1)
-                //{
-                //    _isGrounded = false;
-                //    Debug.Log("is happeing");
-                //} Use if jump does not change IsGrounded
+                else if (i == _downVectors.Count - 1)
+                {
+                    _isGrounded = false;
+                }
             }
+        }
+
+        private void RayGrab()
+        {
+            float distance =
+                        Vector3.Distance(transform.position, hit.transform.position);
+
+            _transformHit = hit.transform;
+            _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
+
+            GameObject hitPoint = new GameObject();
+            hitPoint.transform.position = hit.point;
+            hitPoint.transform.parent = hit.transform;
+            _pointHit = hitPoint.transform;
+
+            if (distance > _pullDistance)
+            {
+                _isPushing = true;
+            }
+            else if (distance < _pullDistance)
+            {
+                _isPulling = true;
+            }
+
+            _isGrabing = true;
         }
     }
 }

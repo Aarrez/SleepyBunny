@@ -305,7 +305,18 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""XboxController"",
+                    ""action"": ""DebugState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a422e443-c66e-4990-9de4-7819a8b32146"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""DebugState"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

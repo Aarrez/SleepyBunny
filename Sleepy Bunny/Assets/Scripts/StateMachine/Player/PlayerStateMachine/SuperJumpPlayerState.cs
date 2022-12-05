@@ -24,7 +24,6 @@ namespace PlayerStM.SuperState
             }
             else if (Ctx.IsClimbing)
             {
-                Debug.Log("climb from jump");
                 SwitchState(Factory.SuperClimb());
             }
         }
@@ -33,7 +32,11 @@ namespace PlayerStM.SuperState
         {
             Ctx.PlayerAnimator.SetInteger("Index",
                 (int)_eAnim.Jump);
+
+            //For sound
             AnimationFunctionManager.OnJumpEvent?.Invoke(Ctx.transform.position);
+
+            //The acuall jump thing
             AddJumpForce();
             Ctx.IsGrounded = false;
             Debug.Log("Jumping");
