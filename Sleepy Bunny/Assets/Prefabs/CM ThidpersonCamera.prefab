@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8916875050992293558}
   - component: {fileID: 8916875050992293552}
   - component: {fileID: 8916875050992293555}
+  - component: {fileID: 2361066493399913428}
   m_Layer: 1
   m_Name: CM ThidpersonCamera
   m_TagString: Untagged
@@ -194,6 +195,23 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -5822428013130308404, guid: 0ba78ef5d226c524ead725487c564f1b, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &2361066493399913428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8916875050992293559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449ef5ebbe24720439ec31d15f7b6f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FocusTracksTarget: 0
+  m_FocusTracking: 4
+  m_FocusTarget: {fileID: 0}
+  m_FocusOffset: 0
+  m_Profile: {fileID: 11400000, guid: 6e403da0b033f1543845908b7ab3a9df, type: 2}
 --- !u!1 &8916875051678770159
 GameObject:
   m_ObjectHideFlags: 3
