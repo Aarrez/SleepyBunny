@@ -2938,6 +2938,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7140de63b5c6f4ebeed6c52e578c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _softHitVelocity: 3
+  _gravityModifier: 0
   _movmentForce: 70
   _directionalJumpForce: 0.5
   _jumpHeight: 4
@@ -2946,10 +2948,11 @@ MonoBehaviour:
   _rayGroundDist: 0.1
   _vectorAngle: 0.5
   _forwardVAngel: 0.3
-  _useDefaultLayers: 1
+  _useDefaultGroundLayer: 0
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 201
+  _useDefaultInteractionsLayers: 1
   _climbLayer:
     serializedVersion: 2
     m_Bits: 512

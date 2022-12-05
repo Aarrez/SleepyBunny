@@ -6,7 +6,9 @@ using UnityEngine.Events;
 public class AnimationFunctionManager : MonoBehaviour
 {
     //Used in SuperJumpPlayerState to play sound when jump
-    public static Action<Vector3> OnJumpEvent;
+    public static Action OnJumpAction;
+
+    public static event Action AnimationJumpEvent;
 
     [SerializeField] private EventReference _steps;
 
@@ -18,12 +20,12 @@ public class AnimationFunctionManager : MonoBehaviour
     // that happens when player jumps
     private void OnEnable()
     {
-        OnJumpEvent += JumpsSound;
+        OnJumpAction += JumpsSound;
     }
 
     private void OnDisable()
     {
-        OnJumpEvent -= JumpsSound;
+        OnJumpAction -= JumpsSound;
     }
 
     public void FootstepSounds()
@@ -37,9 +39,10 @@ public class AnimationFunctionManager : MonoBehaviour
         RuntimeManager.PlayOneShot(_climb);
     }
 
-    public void JumpsSound(Vector3 position)
+    public void JumpsSound()
     {
+        AnimationJumpEvent?.Invoke();
         if (_jump.IsNull) { return; }
-        RuntimeManager.PlayOneShot(_jump, position);
+        RuntimeManager.PlayOneShot(_jump);
     }
 }

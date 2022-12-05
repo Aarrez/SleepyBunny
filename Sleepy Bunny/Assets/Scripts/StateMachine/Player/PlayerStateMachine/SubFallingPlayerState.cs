@@ -1,6 +1,5 @@
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -13,6 +12,8 @@ namespace PlayerStM.SubStates
 
     public class SubFallingPlayerState : BasePlayerState
     {
+        private float _fallVeloctiy = 0f;
+
         public SubFallingPlayerState
             (
             PlayerStateMachine currentContext
@@ -37,6 +38,7 @@ namespace PlayerStM.SubStates
 
         public override void FixedUpdateState()
         {
+            MinFallVelocity();
             CheckSwitchState();
             Ctx.GroundedRaycast();
         }
@@ -49,12 +51,30 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.CurrentSuper != Factory.SuperClimb())
             {
+                if (_fallVeloctiy > Ctx.SoftHitVelocity)
+                {
+                    Ctx.PlayerAnimator.SetFloat(
+                        "LandEffect", (float)_eLandAnim.LandSoft);
+                }
+                else
+                {
+                    Ctx.PlayerAnimator.SetFloat(
+                        "LandEffect", (float)_eLandAnim.LandHard);
+                }
                 Ctx.PlayerAnimator.SetTrigger("Landed");
             }
         }
 
         public override void InitializeSubState()
         {
+        }
+
+        private void MinFallVelocity()
+        {
+            if (_fallVeloctiy > Ctx.Rb.velocity.y)
+            {
+                _fallVeloctiy = Ctx.Rb.velocity.y;
+            }
         }
     }
 }

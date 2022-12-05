@@ -14,6 +14,7 @@ namespace PlayerStM.SuperState
         {
             IsRootState = true;
             InitializeSubState();
+            AnimationFunctionManager.AnimationJumpEvent += AddJumpForce;
         }
 
         public override void CheckSwitchState()
@@ -32,12 +33,6 @@ namespace PlayerStM.SuperState
         {
             Ctx.PlayerAnimator.SetInteger("Index",
                 (int)_eAnim.Jump);
-
-            //For sound
-            AnimationFunctionManager.OnJumpEvent?.Invoke(Ctx.transform.position);
-
-            //The acuall jump thing
-            AddJumpForce();
             Ctx.IsGrounded = false;
             Debug.Log("Jumping");
         }
