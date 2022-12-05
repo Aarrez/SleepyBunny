@@ -47,11 +47,16 @@ namespace PlayerStM.BaseStates
 
         #region Serialized Variables
 
-        [Header("Movement related variables")]
+        [Header("Physics vaiables")]
+        [Tooltip("This velocity dictates when to switch from Land soft animaiton" +
+            "\n to land hard animation.")]
+        [SerializeField] private float _softHitVelocity = -3.0f;
+
         [Tooltip("The default gravity setting is -9.82." +
             "The gravity modifier adds or subtracts from that number")]
         [SerializeField] private float _gravityModifier = 0f;
 
+        [Header("Movement related variables")]
         [Tooltip("Determines how speedy the character is")]
         [SerializeField] private float _movmentForce = 1f;
 
@@ -208,6 +213,7 @@ namespace PlayerStM.BaseStates
         }
 
         // Get and set floats
+
         public float MovmentForce
         {
             get => _movmentForce;
@@ -238,10 +244,6 @@ namespace PlayerStM.BaseStates
             set => _pushForce = value;
         }
 
-        public float RotationSpeed => _rotationSpeed;
-
-        public float ClimbSpeed => _climbSpeed;
-
         public float BreakDistance
         {
             get => _breakDistance;
@@ -253,6 +255,14 @@ namespace PlayerStM.BaseStates
             get => _pullDistance;
             set => _pullDistance = value;
         }
+
+        public float ClimbRayLength => _climbRayLength;
+
+        public float RotationSpeed => _rotationSpeed;
+
+        public float ClimbSpeed => _climbSpeed;
+
+        public float SoftHitVelocity => _softHitVelocity;
 
         //Get and set bools
         public bool IsGrounded
@@ -529,8 +539,8 @@ namespace PlayerStM.BaseStates
             {
                 Debug.DrawRay(transform.position, _downVectors[i] * _rayGroundDist,
                         Color.red, 1);
-                if (Physics.Raycast(transform.position, _downVectors[i], out hit,
-                    _rayGroundDist, _groundLayer))
+                if (Physics.Raycast(transform.position, _downVectors[i],
+                    _rayGroundDist, _groundLayer, QueryTriggerInteraction.Collide))
                 {
                     _isGrounded = true;
                     break;

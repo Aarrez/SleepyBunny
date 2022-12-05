@@ -77,7 +77,7 @@ namespace PlayerStM.SubStates
         private void OnEdge()
         {
             if (!Physics.Raycast(Ctx.transform.position, Ctx.transform.forward,
-                 1, Ctx.ClimbLayer))
+                 Ctx.ClimbRayLength, Ctx.ClimbLayer))
             {
                 Ctx.IsClimbing = false;
                 Ctx.IsGrabing = false;
