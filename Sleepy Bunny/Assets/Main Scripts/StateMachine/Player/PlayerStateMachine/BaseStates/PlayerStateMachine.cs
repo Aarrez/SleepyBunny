@@ -139,6 +139,8 @@ namespace PlayerStM.BaseStates
 
         private Transform _pointHit;
 
+        private GameObject hitPoint;
+
         private List<Vector3> _downVectors = new List<Vector3>();
 
         private List<Vector3> _forwardVector = new List<Vector3>();
@@ -468,7 +470,7 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public void ClimbGrabInteract()
         {
-            if (_isGrabing || _isClimbing)
+            if (_isGrabing ^ _isClimbing)
             {
                 _isGrabing = false;
                 _isClimbing = false;
@@ -479,7 +481,7 @@ namespace PlayerStM.BaseStates
                 return;
             }
 
-            // The forloop shoots out rays in all direction unitl
+            // The forloop shoots out rays in all direction unitll
             // one hits a object with the correct layer
             for (int i = 0; i < _forwardVector.Count; i++)
             {
@@ -504,12 +506,19 @@ namespace PlayerStM.BaseStates
                     _transformHit = hit.transform;
                     _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
 
-                    GameObject hitPoint = new GameObject();
+                    if (hitPoint != null)
+                    {
+                        Destroy(hitPoint);
+                    }
+
+                    hitPoint = new GameObject();
                     hitPoint.name = "PullPoint";
+                    hitPoint.tag = "Move_Object";
                     hitPoint.transform.position = hit.point;
                     hitPoint.transform.parent = hit.transform;
                     _pointHit = hitPoint.transform;
 
+                    _isPulling = true;
                     _isGrabing = true;
                     break;
                 }

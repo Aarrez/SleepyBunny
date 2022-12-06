@@ -31538,7 +31538,6 @@ GameObject:
   - component: {fileID: 797094406}
   - component: {fileID: 797094405}
   - component: {fileID: 797094407}
-  - component: {fileID: 797094408}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -31607,18 +31606,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
---- !u!114 &797094408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797094403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c13107f4a559aa9438b51e85912a624e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &798900806 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6733177361254619370, guid: 59ec84ded9d97344fa785ce8c48ee0f2,
@@ -45631,12 +45618,17 @@ PrefabInstance:
     - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
       propertyPath: _pullDistance
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
       propertyPath: _breakDistance
-      value: 100
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689577338028352677, guid: 9e4796eb3a7359049a49ced1447c82f7,
+        type: 3}
+      propertyPath: _groundLayer.m_Bits
+      value: 1481
       objectReference: {fileID: 0}
     - target: {fileID: 2689577338635950560, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
@@ -104828,6 +104820,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FollowOffset.z
       value: -0.3266989
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361066493399913428, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4891127319792737747, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}

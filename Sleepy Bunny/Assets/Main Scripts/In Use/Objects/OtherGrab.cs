@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -9,7 +10,7 @@ public class OtherGrab : MonoBehaviour
 {
     private Rigidbody _rigidbody;
 
-    [SerializeField] private bool Grabed = false;
+    public bool Grabed = false;
 
     private void Start()
     {
@@ -17,5 +18,10 @@ public class OtherGrab : MonoBehaviour
         _rigidbody.useGravity = true;
         gameObject.layer = LayerMask.NameToLayer("Grabable");
         gameObject.tag = "Move_Object";
+    }
+
+    public void ObjectGrabed(bool grabed)
+    {
+        Grabed = grabed;
     }
 }

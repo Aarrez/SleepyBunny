@@ -6,6 +6,4 @@ using UnityEngine;
 public class SpawnPoints : ScriptableObject
 {
     [SerializeField] private int _spawnID;
-
-
 }

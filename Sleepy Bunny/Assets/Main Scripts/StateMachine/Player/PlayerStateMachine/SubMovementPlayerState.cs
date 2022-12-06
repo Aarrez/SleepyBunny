@@ -94,10 +94,12 @@ namespace PlayerStM.SubStates
                     break;
 
                 case SuperGrabPlayerState:
+                    InvetedRotateToMovement();
                     PullingMovement();
                     break;
 
                 default:
+                    RotateToMovment();
                     GroundedMovment();
                     break;
             }
@@ -129,11 +131,19 @@ namespace PlayerStM.SubStates
 
         private void RotateToMovment()
         {
-            if (MoveDirection == Vector3.zero ||
-                Ctx.CurrentSuper != Factory.SuperGrounded()) return;
+            if (MoveDirection == Vector3.zero) return;
 
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
              Quaternion.LookRotation(MoveDirection, Vector3.up),
+             Ctx.RotationSpeed);
+        }
+
+        private void InvetedRotateToMovement()
+        {
+            if (MoveDirection == Vector3.zero) return;
+
+            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
+             Quaternion.LookRotation(-MoveDirection, Vector3.up),
              Ctx.RotationSpeed);
         }
     }

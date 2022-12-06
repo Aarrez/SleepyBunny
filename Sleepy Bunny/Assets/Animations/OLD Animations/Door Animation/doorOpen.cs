@@ -5,19 +5,18 @@ using UnityEngine;
 public class doorOpen : MonoBehaviour
 {
     public GameObject ObjectYouWishtoMove;
+
     public Animator objectToMove;
 
     private bool holdDoorHandle = false;
+
     public GameObject player;
 
     private InputScript _theInput;
 
     public void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-
         _theInput = FindObjectOfType<InputScript>();
-
     }
 
     public void OnTriggerStay(Collider collision)
