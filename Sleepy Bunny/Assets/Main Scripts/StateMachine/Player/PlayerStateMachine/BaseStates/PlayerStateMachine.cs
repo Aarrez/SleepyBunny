@@ -60,12 +60,27 @@ namespace PlayerStM.BaseStates
         [Tooltip("Determines how speedy the character is")]
         [SerializeField] private float _movmentForce = 1f;
 
+        [Header("Jump variables")]
+
+        //
+        [Tooltip("If true there the charcter will be able to move mid air. " +
+            "\nHow fast it moves is determined by JumpMovementMultipler" +
+            "\nIf false player uses DirectionalJumpForce at the start of the jump to" +
+            "determine fly forward with no air conroll")]
+        [SerializeField] private bool _airMovement;
+
+        [Tooltip("Multipler for jump movemnt")]
+        [SerializeField] private float _jumpMovementMultipler = 0.5f;
+
         [Tooltip("Determines how much directional force is applyed when jumping")]
         [SerializeField] private float _directionalJumpForce = .5f;
 
         [Tooltip("Determines how high you jump")]
         [SerializeField] private float _jumpHeight = 10f;
 
+        [Header("")]
+
+        //
         [SerializeField] private float _climbSpeed = 5f;
 
         [Tooltip("Changes how fast the character turns around")]
@@ -318,6 +333,18 @@ namespace PlayerStM.BaseStates
         public Animator PlayerAnimator => _playerAnimator;
 
         public Camera MainCamera => _mainCamera;
+
+        public bool AirMovement
+        {
+            get => _airMovement;
+            set => _airMovement = value;
+        }
+
+        public float JumpMovementMultipler
+        {
+            get => _jumpMovementMultipler;
+            set => _jumpMovementMultipler = value;
+        }
 
         #endregion Get and set
 

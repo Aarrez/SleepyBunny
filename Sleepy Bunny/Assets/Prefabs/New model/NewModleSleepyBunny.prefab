@@ -2941,8 +2941,10 @@ MonoBehaviour:
   _softHitVelocity: -3
   _gravityModifier: 2
   _movmentForce: 50
+  _airMovement: 1
+  _jumpMovementMultipler: 1
   _directionalJumpForce: 2
-  _jumpHeight: 4
+  _jumpHeight: 3
   _climbSpeed: 10
   _rotationSpeed: 10
   _rayGroundDist: 0.1
@@ -2967,8 +2969,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _interactRayLength: 1
-  _breakDistance: 3
-  _pullDistance: 0.5
+  _breakDistance: 20
+  _pullDistance: 1
 --- !u!1 &9070179661848927906
 GameObject:
   m_ObjectHideFlags: 0

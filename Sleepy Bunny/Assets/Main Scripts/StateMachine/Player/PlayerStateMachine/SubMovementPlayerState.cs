@@ -85,7 +85,6 @@ namespace PlayerStM.SubStates
         private void PlayerMove()
         {
             // Player should not move while jumping
-            if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
 
             switch (Ctx.CurrentSuper)
             {
@@ -94,8 +93,15 @@ namespace PlayerStM.SubStates
                     break;
 
                 case SuperGrabPlayerState:
-                    InvetedRotateToMovement();
                     PullingMovement();
+                    break;
+
+                case SuperJumpPlayerState:
+                    if (Ctx.AirMovement)
+                    {
+                        JumpMovemet();
+                    }
+
                     break;
 
                 default:
@@ -108,6 +114,16 @@ namespace PlayerStM.SubStates
         private void GroundedMovment()
         {
             Vector3 Movement = MoveDirection * Ctx.MovmentForce * Time.fixedDeltaTime;
+            Ctx.Rb.velocity = new Vector3(
+                Movement.x,
+                Ctx.Rb.velocity.y,
+                Movement.z);
+        }
+
+        internal void JumpMovemet()
+        {
+            Vector3 Movement = MoveDirection *
+                (Ctx.MovmentForce * Ctx.JumpMovementMultipler) * Time.fixedDeltaTime;
             Ctx.Rb.velocity = new Vector3(
                 Movement.x,
                 Ctx.Rb.velocity.y,
@@ -135,15 +151,6 @@ namespace PlayerStM.SubStates
 
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
              Quaternion.LookRotation(MoveDirection, Vector3.up),
-             Ctx.RotationSpeed);
-        }
-
-        private void InvetedRotateToMovement()
-        {
-            if (MoveDirection == Vector3.zero) return;
-
-            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
-             Quaternion.LookRotation(-MoveDirection, Vector3.up),
              Ctx.RotationSpeed);
         }
     }

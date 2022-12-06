@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using PlayerStM.BaseStates;
 using UnityEngine;
 
@@ -48,6 +49,7 @@ namespace PlayerStM.SuperState
 
         public override void FixedUpdateState()
         {
+            Ctx.GroundedRaycast();
             CheckSwitchState();
         }
 
@@ -56,8 +58,16 @@ namespace PlayerStM.SuperState
         private void AddJumpForce()
         {
             MoveCameraDirection();
-            Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
-                + (MoveDirection * Ctx.DirectionalJumpForce);
+            if (!Ctx.AirMovement)
+            {
+                Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
+                                 + MoveDirection;
+            }
+            else
+            {
+                Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
+                                + (MoveDirection * Ctx.DirectionalJumpForce);
+            }
         }
 
         public override void UpdateState()
