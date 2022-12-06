@@ -33,10 +33,9 @@ namespace PlayerStM.SubStates
 
         public override void FixedUpdateState()
         {
-            CheckSwitchState();
-
             MovePulledObject(Ctx.transform, Ctx.TransformHit, Ctx.RigidbodyGrabed,
             Ctx.PointHit, Ctx.BreakDistance, Ctx.PullDistance, Ctx.PullForce);
+            CheckSwitchState();
         }
 
         public override void UpdateState()

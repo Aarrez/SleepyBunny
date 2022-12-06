@@ -60,12 +60,27 @@ namespace PlayerStM.BaseStates
         [Tooltip("Determines how speedy the character is")]
         [SerializeField] private float _movmentForce = 1f;
 
+        [Header("Jump variables")]
+
+        //
+        [Tooltip("If true there the charcter will be able to move mid air. " +
+            "\nHow fast it moves is determined by JumpMovementMultipler" +
+            "\nIf false player uses DirectionalJumpForce at the start of the jump to" +
+            "determine fly forward with no air conroll")]
+        [SerializeField] private bool _airMovement;
+
+        [Tooltip("Multipler for jump movemnt")]
+        [SerializeField] private float _jumpMovementMultipler = 0.5f;
+
         [Tooltip("Determines how much directional force is applyed when jumping")]
         [SerializeField] private float _directionalJumpForce = .5f;
 
         [Tooltip("Determines how high you jump")]
         [SerializeField] private float _jumpHeight = 10f;
 
+        [Header("")]
+
+        //
         [SerializeField] private float _climbSpeed = 5f;
 
         [Tooltip("Changes how fast the character turns around")]
@@ -258,6 +273,12 @@ namespace PlayerStM.BaseStates
             set => _pullDistance = value;
         }
 
+        public float JumpMovementMultipler
+        {
+            get => _jumpMovementMultipler;
+            set => _jumpMovementMultipler = value;
+        }
+
         public float ClimbRayLength => _climbRayLength;
 
         public float RotationSpeed => _rotationSpeed;
@@ -303,7 +324,15 @@ namespace PlayerStM.BaseStates
             set => _landAnimationDone = value;
         }
 
+        public bool AirMovement
+        {
+            get => _airMovement;
+            set => _airMovement = value;
+        }
+
         public bool IsFalling => _isFalling;
+
+        public Camera MainCamera => _mainCamera;
 
         /// <summary>
         /// When setting GSIndex(Integer)
@@ -316,8 +345,6 @@ namespace PlayerStM.BaseStates
         /// HardLanding = 2, dead = 3(not yet implemented)
         /// </summary>
         public Animator PlayerAnimator => _playerAnimator;
-
-        public Camera MainCamera => _mainCamera;
 
         #endregion Get and set
 

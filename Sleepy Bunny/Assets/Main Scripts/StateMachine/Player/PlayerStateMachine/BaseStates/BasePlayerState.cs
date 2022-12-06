@@ -207,15 +207,15 @@ namespace PlayerStM.BaseStates
             float breakDistance, float pullDistance, float pullForce)
         {
             float distance = Vector3.Distance(playerTransform.position,
-                transformToPull.position);
+                transformToPull.TransformVector(transformToPull.position));
 
-            if (distance > breakDistance)
-            {
-                Ctx.IsGrabing = false;
-                Debug.Log("Connection Break");
-                return;
-            }
-            else if (distance < pullDistance)
+            //if (distance > breakDistance)
+            //{
+            //    Ctx.IsGrabing = false;
+            //    Debug.Log("Connection Break");
+            //    return;
+            //}
+            if (distance > pullDistance)
             {
                 return;
             }
