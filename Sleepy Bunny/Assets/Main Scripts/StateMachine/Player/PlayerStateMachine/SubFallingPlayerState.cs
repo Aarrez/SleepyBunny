@@ -18,8 +18,7 @@ namespace PlayerStM.SubStates
             (
             PlayerStateMachine currentContext
             , StateFactory stateFactory
-            )
-            : base(currentContext, stateFactory)
+            ) : base(currentContext, stateFactory)
         {
         }
 

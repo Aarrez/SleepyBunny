@@ -273,6 +273,12 @@ namespace PlayerStM.BaseStates
             set => _pullDistance = value;
         }
 
+        public float JumpMovementMultipler
+        {
+            get => _jumpMovementMultipler;
+            set => _jumpMovementMultipler = value;
+        }
+
         public float ClimbRayLength => _climbRayLength;
 
         public float RotationSpeed => _rotationSpeed;
@@ -318,7 +324,15 @@ namespace PlayerStM.BaseStates
             set => _landAnimationDone = value;
         }
 
+        public bool AirMovement
+        {
+            get => _airMovement;
+            set => _airMovement = value;
+        }
+
         public bool IsFalling => _isFalling;
+
+        public Camera MainCamera => _mainCamera;
 
         /// <summary>
         /// When setting GSIndex(Integer)
@@ -331,20 +345,6 @@ namespace PlayerStM.BaseStates
         /// HardLanding = 2, dead = 3(not yet implemented)
         /// </summary>
         public Animator PlayerAnimator => _playerAnimator;
-
-        public Camera MainCamera => _mainCamera;
-
-        public bool AirMovement
-        {
-            get => _airMovement;
-            set => _airMovement = value;
-        }
-
-        public float JumpMovementMultipler
-        {
-            get => _jumpMovementMultipler;
-            set => _jumpMovementMultipler = value;
-        }
 
         #endregion Get and set
 

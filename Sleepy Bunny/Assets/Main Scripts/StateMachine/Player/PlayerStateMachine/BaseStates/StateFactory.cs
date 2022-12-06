@@ -8,8 +8,6 @@ namespace PlayerStM.BaseStates
 {
     public enum eStates
     {
-        MinorCrouch,
-
         SubLand,
 
         SubIdle,
@@ -37,7 +35,6 @@ namespace PlayerStM.BaseStates
         {
             _context = currentContext;
 
-            _states[eStates.MinorCrouch] = new MinorCrouchPlayerState(_context, this);
             _states[eStates.SubLand] = new SubLandPlayerState(_context, this);
             _states[eStates.SubMovement] = new SubMovementPlayerState(_context, this);
             _states[eStates.SubIdle] = new SubIdlePlayerState(_context, this);
@@ -86,11 +83,6 @@ namespace PlayerStM.BaseStates
         public BasePlayerState SubLand()
         {
             return _states[eStates.SubLand];
-        }
-
-        public BasePlayerState MinorCrouch()
-        {
-            return _states[eStates.MinorCrouch];
         }
     }
 }
