@@ -206,20 +206,6 @@ namespace PlayerStM.BaseStates
             Rigidbody rigidbodyToPull, Transform pullPoint,
             float breakDistance, float pullDistance, float pullForce)
         {
-            float distance = Vector3.Distance(playerTransform.position,
-                transformToPull.TransformVector(transformToPull.position));
-
-            //if (distance > breakDistance)
-            //{
-            //    Ctx.IsGrabing = false;
-            //    Debug.Log("Connection Break");
-            //    return;
-            //}
-            if (distance > pullDistance)
-            {
-                return;
-            }
-
             Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
             Vector3 normalizedDirection = pullDirection.normalized;
             rigidbodyToPull.AddForceAtPosition

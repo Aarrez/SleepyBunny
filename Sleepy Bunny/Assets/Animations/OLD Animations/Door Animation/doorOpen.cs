@@ -19,17 +19,12 @@ public class doorOpen : MonoBehaviour
         _theInput = FindObjectOfType<InputScript>();
     }
 
-    public void OnTriggerStay(Collider collision)
+    private void OpenDoor(bool openDoor)
     {
-        if (collision.tag == "Player" && _theInput.InteractCtx.performed)
+        if (openDoor)
         {
-            holdDoorHandle = true;
             Debug.Log("By the handle");
             objectToMove.SetBool("doorOpen", true);
-        }
-        else if (collision.tag != "Player")
-        {
-            holdDoorHandle = false;
         }
     }
 }
