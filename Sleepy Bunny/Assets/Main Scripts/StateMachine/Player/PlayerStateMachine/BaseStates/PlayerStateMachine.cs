@@ -176,6 +176,8 @@ namespace PlayerStM.BaseStates
 
         private bool _landAnimationDone = false;
 
+        private bool _reachedEdge = false;
+
         private Transform _transformHit;
 
         private Rigidbody _rigidbodyGrabed;
@@ -228,6 +230,8 @@ namespace PlayerStM.BaseStates
             get { return _currentSub; }
             set { _currentSub = value; }
         }
+
+        public List<Vector3> ForwardVector => _forwardVector;
 
         // Get and set floats
 
@@ -328,6 +332,12 @@ namespace PlayerStM.BaseStates
         {
             get => _airMovement;
             set => _airMovement = value;
+        }
+
+        public bool ReachedEdge
+        {
+            get => _reachedEdge;
+            set => _reachedEdge = value;
         }
 
         public bool IsFalling => _isFalling;
@@ -439,7 +449,7 @@ namespace PlayerStM.BaseStates
         private void SetRaycastVectors()
         {
             // Cardinal directions are relative to the players rotation
-            //
+
             //0
             _downVectors.Add(Vector3.down);
 
@@ -475,17 +485,22 @@ namespace PlayerStM.BaseStates
             _downVectors.Add(Vector3.Lerp
                 (_downVectors[1], _downVectors[4], _vectorAngle));
 
+            //0 Forward
             _forwardVector.Add(Vector3.forward);
 
+            //1 Forward up
             _forwardVector.Add(Vector3.Lerp
                 (Vector3.forward, Vector3.up, _forwardVAngel));
 
+            //2 Forward down
             _forwardVector.Add(Vector3.Lerp
                 (Vector3.forward, Vector3.down, _forwardVAngel));
 
+            //3 Forward right
             _forwardVector.Add(Vector3.Lerp
                 (Vector3.forward, Vector3.right, _forwardVAngel));
 
+            //4 Forward left
             _forwardVector.Add(Vector3.Lerp
                 (Vector3.forward, Vector3.left, _forwardVAngel));
         }

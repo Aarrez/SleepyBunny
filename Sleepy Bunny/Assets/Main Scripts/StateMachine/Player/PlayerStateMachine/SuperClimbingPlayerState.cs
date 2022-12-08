@@ -31,7 +31,7 @@ namespace PlayerStM.SubStates
             {
                 SwitchState(Factory.SuperJump());
             }
-            else if (Ctx.IsGrounded || !Ctx.IsClimbing)
+            else if (!Ctx.IsClimbing)
             {
                 SwitchState(Factory.SuperGrounded());
             }
@@ -76,17 +76,19 @@ namespace PlayerStM.SubStates
 
         private void OnEdge()
         {
-            if (!Physics.Raycast(Ctx.transform.position, Ctx.transform.forward,
-                 Ctx.ClimbRayLength, Ctx.ClimbLayer))
+            for (int i = 0; i < Ctx.ForwardVector.Count; i++)
             {
-                Ctx.IsClimbing = false;
-                Ctx.IsGrabing = false;
+                if (!Physics.Raycast(Ctx.transform.position, Ctx.ForwardVector[i],
+                 Ctx.ClimbRayLength, Ctx.ClimbLayer))
+                {
+
+                }
             }
         }
 
         public override void CheckSwitchAnimation()
         {
-           
+
         }
     }
 }

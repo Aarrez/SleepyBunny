@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Levels/UI Scene.unity
     guid: c7dadc4ab6cfd4218962ea671d2d5973
-  - enabled: 1
+  - enabled: 0
     path: Assets/Levels/Level1.unity
     guid: 6428dfbdb067a3d478d2105d099212d1
+  - enabled: 1
+    path: Assets/Levels/SB appartment.unity
+    guid: 21912caf980c0bd47b72580da684cb5e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a3eba4dd8f83d644898a2bd24e89f61f,
       type: 2}

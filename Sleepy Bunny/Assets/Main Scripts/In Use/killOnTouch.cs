@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class killOnTouch : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnCollisionEnter(Collision collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        collision.gameObject.SetActive(false);
     }
 }

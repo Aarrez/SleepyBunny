@@ -127,8 +127,8 @@ namespace PlayerStM.BaseStates
         public abstract void CheckSwitchState();
 
         /// <summary>
-        /// Basicly only used by the inital 
-        /// super state to have a substate 
+        /// Basicly only used by the inital
+        /// super state to have a substate
         /// Do not use if a Sub- or minorstate
         /// </summary>
         public abstract void InitializeSubState();
@@ -233,12 +233,17 @@ namespace PlayerStM.BaseStates
             float distance = Vector3.Magnitude(pullDirection);
             if (distance > pullDistance)
             {
+                //rigidbodyToPull.velocity =
+                //(normalizedDirection * pullForce *
+                //Time.fixedDeltaTime);
+
                 rigidbodyToPull.AddForceAtPosition
                 ((normalizedDirection * pullForce *
                 Time.fixedDeltaTime), pullPoint.position);
             }
-
         }
+
+        // Below are remenants of pushing mechanic that does not work
 
         //internal void MovePushedObject(Transform playerTransform,
         //    Transform transformToPush, Rigidbody rigidbodyToPush,
