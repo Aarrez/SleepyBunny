@@ -1,7 +1,6 @@
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
 using UnityEngine;
-using UnityEngine.iOS;
 
 namespace PlayerStM.SubStates
 {

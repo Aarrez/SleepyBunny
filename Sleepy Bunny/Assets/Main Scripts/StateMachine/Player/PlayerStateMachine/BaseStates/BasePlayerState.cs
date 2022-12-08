@@ -2,7 +2,6 @@ using PlayerStM.SubStates;
 using UnityEngine;
 using System;
 using PlayerStM.SuperState;
-using OpenCover.Framework.Model;
 
 namespace PlayerStM.BaseStates
 {
@@ -208,9 +207,16 @@ namespace PlayerStM.BaseStates
         {
             Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
             Vector3 normalizedDirection = pullDirection.normalized;
-            rigidbodyToPull.AddForceAtPosition
+
+            float distance = Vector3.Magnitude(pullDirection);
+            Debug.Log(distance);
+            if(distance > pullDistance)
+            {
+                rigidbodyToPull.AddForceAtPosition
                 ((normalizedDirection * pullForce *
                 Time.fixedDeltaTime), pullPoint.position);
+            }
+            
         }
 
         //internal void MovePushedObject(Transform playerTransform,

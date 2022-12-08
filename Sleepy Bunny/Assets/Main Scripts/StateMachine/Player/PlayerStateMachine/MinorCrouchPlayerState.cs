@@ -8,6 +8,7 @@ namespace PlayerStM.SubStates
             , StateFactory stateFactory)
             : base(currentContext, stateFactory)
         {
+            
         }
 
         public override void CheckSwitchState()

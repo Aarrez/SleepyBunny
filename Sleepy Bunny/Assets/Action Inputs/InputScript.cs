@@ -74,11 +74,11 @@ public class InputScript : MonoBehaviour
             _interactCtx = ctx;
         };
 
-        //cPlayer.Interact.canceled += ctx =>
-        //{
-        //    Interact?.Invoke();
-        //    _interactCtx = ctx;
-        //};
+        cPlayer.Interact.canceled += ctx =>
+        {
+            Interact?.Invoke();
+            _interactCtx = ctx;
+        };
 
         #endregion Interact Input
 

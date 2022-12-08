@@ -497,10 +497,9 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public void ClimbGrabInteract()
         {
-            if (_isGrabing ^ _isClimbing)
+            if (_isGrabing)
             {
                 _isGrabing = false;
-                _isClimbing = false;
                 _isPulling = false;
                 _isPushing = false;
                 hit.IsUnityNull();
