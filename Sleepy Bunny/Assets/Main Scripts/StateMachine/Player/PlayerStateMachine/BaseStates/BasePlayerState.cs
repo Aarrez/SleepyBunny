@@ -124,7 +124,6 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public abstract void ExitState();
 
-        
         public abstract void CheckSwitchState();
 
         /// <summary>
@@ -232,13 +231,13 @@ namespace PlayerStM.BaseStates
             Vector3 normalizedDirection = pullDirection.normalized;
 
             float distance = Vector3.Magnitude(pullDirection);
-            if(distance > pullDistance)
+            if (distance > pullDistance)
             {
                 rigidbodyToPull.AddForceAtPosition
                 ((normalizedDirection * pullForce *
                 Time.fixedDeltaTime), pullPoint.position);
             }
-            
+
         }
 
         //internal void MovePushedObject(Transform playerTransform,

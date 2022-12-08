@@ -28,38 +28,32 @@ namespace PlayerStM.SubStates
         public override void CheckSwitchState()
         {
         }
-        
+
         public override void EnterState()
         {
         }
-        
+
         public override void FixedUpdateState()
         {
             CheckSwitchState();
         }
 
-       
+
         public override void UpdateState()
         {
         }
-        
+
         public override void ExitState()
         {
         }
-        /// <summary>
-        /// Basicly only used by the inital super state to have a substate 
-        /// Do not use if a Sub- or minorstate
-        /// </summary>
+
         public override void InitializeSubState()
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void CheckSwitchAnimation()
         {
-          
+
         }
     }
 }
