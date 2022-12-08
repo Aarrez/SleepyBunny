@@ -4,27 +4,15 @@ using UnityEngine;
 
 public class doorOpen : MonoBehaviour
 {
-    public GameObject ObjectYouWishtoMove;
+    private Animator _animator;
 
-    public Animator objectToMove;
-
-    private bool holdDoorHandle = false;
-
-    public GameObject player;
-
-    private InputScript _theInput;
-
-    public void Start()
+    private void Awake()
     {
-        _theInput = FindObjectOfType<InputScript>();
+        _animator = GetComponentInParent<Animator>();
     }
 
-    private void OpenDoor(bool openDoor)
+    public void OpenDoor()
     {
-        if (openDoor)
-        {
-            Debug.Log("By the handle");
-            objectToMove.SetBool("doorOpen", true);
-        }
+        _animator.SetTrigger("OpenDoor");
     }
 }

@@ -10,7 +10,7 @@ public class InteractObject : MonoBehaviour
 
     public Action Interacted => _interacted;
 
-    [SerializeField] private EventReference _LightSwitch;
+    [SerializeField] private EventReference _lightSwitch;
 
     private void OnEnable()
     {
@@ -29,13 +29,19 @@ public class InteractObject : MonoBehaviour
             if (GetComponentInChildren<Light>().isActiveAndEnabled)
             {
                 GetComponentInChildren<Light>().enabled = false;
-                RuntimeManager.PlayOneShot(_LightSwitch);
+                if (_lightSwitch.IsNull) { return; }
+                RuntimeManager.PlayOneShot(_lightSwitch);
             }
             else
             {
                 GetComponentInChildren<Light>().enabled = true;
-                RuntimeManager.PlayOneShot(_LightSwitch);
+                if (_lightSwitch.IsNull) { return; }
+                RuntimeManager.PlayOneShot(_lightSwitch);
             }
+        }
+        else if (gameObject.tag == "Door")
+        {
+            GetComponentInParent<Animator>().SetTrigger("OpenDoor");
         }
     }
 }
