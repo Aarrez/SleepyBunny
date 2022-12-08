@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using PlayerStM.BaseStates;
 using UnityEngine;
 
@@ -72,6 +71,11 @@ namespace PlayerStM.SuperState
 
         public override void UpdateState()
         {
+        }
+
+        public override void CheckSwitchAnimation()
+        {
+           
         }
     }
 }

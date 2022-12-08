@@ -16,6 +16,7 @@ namespace PlayerStM.BaseStates
             this.Ctx = ctx;
             this.Factory = factory;
             InputScript.Moveing += GetMoveCtx;
+            AnimaitonAffected += CheckSwitchAnimation;
         }
 
         // Varibales for movment
@@ -26,6 +27,8 @@ namespace PlayerStM.BaseStates
         private Vector3 _cameraDirection;
 
         private Vector3 _moveDirection;
+
+        public static Action AnimaitonAffected;
 
         // Bool used to check if state is Super of sub
         protected bool IsRootState = false;
@@ -101,17 +104,37 @@ namespace PlayerStM.BaseStates
             Push = 3
         }
 
+        ///<summary>
+        /// Called when this state is switched to
+        /// </summary>
         public abstract void EnterState();
 
+        ///<summary>
+        /// Runs on FixedUpdate()
+        /// </summary>
         public abstract void FixedUpdateState();
 
+        ///<summary>
+        /// Runs on Update()
+        /// </summary>
         public abstract void UpdateState();
 
+        /// <summary>
+        /// When switching to another state this method will be called
+        /// </summary>
         public abstract void ExitState();
 
+        
         public abstract void CheckSwitchState();
 
+        /// <summary>
+        /// Basicly only used by the inital 
+        /// super state to have a substate 
+        /// Do not use if a Sub- or minorstate
+        /// </summary>
         public abstract void InitializeSubState();
+
+        public abstract void CheckSwitchAnimation();
 
         public void FixedUpdateStates()
         {
@@ -209,7 +232,6 @@ namespace PlayerStM.BaseStates
             Vector3 normalizedDirection = pullDirection.normalized;
 
             float distance = Vector3.Magnitude(pullDirection);
-            Debug.Log(distance);
             if(distance > pullDistance)
             {
                 rigidbodyToPull.AddForceAtPosition

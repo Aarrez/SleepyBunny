@@ -83,5 +83,10 @@ namespace PlayerStM.SubStates
                 Ctx.IsGrabing = false;
             }
         }
+
+        public override void CheckSwitchAnimation()
+        {
+           
+        }
     }
 }

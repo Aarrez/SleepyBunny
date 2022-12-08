@@ -75,5 +75,10 @@ namespace PlayerStM.SubStates
         public override void UpdateState()
         {
         }
+
+        public override void CheckSwitchAnimation()
+        {
+           
+        }
     }
 }

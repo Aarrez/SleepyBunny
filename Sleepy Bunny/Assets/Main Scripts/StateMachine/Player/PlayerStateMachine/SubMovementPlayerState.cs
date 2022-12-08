@@ -73,7 +73,6 @@ namespace PlayerStM.SubStates
         {
             CheckSwitchState();
             MoveCameraDirection();
-            RotateToMovment();
             PlayerMove();
         }
 
@@ -92,6 +91,7 @@ namespace PlayerStM.SubStates
                     break;
 
                 case SuperGrabPlayerState:
+                    InverseRotateToMovment();
                     PullingMovement();
                     break;
 
@@ -151,6 +151,21 @@ namespace PlayerStM.SubStates
             Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
              Quaternion.LookRotation(MoveDirection, Vector3.up),
              Ctx.RotationSpeed);
+        }
+
+        private void InverseRotateToMovment()
+        {
+            if (MoveDirection == Vector3.zero) return;
+
+            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
+             Quaternion.LookRotation(-MoveDirection, Vector3.up),
+             Ctx.RotationSpeed);
+        }
+
+        public override void CheckSwitchAnimation()
+        {
+            Debug.Log("Updateing animation");
+            EnterState();
         }
     }
 }

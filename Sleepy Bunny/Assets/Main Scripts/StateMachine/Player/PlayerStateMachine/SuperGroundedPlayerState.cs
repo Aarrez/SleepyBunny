@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using PlayerStM.BaseStates;
-using PlayerStM.SubStates;
 
 namespace PlayerStM.SuperState
 {
@@ -68,6 +67,11 @@ namespace PlayerStM.SuperState
 
         public override void UpdateState()
         {
+        }
+
+        public override void CheckSwitchAnimation()
+        {
+           
         }
     }
 }

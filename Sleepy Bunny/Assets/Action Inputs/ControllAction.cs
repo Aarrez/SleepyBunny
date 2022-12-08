@@ -490,7 +490,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         public CustomPlayerActions(@ControllAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_CustomPlayer_Movement;
         public InputAction @Jump => m_Wrapper.m_CustomPlayer_Jump;
-        public InputAction Interact => m_Wrapper.m_CustomPlayer_Interact;
+        public InputAction @Interact => m_Wrapper.m_CustomPlayer_Interact;
         public InputAction @Crouch => m_Wrapper.m_CustomPlayer_Crouch;
         public InputAction @Look => m_Wrapper.m_CustomPlayer_Look;
         public InputAction @DebugState => m_Wrapper.m_CustomPlayer_DebugState;
@@ -511,9 +511,9 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnJump;
-                Interact.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnInteract;
-                Interact.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnInteract;
-                Interact.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnInteract;
+                @Interact.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnInteract;
                 @Crouch.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnCrouch;
@@ -539,9 +539,9 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                Interact.started += instance.OnInteract;
-                Interact.performed += instance.OnInteract;
-                Interact.canceled += instance.OnInteract;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;

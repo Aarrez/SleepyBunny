@@ -59,5 +59,10 @@ namespace PlayerStM.SubStates
                 SetSubState(Factory.SubIdle());
             }
         }
+
+        public override void CheckSwitchAnimation()
+        {
+           
+        }
     }
 }

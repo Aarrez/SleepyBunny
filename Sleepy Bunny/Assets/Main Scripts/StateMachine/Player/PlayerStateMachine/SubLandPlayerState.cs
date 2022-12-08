@@ -1,5 +1,4 @@
 using PlayerStM.BaseStates;
-using System.Threading.Tasks;
 
 namespace PlayerStM.SubStates
 {
@@ -42,6 +41,10 @@ namespace PlayerStM.SubStates
         //When a new superstate is set this medtod is called
 
         public override void UpdateState()
+        {
+        }
+
+        public override void CheckSwitchAnimation()
         {
         }
     }

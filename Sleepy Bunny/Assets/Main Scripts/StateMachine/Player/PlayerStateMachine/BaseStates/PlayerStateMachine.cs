@@ -504,6 +504,7 @@ namespace PlayerStM.BaseStates
                 _isPushing = false;
                 hit.IsUnityNull();
                 Debug.Log("Restet");
+                BasePlayerState.AnimaitonAffected();
                 return;
             }
 
@@ -522,6 +523,7 @@ namespace PlayerStM.BaseStates
                 {
                     _transformHit = hit.transform;
                     _isClimbing = true;
+                    BasePlayerState.AnimaitonAffected();
                     break;
                 }
 
@@ -546,6 +548,7 @@ namespace PlayerStM.BaseStates
 
                     _isPulling = true;
                     _isGrabing = true;
+                    BasePlayerState.AnimaitonAffected();
                     break;
                 }
 

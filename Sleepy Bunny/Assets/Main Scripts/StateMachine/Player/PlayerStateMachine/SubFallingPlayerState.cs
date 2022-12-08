@@ -1,7 +1,4 @@
 using PlayerStM.BaseStates;
-using PlayerStM.SuperState;
-using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace PlayerStM.SubStates
 {
@@ -74,6 +71,11 @@ namespace PlayerStM.SubStates
             {
                 _fallVeloctiy = Ctx.Rb.velocity.y;
             }
+        }
+
+        public override void CheckSwitchAnimation()
+        {
+            
         }
     }
 }

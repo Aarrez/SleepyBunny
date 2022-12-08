@@ -12,6 +12,7 @@ public class OtherGrab : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.useGravity = true;
+        _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         gameObject.layer = LayerMask.NameToLayer("Grabable");
         gameObject.tag = "Move_Object";
     }
