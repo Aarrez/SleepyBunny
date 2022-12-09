@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.11768, g: 324.74365, b: 429.81006, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1194,6 +1194,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1545323720}
     m_Modifications:
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _climb.Path
+      value: event:/Grab Sound SFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _climb.Guid.Data1
+      value: 2118287022
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _climb.Guid.Data2
+      value: 1282966788
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _climb.Guid.Data3
+      value: -146470784
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _climb.Guid.Data4
+      value: 1756757019
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _landingHard.Path
+      value: event:/Landing on cloth
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _landingHard.Guid.Data1
+      value: 1867837604
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _landingHard.Guid.Data2
+      value: 1205441371
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _landingHard.Guid.Data3
+      value: 1874150315
+      objectReference: {fileID: 0}
+    - target: {fileID: 204981382, guid: 9e4796eb3a7359049a49ced1447c82f7, type: 3}
+      propertyPath: _landingHard.Guid.Data4
+      value: 1731103001
+      objectReference: {fileID: 0}
     - target: {fileID: 715097503647677489, guid: 9e4796eb3a7359049a49ced1447c82f7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5118,7 +5158,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640547884}
-  m_LocalRotation: {x: 0.1188742, y: 0.00014559405, z: -0.000017430972, w: 0.9929093}
+  m_LocalRotation: {x: 0.11887417, y: 0.0001456632, z: -0.000017439246, w: 0.9929093}
   m_LocalPosition: {x: -3.3992043, y: 0.83162403, z: -2.6445596}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5977,17 +6017,17 @@ PrefabInstance:
     - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11887419
+      value: 0.11887418
       objectReference: {fileID: 0}
     - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00014560985
+      value: 0.00014564545
       objectReference: {fileID: 0}
     - target: {fileID: 8916875051678770153, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000017432865
+      value: -0.000017437122
       objectReference: {fileID: 0}
     - target: {fileID: 8916875052486592168, guid: 4e517476e42dc4c489ae6b7b5f89fdc4,
         type: 3}
