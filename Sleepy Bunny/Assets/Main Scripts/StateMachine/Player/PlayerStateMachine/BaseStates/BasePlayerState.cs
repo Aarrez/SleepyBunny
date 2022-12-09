@@ -233,13 +233,13 @@ namespace PlayerStM.BaseStates
             float distance = Vector3.Magnitude(pullDirection);
             if (distance > pullDistance)
             {
-                //rigidbodyToPull.velocity =
-                //(normalizedDirection * pullForce *
-                //Time.fixedDeltaTime);
+                rigidbodyToPull.AddForce(
+                    (normalizedDirection * pullForce *
+                    Time.fixedDeltaTime));
 
-                rigidbodyToPull.AddForceAtPosition
-                ((normalizedDirection * pullForce *
-                Time.fixedDeltaTime), pullPoint.position);
+                //rigidbodyToPull.AddForceAtPosition
+                //((normalizedDirection * pullForce *
+                //Time.fixedDeltaTime), pullPoint.position);
             }
         }
 
