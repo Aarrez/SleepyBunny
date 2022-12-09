@@ -131,11 +131,13 @@ namespace PlayerStM.SubStates
 
         private void PullingMovement()
         {
-            Vector3 Movement = MoveDirection * Ctx.MovmentForce / 2 * Time.fixedDeltaTime;
-            Ctx.Rb.velocity = new Vector3(
-                Movement.x,
-                Ctx.Rb.velocity.y,
-                Movement.z);
+            Vector3 Movement = MoveDirection * Ctx.PullForce * Time.fixedDeltaTime;
+            Ctx.Rb.AddForce(Movement);
+
+            //Ctx.Rb.velocity = new Vector3(
+            //    Movement.x,
+            //    Ctx.Rb.velocity.y,
+            //    Movement.z);
         }
 
         private void PlayerClimb()
@@ -164,8 +166,6 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchAnimation()
         {
-            Debug.Log("Updateing animation");
-            EnterState();
         }
     }
 }
