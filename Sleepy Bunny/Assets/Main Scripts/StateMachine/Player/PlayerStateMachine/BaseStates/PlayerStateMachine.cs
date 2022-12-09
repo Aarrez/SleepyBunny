@@ -571,6 +571,7 @@ namespace PlayerStM.BaseStates
                 else if (Physics.Raycast(transform.position, tempVector, out hit,
                     _interactRayLength, _interactLayer))
                 {
+                    Debug.Log("Happening");
                     try
                     {
                         hit.transform.gameObject.GetComponent<InteractObject>()

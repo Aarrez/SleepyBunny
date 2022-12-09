@@ -6,11 +6,18 @@ using FMODUnity;
 
 public class InteractObject : MonoBehaviour
 {
+    private GameObject _fanObjects;
+
     private Action _interacted;
 
     public Action Interacted => _interacted;
 
     [SerializeField] private EventReference _lightSwitch;
+
+    private void Awake()
+    {
+        _fanObjects = GameObject.FindGameObjectWithTag("Fan");
+    }
 
     private void OnEnable()
     {
@@ -42,6 +49,10 @@ public class InteractObject : MonoBehaviour
         else if (gameObject.tag == "Door")
         {
             GetComponentInParent<Animator>().SetTrigger("OpenDoor");
+        }
+        else if (gameObject.tag == "FanButton")
+        {
+            _fanObjects.SetActive(true);
         }
     }
 }

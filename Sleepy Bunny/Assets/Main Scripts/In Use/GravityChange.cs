@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class GravityChange : MonoBehaviour
 {
-    [SerializeField] private float _newGravity = 1f;
-
-    // Start is called before the first frame update
-    private void Start()
+    private enum _addForce
     {
+        Up = 0,
+
+        Down = 1
     }
 
-    // Update is called once per frame
-    private void Update()
+    [SerializeField] private _addForce AddForce;
+
+    [SerializeField] private ForceMode _forceType = ForceMode.Force;
+
+    [SerializeField] private float _forceModifier = 1f;
+
+    private void OnTriggerStay(Collider other)
     {
+        if (other.tag != "Player") { return; }
+
+        if (AddForce == _addForce.Up)
+        {
+            other.attachedRigidbody.AddForce(Vector3.up * _forceModifier, _forceType);
+        }
+        else
+        {
+            other.attachedRigidbody.AddForce(Vector3.down * _forceModifier, _forceType);
+        }
     }
 }

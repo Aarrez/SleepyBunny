@@ -35,6 +35,7 @@ namespace PlayerStM.SubStates
         {
             MovePulledObject(Ctx.transform, Ctx.TransformHit, Ctx.RigidbodyGrabed,
             Ctx.PointHit, Ctx.BreakDistance, Ctx.PullDistance, Ctx.PullForce);
+
             CheckSwitchState();
         }
 
@@ -62,7 +63,6 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchAnimation()
         {
-           
         }
     }
 }
