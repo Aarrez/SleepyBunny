@@ -3297,7 +3297,7 @@ Transform:
   m_GameObject: {fileID: 8701972349885150162}
   m_LocalRotation: {x: -0.0020151339, y: -0.00031834407, z: -0.0020514282, w: 0.9999958}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99999994, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4457392093052880907}
@@ -3460,6 +3460,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 324714289547476469, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 324714289547476469, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
+        type: 3}
       propertyPath: m_CapsuleColliders.Array.size
       value: 7
       objectReference: {fileID: 0}
@@ -3565,6 +3570,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b, type: 3}
+--- !u!1 &4265360010129381953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 324714289547476468, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4589176514042619829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8220097443589322037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265360010129381953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206ce0b7d5b3944cdbc83ba88739df98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solverIndices: 
+  m_CollisionMaterial: {fileID: 0}
+  m_SurfaceCollisions: 0
+  m_SelfCollisions: 0
+  m_OneSided: 0
+  _distanceConstraintsEnabled: 1
+  _stretchingScale: 1
+  _stretchCompliance: 0
+  _maxCompression: 0
+  _bendConstraintsEnabled: 1
+  _bendCompliance: 0
+  _maxBending: 0.025
+  _plasticYield: 0
+  _plasticCreep: 0
+  _aerodynamicsEnabled: 1
+  _drag: 0.05
+  _lift: 0.05
+  m_ClothBlueprint: {fileID: 0}
+  _volumeConstraintsEnabled: 1
+  _compressionCompliance: 0
+  _pressure: 1
+  _tetherConstraintsEnabled: 1
+  _tetherCompliance: 0
+  _tetherScale: 1
+  m_renderer: {fileID: 0}
 --- !u!4 &7002591775253504783 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6817943681931003066, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
