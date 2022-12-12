@@ -172,7 +172,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""id"": ""94684778-b69b-4d0a-87dd-45e8a82f7247"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=100,y=25)"",
+                    ""processors"": ""ScaleVector2(x=75,y=50),InvertVector2(invertX=false)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": true,

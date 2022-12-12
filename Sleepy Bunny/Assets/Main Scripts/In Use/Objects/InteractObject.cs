@@ -31,28 +31,15 @@ public class InteractObject : MonoBehaviour
 
     private void InteractedWith()
     {
-        if (gameObject.tag == "Light")
-        {
-            if (GetComponentInChildren<Light>().isActiveAndEnabled)
-            {
-                GetComponentInChildren<Light>().enabled = false;
-                if (_lightSwitch.IsNull) { return; }
-                RuntimeManager.PlayOneShot(_lightSwitch);
-            }
-            else
-            {
-                GetComponentInChildren<Light>().enabled = true;
-                if (_lightSwitch.IsNull) { return; }
-                RuntimeManager.PlayOneShot(_lightSwitch);
-            }
-        }
-        else if (gameObject.tag == "Door")
+        if (gameObject.tag == "Door")
         {
             GetComponentInParent<Animator>().SetTrigger("OpenDoor");
         }
         else if (gameObject.tag == "FanButton")
         {
             _fanObjects.SetActive(true);
+            if (_lightSwitch.IsNull) { return; }
+            RuntimeManager.PlayOneShot(_lightSwitch);
         }
     }
 }

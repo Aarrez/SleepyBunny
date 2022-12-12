@@ -16,6 +16,7 @@ TagManager:
   - Door
   - FanButton
   - Fan
+  - Drawer
   layers:
   - Default
   - TransparentFX

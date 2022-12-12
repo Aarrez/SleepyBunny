@@ -43,6 +43,8 @@ namespace PlayerStM.SubStates
             Debug.Log("Climbing");
             Ctx.Rb.useGravity = false;
             Ctx.Rb.velocity = Vector3.zero;
+            Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                        (float)_eIdleAnim.IdleClimb);
         }
 
         public override void FixedUpdateState()
@@ -65,15 +67,6 @@ namespace PlayerStM.SubStates
         {
         }
 
-        private void RotateTwoardsTransform(Transform climbTransform)
-        {
-            Quaternion rotateTowards = Quaternion.FromToRotation(Ctx.transform.position,
-                climbTransform.position);
-
-            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
-                rotateTowards, Ctx.RotationSpeed);
-        }
-
         private void OnEdge()
         {
             for (int i = 0; i < Ctx.ForwardVector.Count; i++)
@@ -81,14 +74,12 @@ namespace PlayerStM.SubStates
                 if (!Physics.Raycast(Ctx.transform.position, Ctx.ForwardVector[i],
                  Ctx.ClimbRayLength, Ctx.ClimbLayer))
                 {
-
                 }
             }
         }
 
         public override void CheckSwitchAnimation()
         {
-
         }
     }
 }

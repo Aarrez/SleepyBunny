@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -14,7 +13,10 @@ public class OtherGrab : MonoBehaviour
         _rigidbody.useGravity = true;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         gameObject.layer = LayerMask.NameToLayer("Grabable");
-        gameObject.tag = "Move_Object";
+        if (gameObject.CompareTag("Untagged"))
+        {
+            gameObject.tag = "Move_Object";
+        }
     }
 
     public void ObjectGrabed(bool grabed)
