@@ -532,18 +532,8 @@ namespace PlayerStM.BaseStates
 
                 Debug.DrawRay(transform.position, tempVector * 1, Color.green, 2);
 
-                //Climb ray
-                if (Physics.Raycast(transform.position, tempVector, out hit,
-                _climbRayLength, _climbLayer))
-                {
-                    _transformHit = hit.transform;
-                    _isClimbing = true;
-                    BasePlayerState.AnimaitonAffected();
-                    break;
-                }
-
                 //Grab ray
-                else if (Physics.Raycast(transform.position, tempVector, out hit,
+                if (Physics.Raycast(transform.position, tempVector, out hit,
                     _grabRayLength, _grabLayer))
                 {
                     _transformHit = hit.transform;
@@ -563,6 +553,16 @@ namespace PlayerStM.BaseStates
 
                     _isPulling = true;
                     _isGrabing = true;
+                    BasePlayerState.AnimaitonAffected();
+                    break;
+                }
+
+                //Climb ray
+                else if (Physics.Raycast(transform.position, tempVector, out hit,
+                _climbRayLength, _climbLayer))
+                {
+                    _transformHit = hit.transform;
+                    _isClimbing = true;
                     BasePlayerState.AnimaitonAffected();
                     break;
                 }

@@ -1,3 +1,5 @@
+using System;
+using PlayerStM.BaseStates;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -22,5 +24,18 @@ public class OtherGrab : MonoBehaviour
     public void ObjectGrabed(bool grabed)
     {
         Grabed = grabed;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Player")) { return; }
+        collision.collider.GetComponentInChildren<Animator>().SetFloat("MoveIndex", 3);
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Player")) { return; }
+
+        collision.collider.GetComponentInChildren<Animator>().SetFloat("MoveIndex", 0);
     }
 }
