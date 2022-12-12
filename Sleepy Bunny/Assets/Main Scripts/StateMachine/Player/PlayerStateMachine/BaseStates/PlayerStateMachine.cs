@@ -544,7 +544,7 @@ namespace PlayerStM.BaseStates
 
                 //Grab ray
                 else if (Physics.Raycast(transform.position, tempVector, out hit,
-                    _climbRayLength, _grabLayer))
+                    _grabRayLength, _grabLayer))
                 {
                     _transformHit = hit.transform;
                     _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
