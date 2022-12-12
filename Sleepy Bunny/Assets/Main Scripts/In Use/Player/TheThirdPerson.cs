@@ -40,11 +40,8 @@ public class TheThirdPerson : PlayerRaycast
     public float DamageAmount;
 
     private float _amountOfHealth;
-
     public float Health;
-
     public AudioSource PainNoise;
-
     public AudioSource Sizzle;
 
     public bool ShouldRespawn = false;
@@ -74,7 +71,6 @@ public class TheThirdPerson : PlayerRaycast
     public void Start()
     {
         Physics.gravity = new Vector3(0, -9.82F, 0);
-
         //gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         //transform.position = gm.lastCheckPointPos;
     }
@@ -83,7 +79,6 @@ public class TheThirdPerson : PlayerRaycast
     private void M_Movement()
     {
         _movementDirection = Camera.main.transform.TransformDirection(_movement);
-
         //Gets the input
         Vector2 tempV2 = _theInput.MoveCtx.ReadValue<Vector2>();
         if (!_climbing)
@@ -137,7 +132,6 @@ public class TheThirdPerson : PlayerRaycast
     private void PMoveDirectionOfCamera()
     {
         Vector3 camDirection = Camera.main.transform.TransformDirection(_movement);
-
         //Prevents the player model form leaning down when looking down
         _movementDirection = new Vector3(camDirection.x, 0f, camDirection.z);
     }
@@ -208,5 +202,6 @@ public class TheThirdPerson : PlayerRaycast
     //Respaawn
     public void Respawn()
     {
+        transform.position = _gm.lastCheckPointPos;
     }
 }

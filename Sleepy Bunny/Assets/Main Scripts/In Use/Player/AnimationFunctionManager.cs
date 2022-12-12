@@ -54,19 +54,16 @@ public class AnimationFunctionManager : MonoBehaviour
 
     public void landingHard()
     {
-        if (_landingHard.IsNull) { return; }
         RuntimeManager.PlayOneShot(_landingHard);
     }
 
     public void landingSoft()
     {
-        if (_landingSoft.IsNull) { return; }
         RuntimeManager.PlayOneShot(_landingSoft);
     }
 
     public void dragingObject()
     {
-        if (_dragingObject.IsNull) { return; }
         RuntimeManager.PlayOneShot(_dragingObject);
     }
 }

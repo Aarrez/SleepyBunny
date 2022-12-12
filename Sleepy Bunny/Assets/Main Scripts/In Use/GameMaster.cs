@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using PlayerStM.BaseStates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,9 +10,7 @@ public class GameMaster : MonoBehaviour
 
     private static GameMaster instance;
 
-    public Vector3 CurrentCheckpointPosition;
-
-    private Transform _playerTransform;
+    public Vector3 lastCheckPointPos;
 
     public bool pillowOnFloor = false;
 
@@ -32,8 +29,6 @@ public class GameMaster : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        _playerTransform = FindObjectOfType<PlayerStateMachine>().transform;
     }
 
     private void Start()
@@ -45,11 +40,6 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-    }
-
-    private void PlayerDied()
-    {
-        _playerTransform.position = CurrentCheckpointPosition;
     }
 
     public void EndGame()

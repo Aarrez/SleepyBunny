@@ -1,33 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FMODUnity;
 
-public class Checkpoints : MonoBehaviour
+[CreateAssetMenu(fileName = "CheckPoint", menuName = "Create Checkpoint", order = 1)]
+public class Checkpoints : ScriptableObject
 {
-    private GameMaster _gameMaster;
+    private bool isActive;
 
-    [SerializeField] private EventReference _lightSwitch;
-
-    private void Awake()
-    {
-        _gameMaster = FindObjectOfType<GameMaster>();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        UpdateCheckpoint();
-
-        GetComponent<BoxCollider>().enabled = false;
-    }
-
-    private void UpdateCheckpoint()
-    {
-        GetComponentInChildren<Light>().enabled = true;
-
-        _gameMaster.CurrentCheckpointPosition = transform.position;
-
-        if (_lightSwitch.IsNull) { return; }
-        RuntimeManager.PlayOneShot(_lightSwitch);
-    }
+    public Vector3 position;
 }
