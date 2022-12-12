@@ -43,6 +43,8 @@ namespace PlayerStM.SubStates
             Debug.Log("Climbing");
             Ctx.Rb.useGravity = false;
             Ctx.Rb.velocity = Vector3.zero;
+            Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                (float)_eIdleAnim.IdleClimb);
         }
 
         public override void FixedUpdateState()
@@ -78,17 +80,24 @@ namespace PlayerStM.SubStates
         {
             for (int i = 0; i < Ctx.ForwardVector.Count; i++)
             {
-                if (!Physics.Raycast(Ctx.transform.position, Ctx.ForwardVector[i],
+                Debug.DrawRay(Ctx.transform.position,
+                    Ctx.transform.TransformDirection(Ctx.ForwardVector[i]),
+                    Color.red, 1);
+                if (Physics.Raycast(Ctx.transform.position,
+                    Ctx.transform.TransformDirection(Ctx.ForwardVector[i]),
                  Ctx.ClimbRayLength, Ctx.ClimbLayer))
                 {
-
+                    return;
+                }
+                else
+                {
+                    Ctx.IsClimbing = false;
                 }
             }
         }
 
         public override void CheckSwitchAnimation()
         {
-
         }
     }
 }
