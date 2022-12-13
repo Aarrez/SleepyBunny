@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638064473848092182
+  lastModified: 638065422493439073
   FileSizes:
   - Name: Desktop
-    Value: 464384
+    Value: 566944
   Exists: 1
 --- !u!114 &-7711967296380901479
 MonoBehaviour:
@@ -116,11 +116,38 @@ MonoBehaviour:
   Path: FMOD/SleepyBunnySFX/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638064391562157233
+  lastModified: 638065422493448771
   FileSizes:
   - Name: Desktop
-    Value: 962
+    Value: 1064
   Exists: 1
+--- !u!114 &-5446380151847569314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Dragging object short version
+  m_EditorClassIdentifier: 
+  Path: event:/Dragging object short version
+  Guid:
+    Data1: 1742182361
+    Data2: 1125027051
+    Data3: -246027879
+    Data4: 1487455983
+  Banks:
+  - {fileID: -8838939354570265537}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5360712193458811674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,12 +263,14 @@ MonoBehaviour:
   - {fileID: 4224950003971144841}
   - {fileID: -4176963198526326417}
   - {fileID: 5322240767006344268}
+  - {fileID: 5153007433759537566}
+  - {fileID: -5446380151847569314}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8838939354570265537}
   StringsBanks:
   - {fileID: -6358821989920892564}
-  cacheTime: 638064473848092182
+  cacheTime: 638065422493448771
   cacheVersion: 131593
 --- !u!114 &3606798378312975071
 MonoBehaviour:
@@ -297,6 +326,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &5153007433759537566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Dragging object
+  m_EditorClassIdentifier: 
+  Path: event:/Dragging object
+  Guid:
+    Data1: 341388829
+    Data2: 1161806804
+    Data3: -1126862204
+    Data4: -1615300045
+  Banks:
+  - {fileID: -8838939354570265537}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 6921
 --- !u!114 &5322240767006344268
 MonoBehaviour:
   m_ObjectHideFlags: 0
