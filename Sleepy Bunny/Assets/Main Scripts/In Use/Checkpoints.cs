@@ -9,6 +9,8 @@ public class Checkpoints : MonoBehaviour
 
     [SerializeField] private EventReference _lightSwitch;
 
+    [SerializeField] private Transform _spawnPoint;
+
     private void Awake()
     {
         _gameMaster = FindObjectOfType<GameMaster>();
@@ -24,8 +26,20 @@ public class Checkpoints : MonoBehaviour
     private void UpdateCheckpoint()
     {
         GetComponentInChildren<Light>().enabled = true;
+        try
+        {
+            Light[] lights = GetComponentsInChildren<Light>();
+            for (int i = 0; i < lights.Length; i++)
+            {
+                lights[i].enabled = true;
+            }
+        }
+        catch (System.Exception)
+        {
+            GetComponentInChildren<Light>().enabled = true;
+        }
 
-        _gameMaster.CurrentCheckpointPosition = transform.position;
+        _gameMaster.CurrentCheckpointPosition = _spawnPoint.position;
 
         if (_lightSwitch.IsNull) { return; }
         RuntimeManager.PlayOneShot(_lightSwitch);

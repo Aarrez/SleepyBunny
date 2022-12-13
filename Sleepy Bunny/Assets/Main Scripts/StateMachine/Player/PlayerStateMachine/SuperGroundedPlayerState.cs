@@ -20,7 +20,11 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
+            if (Ctx.IsDead)
+            {
+                SwitchState(Factory.SuperDead());
+            }
+            else if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
             {
                 SwitchState(Factory.SuperJump());
             }
@@ -71,7 +75,6 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchAnimation()
         {
-           
         }
     }
 }

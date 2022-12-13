@@ -19,7 +19,11 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsGrounded)
+            if (Ctx.IsDead)
+            {
+                SwitchState(Factory.SuperDead());
+            }
+            else if (Ctx.IsGrounded)
             {
                 SwitchState(Factory.SuperGrounded());
             }
@@ -75,7 +79,6 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchAnimation()
         {
-           
         }
     }
 }

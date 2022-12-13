@@ -14,7 +14,7 @@ ModelImporter:
     second: New_JUMP
   - first:
       74: 3425395189600132052
-    second: New_TRIP
+    second: Dead
   - first:
       74: -7969577759617228146
     second: New_PUSH OBJECT 2
@@ -198,11 +198,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: New_TRIP
+      name: Dead
       takeName: TRIP
       internalID: 0
-      firstFrame: 20
-      lastFrame: 80
+      firstFrame: 30
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

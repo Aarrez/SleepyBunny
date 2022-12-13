@@ -47,16 +47,24 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.CurrentSuper != Factory.SuperClimb())
             {
+                if (_fallVeloctiy > Ctx.DeadVelocity)
+                {
+                    Ctx.IsDead = true;
+                    Ctx.PlayerDied();
+                    return;
+                }
+
                 if (_fallVeloctiy > Ctx.SoftHitVelocity)
                 {
                     Ctx.PlayerAnimator.SetFloat(
                         "LandEffect", (float)_eLandAnim.LandSoft);
                 }
-                else
+                else if (_fallVeloctiy < Ctx.SoftHitVelocity)
                 {
                     Ctx.PlayerAnimator.SetFloat(
                         "LandEffect", (float)_eLandAnim.LandHard);
                 }
+
                 Ctx.PlayerAnimator.SetTrigger("Landed");
             }
         }
@@ -75,7 +83,6 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchAnimation()
         {
-            
         }
     }
 }
