@@ -49,6 +49,7 @@ namespace PlayerStM.SubStates
             {
                 if (_fallVeloctiy > Ctx.DeadVelocity)
                 {
+                    Ctx.IsDead = true;
                     Ctx.PlayerDied();
                     return;
                 }

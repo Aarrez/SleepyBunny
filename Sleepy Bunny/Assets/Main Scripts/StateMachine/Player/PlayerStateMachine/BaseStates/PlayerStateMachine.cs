@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerStM.SubStates;
 using Unity.VisualScripting;
+using NUnit.Framework.Constraints;
 
 namespace PlayerStM.BaseStates
 {
@@ -84,6 +85,9 @@ namespace PlayerStM.BaseStates
         [Header("")]
 
         //
+        [Tooltip("Character snaps to object at this distance")]
+        [SerializeField] private float _hitDistanceModifier = 0.1f;
+
         [SerializeField] private float _climbSpeed = 5f;
 
         [Tooltip("Changes how fast the character turns around")]
@@ -351,7 +355,11 @@ namespace PlayerStM.BaseStates
 
         public bool IsFalling => _isFalling;
 
-        public bool IsDead => _isDead;
+        public bool IsDead
+        {
+            get => _isDead;
+            set => _isDead = value;
+        }
 
         public Camera MainCamera => _mainCamera;
 
@@ -505,15 +513,11 @@ namespace PlayerStM.BaseStates
             _forwardVector.Add(Vector3.Lerp
                 (Vector3.forward, Vector3.up, _forwardVAngel));
 
-            //2 Forward down
-            _forwardVector.Add(Vector3.Lerp
-                (Vector3.forward, Vector3.down, _forwardVAngel));
-
-            //3 Forward right
+            //2 Forward right
             _forwardVector.Add(Vector3.Lerp
                 (Vector3.forward, Vector3.right, _forwardVAngel));
 
-            //4 Forward left
+            //3 Forward left
             _forwardVector.Add(Vector3.Lerp
                 (Vector3.forward, Vector3.left, _forwardVAngel));
         }
@@ -540,9 +544,9 @@ namespace PlayerStM.BaseStates
             // one hits a object with the correct layer
             for (int i = 0; i < _forwardVector.Count; i++)
             {
-                Vector3 tempVector =
+                Vector3 temp1Vector =
                     Camera.main.transform.TransformDirection(_forwardVector[i]);
-
+                Vector3 tempVector = new Vector3(temp1Vector.x, 0f, temp1Vector.z);
                 Debug.DrawRay(transform.position, tempVector * 1, Color.green, 2);
 
                 //Grab ray
@@ -576,7 +580,7 @@ namespace PlayerStM.BaseStates
                 {
                     _transformHit = hit.transform;
                     Vector3 hitDistance = (transform.position - hit.transform.position).normalized;
-                    transform.position = hit.point + hitDistance;
+                    transform.position = hit.point + hitDistance * _hitDistanceModifier;
                     _isClimbing = true;
                     BasePlayerState.AnimaitonAffected();
                     break;
@@ -633,6 +637,7 @@ namespace PlayerStM.BaseStates
 
         public void PlayerRespawn()
         {
+            Debug.Log("Called");
             transform.position = _gameMaster.CurrentCheckpointPosition;
         }
     }
