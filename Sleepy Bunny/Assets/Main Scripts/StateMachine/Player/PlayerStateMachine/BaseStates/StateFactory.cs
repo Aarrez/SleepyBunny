@@ -23,6 +23,8 @@ namespace PlayerStM.BaseStates
         SubFalling,
 
         SuperGrab,
+
+        SuperDead
     }
 
     public class StateFactory
@@ -43,6 +45,12 @@ namespace PlayerStM.BaseStates
             _states[eStates.SuperClimb] = new SuperClimbingPlayerState(_context, this);
             _states[eStates.SuperJump] = new SuperJumpPlayerState(_context, this);
             _states[eStates.SuperGrounded] = new SuperGroundedPlayerState(_context, this);
+            _states[eStates.SuperDead] = new SuperDeathPlayerState(_context, this);
+        }
+
+        public BasePlayerState SuperDead()
+        {
+            return _states[eStates.SuperDead];
         }
 
         public BasePlayerState SuperJump()

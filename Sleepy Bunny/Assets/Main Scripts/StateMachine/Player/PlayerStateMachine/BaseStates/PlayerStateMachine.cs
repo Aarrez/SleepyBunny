@@ -30,7 +30,7 @@ namespace PlayerStM.BaseStates
 
         private RaycastHit hit;
 
-        private GameMaster _gm;
+        private GameMaster _gameMaster;
 
         private ControllAction thePlayerInput;
 
@@ -51,6 +51,9 @@ namespace PlayerStM.BaseStates
         [Tooltip("This velocity dictates when to switch from Land soft animaiton" +
             "\n to land hard animation.")]
         [SerializeField] private float _softHitVelocity = -3.0f;
+
+        [Tooltip("When charcter hits this or below this velocity it dies.")]
+        [SerializeField] private float _deadVelocity = -6.0f;
 
         [Tooltip("The default gravity setting is -9.82." +
             "The gravity modifier adds or subtracts from that number")]
@@ -174,6 +177,8 @@ namespace PlayerStM.BaseStates
 
         private bool _isPulling = false;
 
+        private bool _isDead = false;
+
         private bool _landAnimationDone = false;
 
         private bool _reachedEdge = false;
@@ -230,6 +235,8 @@ namespace PlayerStM.BaseStates
             get { return _currentSub; }
             set { _currentSub = value; }
         }
+
+        public GameMaster GameMaster => _gameMaster;
 
         public List<Vector3> ForwardVector => _forwardVector;
 
@@ -291,6 +298,8 @@ namespace PlayerStM.BaseStates
 
         public float SoftHitVelocity => _softHitVelocity;
 
+        public float DeadVelocity => _deadVelocity;
+
         //Get and set bools
         public bool IsGrounded
         {
@@ -342,6 +351,8 @@ namespace PlayerStM.BaseStates
 
         public bool IsFalling => _isFalling;
 
+        public bool IsDead => _isDead;
+
         public Camera MainCamera => _mainCamera;
 
         /// <summary>
@@ -361,6 +372,8 @@ namespace PlayerStM.BaseStates
         private void Awake()
         {
             _theInput = FindObjectOfType<InputScript>();
+
+            _gameMaster = FindObjectOfType<GameMaster>();
 
             thePlayerInput = new ControllAction();
 
@@ -609,6 +622,16 @@ namespace PlayerStM.BaseStates
                     _isGrounded = false;
                 }
             }
+        }
+
+        public void PlayerDied()
+        {
+            PlayerAnimator.SetTrigger("Dead");
+        }
+
+        public void PlayerRespawn()
+        {
+            transform.position = _gameMaster.CurrentCheckpointPosition;
         }
     }
 }

@@ -15,17 +15,15 @@ namespace PlayerStM.SubStates
         {
         }
 
-        /// <summary>
-        /// This should be called in UpdateState to consistenly
-        /// switch between different states
-        /// This is a sugestion another way would be to use events
-        /// </summary>
         public override void CheckSwitchState()
         {
+            SwitchState(Factory.SuperGrounded());
         }
 
         public override void EnterState()
         {
+            AnimationFunctionManager.Deathdone += CheckSwitchState;
+            Ctx.PlayerDied();
         }
 
         public override void FixedUpdateState()
@@ -38,6 +36,8 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
+            Ctx.PlayerRespawn();
+            AnimationFunctionManager.Deathdone -= CheckSwitchState;
         }
 
         public override void InitializeSubState()

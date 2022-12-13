@@ -33,11 +33,6 @@ public class GameMaster : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void PlayerDied()
-    {
-        _playerTransform.position = CurrentCheckpointPosition;
-    }
-
     public void EndGame()
     {
         SceneManager.LoadScene("UI Scene");
