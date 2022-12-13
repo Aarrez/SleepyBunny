@@ -24,6 +24,8 @@ public class AnimationFunctionManager : MonoBehaviour
 
     [SerializeField] private EventReference _dragingObject;
 
+    [SerializeField] private EventReference _deathSound;
+
     // Subscribes the method JumpSound to an event
     // that happens when player jumps
     private void OnEnable()
@@ -70,6 +72,12 @@ public class AnimationFunctionManager : MonoBehaviour
     {
         if (_dragingObject.IsNull) { return; }
         RuntimeManager.PlayOneShot(_dragingObject);
+    }
+
+    private void DeathSound()
+    {
+        if (_deathSound.IsNull) { return; }
+        RuntimeManager.PlayOneShot(_deathSound);
     }
 
     private void DeathAnimationDone()

@@ -575,6 +575,8 @@ namespace PlayerStM.BaseStates
                 _climbRayLength, _climbLayer))
                 {
                     _transformHit = hit.transform;
+                    Vector3 hitDistance = (transform.position - hit.transform.position).normalized;
+                    transform.position = hit.point + hitDistance;
                     _isClimbing = true;
                     BasePlayerState.AnimaitonAffected();
                     break;
