@@ -3144,6 +3144,7 @@ MonoBehaviour:
   _deadVelocity: -6
   _gravityModifier: 2
   _movmentForce: 50
+  _runningModifier: 1.5
   _airMovement: 1
   _jumpMovementMultipler: 1
   _directionalJumpForce: 2
@@ -3296,7 +3297,7 @@ PrefabInstance:
     - target: {fileID: 324714289547476469, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_ExternalAcceleration.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 324714289547476469, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
@@ -3306,7 +3307,7 @@ PrefabInstance:
     - target: {fileID: 324714289547476469, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_WorldAccelerationScale
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 324714289547476469, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
@@ -5016,32 +5017,32 @@ PrefabInstance:
     - target: {fileID: 1941340664976022899, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: 0.0004932969
+      value: 0.0005292874
       objectReference: {fileID: 0}
     - target: {fileID: 1941340664976022899, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0.0007882817
+      value: 0.00069361273
       objectReference: {fileID: 0}
     - target: {fileID: 1941340664976022899, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: -0.005051068
+      value: 0.0010023852
       objectReference: {fileID: 0}
     - target: {fileID: 1941340664976022899, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 0.0044612647
+      value: 0.01001038
       objectReference: {fileID: 0}
     - target: {fileID: 1941340664976022899, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 0.004369349
+      value: 0.010010175
       objectReference: {fileID: 0}
     - target: {fileID: 1941340664976022899, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.006759445
+      value: 0.0007059914
       objectReference: {fileID: 0}
     - target: {fileID: 6817943681931003066, guid: 7d0a03c9b142d4bae8c85bb1cbfd469b,
         type: 3}
