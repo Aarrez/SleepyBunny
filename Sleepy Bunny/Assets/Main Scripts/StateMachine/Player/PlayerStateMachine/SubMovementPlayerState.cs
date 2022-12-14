@@ -1,6 +1,7 @@
 using PlayerStM.BaseStates;
 using PlayerStM.SuperState;
 using UnityEngine;
+using FMODUnity;
 
 namespace PlayerStM.SubStates
 {
@@ -33,25 +34,25 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
 
-            switch (Ctx.CurrentSuper)
-            {
-                case SuperClimbingPlayerState:
-                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
-                        (float)_eMoveAnim.Climb);
-                    break;
+            //switch (Ctx.CurrentSuper)
+            //{
+            //    case SuperClimbingPlayerState:
+            //        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+            //            (float)_eMoveAnim.Climb);
+            //        break;
 
-                case SuperGrabPlayerState:
+            //    case SuperGrabPlayerState:
 
-                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
-                    (float)_eMoveAnim.Pull);
+            //        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+            //        (float)_eMoveAnim.Pull);
 
-                    break;
+            //        break;
 
-                default:
-                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
-                        (float)_eMoveAnim.Walk);
-                    break;
-            }
+            //    default:
+            //        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+            //            (float)_eMoveAnim.Walk);
+            //        break;
+            //}
             Ctx.PlayerAnimator.SetInteger("Index",
                         (int)_eAnim.Walk);
         }
@@ -83,6 +84,7 @@ namespace PlayerStM.SubStates
                     PlayerClimb();
                     Ctx.PlayerAnimator.SetFloat("MoveIndex",
                        (float)_eMoveAnim.Climb);
+
                     break;
 
                 case SuperGrabPlayerState:
@@ -152,13 +154,15 @@ namespace PlayerStM.SubStates
 
         private void PullingMovement()
         {
-            Vector3 Movement = MoveDirection * Ctx.PullForce * Time.fixedDeltaTime;
-            Ctx.Rb.AddForce(Movement);
+            Vector3 Movement = MoveDirection *
+                Ctx.PushForce * Time.fixedDeltaTime;
 
-            //Ctx.Rb.velocity = new Vector3(
-            //    Movement.x,
-            //    Ctx.Rb.velocity.y,
-            //    Movement.z);
+            //Ctx.Rb.AddForce(Movement);
+
+            Ctx.Rb.velocity = new Vector3(
+               Movement.x,
+                Ctx.Rb.velocity.y,
+                Movement.z);
         }
 
         private void PlayerClimb()

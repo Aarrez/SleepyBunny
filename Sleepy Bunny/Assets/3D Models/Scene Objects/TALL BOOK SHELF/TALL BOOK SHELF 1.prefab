@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1298452359068329608}
   - component: {fileID: 7681992979717711099}
   - component: {fileID: 6237625512665381663}
+  - component: {fileID: 8430463846866665001}
   m_Layer: 0
   m_Name: modernKey
   m_TagString: Untagged
@@ -114,6 +115,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Grabed: 0
+--- !u!65 &8430463846866665001
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650202775382558557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.020696733, y: 0.0069793235, z: 0.0006000001}
+  m_Center: {x: 0.011289122, y: 0.0069366433, z: -8.4160956e-11}
 --- !u!1 &4574917983537314441
 GameObject:
   m_ObjectHideFlags: 0

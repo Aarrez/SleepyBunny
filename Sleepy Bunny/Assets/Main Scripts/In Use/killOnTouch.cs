@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class killOnTouch : MonoBehaviour
 {
+    private GameMaster _gameMaster;
+
+    private void Awake()
+    {
+        _gameMaster = FindObjectOfType<GameMaster>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag != "Player") { return; }
 
-        collision.gameObject.GetComponent<PlayerStateMachine>().PlayerDied();
+        collision.transform.position = _gameMaster.CurrentCheckpointPosition;
     }
 }
