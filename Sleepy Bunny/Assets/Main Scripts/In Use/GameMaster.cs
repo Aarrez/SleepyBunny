@@ -34,6 +34,8 @@ public class GameMaster : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         CurrentCheckpointPosition = GetComponentInChildren<Checkpoints>().transform.position;
+
+        //_playerTransform.position = CurrentCheckpointPosition;
     }
 
     public void EndGame()

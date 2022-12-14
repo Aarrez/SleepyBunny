@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class splashMenu : MonoBehaviour
 {
-  public void PlayGame()
+    public void PlayGame()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(sceneBuildIndex: 1);
     }
+
     public void QuitGame()
 
     {

@@ -9,5 +9,6 @@ public class StopDrawer : MonoBehaviour
         if (other.tag != "Drawer") { return; }
 
         other.attachedRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        other.attachedRigidbody.isKinematic = true;
     }
 }

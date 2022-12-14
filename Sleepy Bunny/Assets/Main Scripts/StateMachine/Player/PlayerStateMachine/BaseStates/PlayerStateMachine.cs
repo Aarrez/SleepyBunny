@@ -553,9 +553,9 @@ namespace PlayerStM.BaseStates
             // one hits a object with the correct layer
             for (int i = 0; i < _forwardVector.Count; i++)
             {
-                Vector3 temp1Vector =
+                Vector3 tempVector =
                     Camera.main.transform.TransformDirection(_forwardVector[i]);
-                Vector3 tempVector = new Vector3(temp1Vector.x, 0f, temp1Vector.z);
+
                 Debug.DrawRay(transform.position, tempVector * 1, Color.green, 2);
 
                 //Grab ray

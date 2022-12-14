@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class endOfGameTrigger : MonoBehaviour
 {
-    GameMaster gm;
-    
+    private GameMaster gm;
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag != "Player") { return; }
         SceneManager.LoadScene("UI Scene");
     }
 }
