@@ -64,6 +64,9 @@ namespace PlayerStM.BaseStates
         [Tooltip("Determines how speedy the character is")]
         [SerializeField] private float _movmentForce = 1f;
 
+        [Tooltip("Is multiplied with MovemetnForce to get running force")]
+        [SerializeField] private float _runningModifier = 1.5f;
+
         [Header("Jump variables")]
 
         //
@@ -250,6 +253,12 @@ namespace PlayerStM.BaseStates
         {
             get => _movmentForce;
             set => _movmentForce = value;
+        }
+
+        public float RunningModifier
+        {
+            get => _runningModifier;
+            set => _runningModifier = value;
         }
 
         public float JumpHeight

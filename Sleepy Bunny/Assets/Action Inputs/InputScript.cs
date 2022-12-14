@@ -13,21 +13,43 @@ public class InputScript : MonoBehaviour
     private ControllAction.CustomUIActions cUI;
 
     private InputAction.CallbackContext _moveCtx, _jumpCtx, _interactCtx,
-            _pauseCtx;
+            _pauseCtx, _runningCtx;
 
     // Static so u easily can subscribe to these Actions.
-    public static Action Moveing, Jump, Interact, Pause, DebugState;
+    public static Action Moveing, Jump, Interact, Pause, DebugState, Running;
 
     public static event Action<InputAction.CallbackContext> MouseLeft, MouseRight;
 
     // This is for when you are using InputScript in another script.
-    public InputAction.CallbackContext MoveCtx { get => _moveCtx; set => _moveCtx = value; }
+    public InputAction.CallbackContext MoveCtx
+    {
+        get => _moveCtx;
+        set => _moveCtx = value;
+    }
 
-    public InputAction.CallbackContext JumpCtx { get => _jumpCtx; set => _jumpCtx = value; }
+    public InputAction.CallbackContext JumpCtx
+    {
+        get => _jumpCtx;
+        set => _jumpCtx = value;
+    }
 
-    public InputAction.CallbackContext InteractCtx { get => _interactCtx; set => _interactCtx = value; }
+    public InputAction.CallbackContext InteractCtx
+    {
+        get => _interactCtx;
+        set => _interactCtx = value;
+    }
 
-    public InputAction.CallbackContext PauseCtx { get => _pauseCtx; set => _pauseCtx = value; }
+    public InputAction.CallbackContext PauseCtx
+    {
+        get => _pauseCtx;
+        set => _pauseCtx = value;
+    }
+
+    public InputAction.CallbackContext RunningCtx
+    {
+        get => _runningCtx;
+        set => _runningCtx = value;
+    }
 
     private void Awake()
     {
@@ -55,6 +77,22 @@ public class InputScript : MonoBehaviour
         };
 
         #endregion Movement Input
+
+        #region Running Input
+
+        cPlayer.Running.performed += ctx =>
+        {
+            Running?.Invoke();
+            _runningCtx = ctx;
+        };
+
+        cPlayer.Running.canceled += ctx =>
+        {
+            Running?.Invoke();
+            _runningCtx = ctx;
+        };
+
+        #endregion Running Input
 
         #region Jump Input
 

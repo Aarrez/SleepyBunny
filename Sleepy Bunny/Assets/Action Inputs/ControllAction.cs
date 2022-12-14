@@ -98,6 +98,15 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Running"",
+                    ""type"": ""Button"",
+                    ""id"": ""790c3cab-1226-406e-84cf-5fecc6a0062d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -342,6 +351,28 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                     ""action"": ""RightButtonMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4b478a0-f28e-4738-aee6-bfb881c16d60"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Running"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5226df2d-f782-4eef-97f3-77e9c530098e"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XboxController"",
+                    ""action"": ""Running"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -414,6 +445,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         m_CustomPlayer_DebugState = m_CustomPlayer.FindAction("DebugState", throwIfNotFound: true);
         m_CustomPlayer_LeftButtonMouse = m_CustomPlayer.FindAction("LeftButtonMouse", throwIfNotFound: true);
         m_CustomPlayer_RightButtonMouse = m_CustomPlayer.FindAction("RightButtonMouse", throwIfNotFound: true);
+        m_CustomPlayer_Running = m_CustomPlayer.FindAction("Running", throwIfNotFound: true);
         // CustomUI
         m_CustomUI = asset.FindActionMap("CustomUI", throwIfNotFound: true);
         m_CustomUI_Pause = m_CustomUI.FindAction("Pause", throwIfNotFound: true);
@@ -484,6 +516,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_CustomPlayer_DebugState;
     private readonly InputAction m_CustomPlayer_LeftButtonMouse;
     private readonly InputAction m_CustomPlayer_RightButtonMouse;
+    private readonly InputAction m_CustomPlayer_Running;
     public struct CustomPlayerActions
     {
         private @ControllAction m_Wrapper;
@@ -496,6 +529,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         public InputAction @DebugState => m_Wrapper.m_CustomPlayer_DebugState;
         public InputAction @LeftButtonMouse => m_Wrapper.m_CustomPlayer_LeftButtonMouse;
         public InputAction @RightButtonMouse => m_Wrapper.m_CustomPlayer_RightButtonMouse;
+        public InputAction @Running => m_Wrapper.m_CustomPlayer_Running;
         public InputActionMap Get() { return m_Wrapper.m_CustomPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -529,6 +563,9 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @RightButtonMouse.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRightButtonMouse;
                 @RightButtonMouse.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRightButtonMouse;
                 @RightButtonMouse.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRightButtonMouse;
+                @Running.started -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRunning;
+                @Running.performed -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRunning;
+                @Running.canceled -= m_Wrapper.m_CustomPlayerActionsCallbackInterface.OnRunning;
             }
             m_Wrapper.m_CustomPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -557,6 +594,9 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
                 @RightButtonMouse.started += instance.OnRightButtonMouse;
                 @RightButtonMouse.performed += instance.OnRightButtonMouse;
                 @RightButtonMouse.canceled += instance.OnRightButtonMouse;
+                @Running.started += instance.OnRunning;
+                @Running.performed += instance.OnRunning;
+                @Running.canceled += instance.OnRunning;
             }
         }
     }
@@ -622,6 +662,7 @@ public partial class @ControllAction : IInputActionCollection2, IDisposable
         void OnDebugState(InputAction.CallbackContext context);
         void OnLeftButtonMouse(InputAction.CallbackContext context);
         void OnRightButtonMouse(InputAction.CallbackContext context);
+        void OnRunning(InputAction.CallbackContext context);
     }
     public interface ICustomUIActions
     {

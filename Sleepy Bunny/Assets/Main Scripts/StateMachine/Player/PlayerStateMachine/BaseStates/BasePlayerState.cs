@@ -101,7 +101,9 @@ namespace PlayerStM.BaseStates
 
             Pull = 2,
 
-            Push = 3
+            Push = 3,
+
+            Run = 4
         }
 
         ///<summary>

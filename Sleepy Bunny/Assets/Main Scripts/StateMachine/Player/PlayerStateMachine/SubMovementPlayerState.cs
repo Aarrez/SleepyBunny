@@ -37,19 +37,14 @@ namespace PlayerStM.SubStates
             {
                 case SuperClimbingPlayerState:
                     Ctx.PlayerAnimator.SetFloat("MoveIndex",
-                        (float)_eMoveAnim.Climb); break;
+                        (float)_eMoveAnim.Climb);
+                    break;
 
                 case SuperGrabPlayerState:
-                    if (Ctx.IsPushing)
-                    {
-                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
-                        (float)_eMoveAnim.Push);
-                    }
-                    else if (Ctx.IsPulling)
-                    {
-                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
-                        (float)_eMoveAnim.Pull);
-                    }
+
+                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                    (float)_eMoveAnim.Pull);
+
                     break;
 
                 default:
@@ -82,17 +77,19 @@ namespace PlayerStM.SubStates
 
         private void PlayerMove()
         {
-            // Player should not move while jumping
-
             switch (Ctx.CurrentSuper)
             {
                 case SuperClimbingPlayerState:
                     PlayerClimb();
+                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                       (float)_eMoveAnim.Climb);
                     break;
 
                 case SuperGrabPlayerState:
                     InverseRotateToMovment();
                     PullingMovement();
+                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                    (float)_eMoveAnim.Pull);
                     break;
 
                 case SuperJumpPlayerState:
@@ -105,7 +102,19 @@ namespace PlayerStM.SubStates
 
                 default:
                     RotateToMovment();
-                    GroundedMovment();
+                    if (Ctx.TheInput.RunningCtx.ReadValueAsButton())
+                    {
+                        RunningMovement();
+                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                            (float)_eMoveAnim.Run);
+                    }
+                    else
+                    {
+                        GroundedMovment();
+                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                            (float)_eMoveAnim.Walk);
+                    }
+
                     break;
             }
         }
@@ -113,6 +122,18 @@ namespace PlayerStM.SubStates
         private void GroundedMovment()
         {
             Vector3 Movement = MoveDirection * Ctx.MovmentForce * Time.fixedDeltaTime;
+
+            Ctx.Rb.velocity = new Vector3(
+                Movement.x,
+                Ctx.Rb.velocity.y,
+                Movement.z);
+        }
+
+        private void RunningMovement()
+        {
+            Vector3 Movement = MoveDirection *
+                Ctx.MovmentForce * Ctx.RunningModifier * Time.fixedDeltaTime;
+
             Ctx.Rb.velocity = new Vector3(
                 Movement.x,
                 Ctx.Rb.velocity.y,

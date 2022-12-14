@@ -14,6 +14,8 @@ public class LockPlayerInPlace : MonoBehaviour
         _player.GetComponent<PlayerStateMachine>().IsClimbing = false;
         _player.attachedRigidbody.isKinematic = false;
         transform.GetComponent<BoxCollider>().enabled = false;
+        GetComponentInChildren<OtherGrab>().transform.GetComponent<Rigidbody>().isKinematic = false;
+        GetComponentInChildren<OtherGrab>().transform.parent = null;
     }
 
     private void OnTriggerEnter(Collider other)

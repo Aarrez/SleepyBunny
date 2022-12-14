@@ -17,6 +17,7 @@ TagManager:
   - FanButton
   - Fan
   - Drawer
+  - Key
   layers:
   - Default
   - TransparentFX
