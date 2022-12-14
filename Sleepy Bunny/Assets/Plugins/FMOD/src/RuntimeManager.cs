@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
+using FMOD.Studio;
 
 #if UNITY_ADDRESSABLES_EXIST
 using UnityEngine.AddressableAssets;
@@ -1378,6 +1379,11 @@ retry:
         public static bool HasBankLoaded(string loadedBank)
         {
             return (Instance.loadedBanks.ContainsKey(loadedBank));
+        }
+
+        public static EventInstance CreateInstance(EventInstance dragingOjects)
+        {
+            throw new NotImplementedException();
         }
 
 #if (UNITY_IOS || UNITY_TVOS) && !UNITY_EDITOR
