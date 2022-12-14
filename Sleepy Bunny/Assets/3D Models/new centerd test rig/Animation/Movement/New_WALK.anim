@@ -30608,7 +30608,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 5.0833335
+  - time: 5.0416665
     functionName: FootstepSounds
     data: 
     objectReferenceParameter: {fileID: 0}
