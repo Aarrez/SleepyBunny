@@ -47,14 +47,13 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.CurrentSuper != Factory.SuperClimb())
             {
-                if (_fallVeloctiy > Ctx.DeadVelocity)
+                if (_fallVeloctiy < Ctx.DeadVelocity)
                 {
                     Ctx.IsDead = true;
                     Ctx.PlayerDied();
                     return;
                 }
-
-                if (_fallVeloctiy > Ctx.SoftHitVelocity)
+                else if (_fallVeloctiy > Ctx.SoftHitVelocity)
                 {
                     Ctx.PlayerAnimator.SetFloat(
                         "LandEffect", (float)_eLandAnim.LandSoft);

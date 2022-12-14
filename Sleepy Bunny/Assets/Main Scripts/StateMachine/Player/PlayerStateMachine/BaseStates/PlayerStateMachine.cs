@@ -646,7 +646,7 @@ namespace PlayerStM.BaseStates
 
         public void PlayerRespawn()
         {
-            Debug.Log("Called");
+            PlayerAnimator.ResetTrigger("Dead");
             transform.position = _gameMaster.CurrentCheckpointPosition;
         }
     }

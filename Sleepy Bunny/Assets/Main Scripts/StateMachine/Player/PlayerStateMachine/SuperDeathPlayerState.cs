@@ -13,21 +13,24 @@ namespace PlayerStM.SubStates
             StateFactory factory) :
             base(ctx, factory)
         {
+            IsRootState = true;
+            AnimationFunctionManager.Deathdone += AnimaionDone;
         }
 
         public override void CheckSwitchState()
         {
+            if (Ctx.IsDead) { return; }
             SwitchState(Factory.SuperGrounded());
         }
 
         public override void EnterState()
         {
-            AnimationFunctionManager.Deathdone += CheckSwitchState;
-            Ctx.PlayerDied();
+            InitializeSubState();
         }
 
         public override void FixedUpdateState()
         {
+            CheckSwitchState();
         }
 
         public override void UpdateState()
@@ -37,15 +40,21 @@ namespace PlayerStM.SubStates
         public override void ExitState()
         {
             Ctx.PlayerRespawn();
-            AnimationFunctionManager.Deathdone -= CheckSwitchState;
         }
 
         public override void InitializeSubState()
         {
+            SetSubState(Factory.SubIdle());
         }
 
         public override void CheckSwitchAnimation()
         {
+        }
+
+        private void AnimaionDone()
+        {
+            Debug.Log("Ishappening");
+            Ctx.IsDead = false;
         }
     }
 }

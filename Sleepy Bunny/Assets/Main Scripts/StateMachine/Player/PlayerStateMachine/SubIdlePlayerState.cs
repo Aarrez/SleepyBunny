@@ -17,6 +17,7 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
+            if (Ctx.IsDead) { return; }
             if (Ctx.TheInput.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
             {
                 SwitchState(Factory.SubMovement());
@@ -78,7 +79,6 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchAnimation()
         {
-           
         }
     }
 }

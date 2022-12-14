@@ -11,6 +11,8 @@ public class GameMaster : MonoBehaviour
 
     [HideInInspector] public Vector3 CurrentCheckpointPosition;
 
+    private Vector3 checkpointcorinets;
+
     private Transform _playerTransform;
 
     private void Awake()
@@ -31,6 +33,12 @@ public class GameMaster : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        CurrentCheckpointPosition = GetComponentInChildren<Checkpoints>().transform.position;
+    }
+
+    private void Update()
+    {
+        checkpointcorinets = CurrentCheckpointPosition;
     }
 
     public void EndGame()
