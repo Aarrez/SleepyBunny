@@ -31,7 +31,7 @@ public class InteractObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || transform.CompareTag("Door")) { return; }
+        if (other.CompareTag("Player") && transform.CompareTag("Door")) { return; }
 
         GetComponentInParent<Animator>().SetTrigger("OpenDoor");
     }

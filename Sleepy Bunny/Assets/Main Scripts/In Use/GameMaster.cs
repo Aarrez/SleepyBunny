@@ -36,11 +36,6 @@ public class GameMaster : MonoBehaviour
         CurrentCheckpointPosition = GetComponentInChildren<Checkpoints>().transform.position;
     }
 
-    private void Update()
-    {
-        checkpointcorinets = CurrentCheckpointPosition;
-    }
-
     public void EndGame()
     {
         SceneManager.LoadScene("UI Scene");

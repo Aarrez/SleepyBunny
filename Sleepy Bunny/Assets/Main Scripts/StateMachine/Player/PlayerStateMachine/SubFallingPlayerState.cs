@@ -1,3 +1,4 @@
+using UnityEngine;
 using PlayerStM.BaseStates;
 
 namespace PlayerStM.SubStates
@@ -47,10 +48,12 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.CurrentSuper != Factory.SuperClimb())
             {
+                Debug.Log(_fallVeloctiy);
                 if (_fallVeloctiy < Ctx.DeadVelocity)
                 {
                     Ctx.IsDead = true;
                     Ctx.PlayerDied();
+                    _fallVeloctiy = 0;
                     return;
                 }
                 else if (_fallVeloctiy > Ctx.SoftHitVelocity)
@@ -66,6 +69,7 @@ namespace PlayerStM.SubStates
 
                 Ctx.PlayerAnimator.SetTrigger("Landed");
             }
+            _fallVeloctiy = 0;
         }
 
         public override void InitializeSubState()
