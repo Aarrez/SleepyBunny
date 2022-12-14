@@ -48,7 +48,6 @@ namespace PlayerStM.SubStates
         {
             if (Ctx.CurrentSuper != Factory.SuperClimb())
             {
-                Debug.Log(_fallVeloctiy);
                 if (_fallVeloctiy < Ctx.DeadVelocity)
                 {
                     Ctx.IsDead = true;
