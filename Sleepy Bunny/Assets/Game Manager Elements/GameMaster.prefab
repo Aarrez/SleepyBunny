@@ -2229,8 +2229,8 @@ GameObject:
   - component: {fileID: 9034464690165096810}
   - component: {fileID: 6527053006361464818}
   - component: {fileID: 6460247097866817582}
-  - component: {fileID: 7283506718771795237}
   - component: {fileID: 2918420262250245810}
+  - component: {fileID: 7283506718771795237}
   m_Layer: 0
   m_Name: Cylinder.005 (1)
   m_TagString: Untagged
@@ -2306,6 +2306,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2918420262250245810
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751116335926028922}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.028387321, y: 0.04125873, z: 0.020909782}
+  m_Center: {x: 0.0054365634, y: 0.001817216, z: -0.1062705}
 --- !u!114 &7283506718771795237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2326,19 +2339,6 @@ MonoBehaviour:
       Data4: -1394632921
     Path: event:/LightSwitch 2D
   _spawnPoint: {fileID: 4338555954661857261}
---- !u!65 &2918420262250245810
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4751116335926028922}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.028387321, y: 0.04125873, z: 0.020909782}
-  m_Center: {x: 0.0054365634, y: 0.001817216, z: -0.1062705}
 --- !u!1 &4768765287570844701
 GameObject:
   m_ObjectHideFlags: 0
