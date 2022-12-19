@@ -14,7 +14,6 @@ namespace PlayerStM.SuperState
         {
             IsRootState = true;
             InitializeSubState();
-            AnimationFunctionManager.AnimationJumpEvent += AddJumpForce;
         }
 
         public override void CheckSwitchState()
@@ -39,6 +38,7 @@ namespace PlayerStM.SuperState
                 (int)_eAnim.Jump);
             Ctx.IsGrounded = false;
             Debug.Log("Jumping");
+            AddJumpForce();
         }
 
         public override void ExitState()

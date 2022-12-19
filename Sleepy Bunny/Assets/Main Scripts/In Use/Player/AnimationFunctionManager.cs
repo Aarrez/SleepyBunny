@@ -26,7 +26,6 @@ public class AnimationFunctionManager : MonoBehaviour
 
     [SerializeField] private EventReference _deathSound;
 
-
     // Subscribes the method JumpSound to an event
     // that happens when player jumps
     private void OnEnable()
@@ -52,7 +51,6 @@ public class AnimationFunctionManager : MonoBehaviour
 
     public void JumpsSound()
     {
-        AnimationJumpEvent?.Invoke();
         if (_jump.IsNull) { return; }
         RuntimeManager.PlayOneShot(_jump);
     }
