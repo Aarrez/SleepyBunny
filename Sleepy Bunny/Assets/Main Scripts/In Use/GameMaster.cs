@@ -26,6 +26,7 @@ public class GameMaster : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
         _playerTransform = FindObjectOfType<PlayerStateMachine>().transform;
     }
 
@@ -35,7 +36,7 @@ public class GameMaster : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         CurrentCheckpointPosition = GetComponentInChildren<Checkpoints>().transform.position;
 
-        _playerTransform.position = CurrentCheckpointPosition;
+        //_playerTransform.position = CurrentCheckpointPosition;
     }
 
     public void EndGame()
