@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using NUnit.Framework.Constraints;
+using PlayerStM.BaseStates;
 using PlayerStM.SubStates;
 using Unity.VisualScripting;
-using NUnit.Framework.Constraints;
+using UnityEngine;
 
 namespace PlayerStM.BaseStates
 {
@@ -19,410 +21,47 @@ namespace PlayerStM.BaseStates
     /// </summary>
     public class PlayerStateMachine : MonoBehaviour
     {
-        #region Script Refrences
+        // Script that contains all the variables.
+        private PlayerVariables _v;
 
-        private OtherGrab _otherGrab;
-
-        private InputScript _theInput;
-
-        //Input value storage
-
-        private Rigidbody _rb;
-
-        private RaycastHit hit;
-
-        private GameMaster _gameMaster;
-
-        private ControllAction thePlayerInput;
-
-        private Camera _mainCamera;
-
-        //State Variables
-        private BasePlayerState _currentSuper;
-
-        private BasePlayerState _currentSub;
-
-        private StateFactory _stateFactory;
-
-        #endregion Script Refrences
-
-        #region Serialized Variables
-
-        [Header("Physics vaiables")]
-        [Tooltip("This velocity dictates when to switch from Land soft animaiton" +
-            "\n to land hard animation.")]
-        [SerializeField] private float _softHitVelocity = -3.0f;
-
-        [Tooltip("When charcter hits this or below this velocity it dies.")]
-        [SerializeField] private float _deadVelocity = -6.0f;
-
-        [Tooltip("The default gravity setting is -9.82." +
-            "The gravity modifier adds or subtracts from that number")]
-        [SerializeField] private float _gravityModifier = 0f;
-
-        [Header("Movement related variables")]
-        [Tooltip("Determines how speedy the character is")]
-        [SerializeField] private float _movmentForce = 1f;
-
-        [Tooltip("Is multiplied with MovemetnForce to get running force")]
-        [SerializeField] private float _runningModifier = 1.5f;
-
-        [Header("Jump variables")]
-
-        //
-        [Tooltip("If true there the charcter will be able to move mid air. " +
-            "\nHow fast it moves is determined by JumpMovementMultipler" +
-            "\nIf false player uses DirectionalJumpForce at the start of the jump to" +
-            "determine fly forward with no air conroll")]
-        [SerializeField] private bool _airMovement;
-
-        [Tooltip("Multipler for jump movemnt")]
-        [SerializeField] private float _jumpMovementMultipler = 0.5f;
-
-        [Tooltip("Determines how much directional force is applyed when jumping")]
-        [SerializeField] private float _directionalJumpForce = .5f;
-
-        [Tooltip("Determines how high you jump")]
-        [SerializeField] private float _jumpHeight = 10f;
-
-        [Header("")]
-
-        //
-        [Tooltip("Character snaps to object at this distance")]
-        [SerializeField] private float _hitDistanceModifier = 0.1f;
-
-        [SerializeField] private float _climbSpeed = 5f;
-
-        [Tooltip("Changes how fast the character turns around")]
-        [SerializeField] private float _rotationSpeed;
-
-        [Header("Raycast to ground variables")]
-
-        //
-        [Tooltip("How long the ray is that checks for ground" +
-            "\n" + "(Should be 0.1 unless debuging)")]
-        [SerializeField] private float _rayGroundDist = 0.1f;
-
-        [Tooltip("Changes the angle in which the cone of rays are shot" +
-            "\n" + "0 = 0 degres(Strait down), 1 = 90 degres")]
-        [SerializeField, Range(0, 1)] private float _vectorAngle = 0.5f;
-
-        [Tooltip("Changes the angle between forward ray and the rays around it" +
-            "\n" + "0 = 0 degres(Strait forward), 1 = 90 degres")]
-        [SerializeField, Range(0, 1)] private float _forwardVAngel = 0.3f;
-
-        [Tooltip("If true the uses already set layers." + "\n"
-            + "If false you can set custom layers")]
-        [SerializeField] private bool _useDefaultGroundLayer = true;
-
-        [Tooltip("Only change if debuging!" + "\n" +
-           "Inital layermask is Default and Ground")]
-        [SerializeField] private LayerMask _groundLayer;
-
-        [Header("Other raycast variables")]
-
-        //
-        [Tooltip("If true the uses already set layers." + "\n"
-            + "If false you can set custom layers")]
-        [SerializeField] private bool _useDefaultInteractionsLayers = true;
-
-        [Tooltip("The layer the climb ray will hit." +
-            "\n" + "Will automaticly have Climbable layer")]
-        [SerializeField] private LayerMask _climbLayer;
-
-        [Tooltip("Default 0.5")]
-        [SerializeField] private float _climbRayLength = 0.5f;
-
-        [Tooltip("The layer grab ray will hit." +
-            "\n" + "Will automaticly have Grabable layer")]
-        [SerializeField] private LayerMask _grabLayer;
-
-        [Tooltip("Default 1")]
-        [SerializeField] private float _grabRayLength = 1f;
-
-        [SerializeField] private float _pullForce = 2f;
-
-        [SerializeField] private float _pushForce = 2f;
-
-        [Tooltip("The layer in witch rays do the interact functionality." +
-            "\n" + "Will automaticly have Interactable layer")]
-        [SerializeField] private LayerMask _interactLayer;
-
-        [Tooltip("Default 1")]
-        [SerializeField] private float _interactRayLength = 1f;
-
-        [Header("Push and pull variables")]
-        [SerializeField] private float _breakDistance = 3f;
-
-        [SerializeField] private float _pullDistance = 0.5f;
-
-        #endregion Serialized Variables
-
-        #region Private Variables
-
-        private const float _gravity = -9.82f;
-
-        private Transform _pointHit;
-
-        private GameObject hitPoint;
-
-        private List<Vector3> _downVectors = new List<Vector3>();
-
-        private List<Vector3> _forwardVector = new List<Vector3>();
-
-        private Animator _playerAnimator;
-
-        private bool _isGrounded = false;
-
-        private bool _isClimbing = false;
-
-        private bool _isFalling = false;
-
-        private bool _isGrabing = false;
-
-        private bool _isPushing = false;
-
-        private bool _isPulling = false;
-
-        private bool _isDead = false;
-
-        private bool _landAnimationDone = false;
-
-        private bool _reachedEdge = false;
-
-        private Transform _transformHit;
-
-        private Rigidbody _rigidbodyGrabed;
-
-        #endregion Private Variables
-
-        #region Get and set
-
-        //Miscellaneous Get and set
-        public Transform TransformHit
-        {
-            get => _transformHit;
-            set => _transformHit = value;
-        }
-
-        public Transform PointHit
-        {
-            get => _pointHit;
-            set => _pointHit = value;
-        }
-
-        public LayerMask GroundLayer => _groundLayer;
-
-        public LayerMask ClimbLayer => _climbLayer;
-
-        public LayerMask GrabLayer => _grabLayer;
-
-        public InputScript TheInput => _theInput;
-
-        public Rigidbody Rb
-        {
-            get => _rb;
-            set => _rb = value;
-        }
-
-        public Rigidbody RigidbodyGrabed
-        {
-            get => _rigidbodyGrabed;
-            set => _rigidbodyGrabed = value;
-        }
-
-        public BasePlayerState CurrentSuper
-        {
-            get { return _currentSuper; }
-            set { _currentSuper = value; }
-        }
-
-        public BasePlayerState CurrentSub
-        {
-            get { return _currentSub; }
-            set { _currentSub = value; }
-        }
-
-        public GameMaster GameMaster => _gameMaster;
-
-        public List<Vector3> ForwardVector => _forwardVector;
-
-        // Get and set floats
-
-        public float MovmentForce
-        {
-            get => _movmentForce;
-            set => _movmentForce = value;
-        }
-
-        public float RunningModifier
-        {
-            get => _runningModifier;
-            set => _runningModifier = value;
-        }
-
-        public float JumpHeight
-        {
-            get => _jumpHeight;
-            set => _jumpHeight = value;
-        }
-
-        public float DirectionalJumpForce
-        {
-            get => _directionalJumpForce;
-            set => _directionalJumpForce = value;
-        }
-
-        public float PullForce
-        {
-            get => _pullForce;
-            set => _pullForce = value;
-        }
-
-        public float PushForce
-        {
-            get => _pushForce;
-            set => _pushForce = value;
-        }
-
-        public float BreakDistance
-        {
-            get => _breakDistance;
-            set => _breakDistance = value;
-        }
-
-        public float PullDistance
-        {
-            get => _pullDistance;
-            set => _pullDistance = value;
-        }
-
-        public float JumpMovementMultipler
-        {
-            get => _jumpMovementMultipler;
-            set => _jumpMovementMultipler = value;
-        }
-
-        public float ClimbRayLength => _climbRayLength;
-
-        public float RotationSpeed => _rotationSpeed;
-
-        public float ClimbSpeed => _climbSpeed;
-
-        public float SoftHitVelocity => _softHitVelocity;
-
-        public float DeadVelocity => _deadVelocity;
-
-        //Get and set bools
-        public bool IsGrounded
-        {
-            get => _isGrounded;
-            set => _isGrounded = value;
-        }
-
-        public bool IsClimbing
-        {
-            get => _isClimbing;
-            set => _isClimbing = value;
-        }
-
-        public bool IsGrabing
-        {
-            get => _isGrabing;
-            set => _isGrabing = value;
-        }
-
-        public bool IsPushing
-        {
-            get => _isPushing;
-            set => _isPushing = value;
-        }
-
-        public bool IsPulling
-        {
-            get => _isPulling;
-            set => _isPulling = value;
-        }
-
-        public bool LandAnimationDone
-        {
-            get => _landAnimationDone;
-            set => _landAnimationDone = value;
-        }
-
-        public bool AirMovement
-        {
-            get => _airMovement;
-            set => _airMovement = value;
-        }
-
-        public bool ReachedEdge
-        {
-            get => _reachedEdge;
-            set => _reachedEdge = value;
-        }
-
-        public bool IsFalling => _isFalling;
-
-        public bool IsDead
-        {
-            get => _isDead;
-            set => _isDead = value;
-        }
-
-        public Camera MainCamera => _mainCamera;
-
-        /// <summary>
-        /// When setting GSIndex(Integer)
-        /// <br></br>
-        /// Idle = 0,  Walking = 1,
-        /// <br></br>
-        /// Falling = 2, Land(blendTree) = 3
-        /// <br></br>
-        /// LandEffect: SoftLand = 1;
-        /// HardLanding = 2, dead = 3(not yet implemented)
-        /// </summary>
-        public Animator PlayerAnimator => _playerAnimator;
-
-        #endregion Get and set
+        public PlayerVariables Variables => _v;
 
         private void Awake()
         {
-            _theInput = FindObjectOfType<InputScript>();
+            _v = GetComponent<PlayerVariables>();
 
-            _gameMaster = FindObjectOfType<GameMaster>();
+            _v._gameMaster = FindObjectOfType<GameMaster>();
 
-            thePlayerInput = new ControllAction();
+            _v._theInput = FindObjectOfType<InputScript>();
 
-            _playerAnimator = GetComponentInChildren<Animator>();
-            _rb = GetComponentInParent<Rigidbody>();
+            _v.thePlayerInput = new ControllAction();
 
-            _stateFactory = new StateFactory(this);
-            _currentSuper = _stateFactory.SuperGrounded();
-            _currentSuper.EnterState();
+            _v._playerAnimator = GetComponentInChildren<Animator>();
+            _v._rb = GetComponentInParent<Rigidbody>();
 
-            _mainCamera = Camera.main;
+            _v._stateFactory = new StateFactory(this, _v);
+            _v._currentSuper = _v._stateFactory.SuperGrounded();
+            _v._currentSuper.EnterState();
+
+            _v._mainCamera = Camera.main;
         }
 
         private void Start()
         {
             SetRaycastVectors();
 
-            Physics.gravity = new Vector3(0, _gravity + _gravityModifier, 0);
-        }
+            Physics.gravity = new Vector3(0, _v.Gravity + _v._gravityModifier, 0);
 
-        private void OnValidate()
-        {
-            if (_useDefaultGroundLayer)
+            if (_v._useDefaultGroundLayer)
             {
-                _groundLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
+                _v._groundLayer = LayerMask.GetMask("Ground") + LayerMask.GetMask("Default");
             }
 
-            if (_useDefaultInteractionsLayers)
+            if (_v._useDefaultInteractionsLayers)
             {
-                _climbLayer = LayerMask.GetMask("Climbable");
-                _grabLayer = LayerMask.GetMask("Grabable");
-                _interactLayer = LayerMask.GetMask("Interactable");
+                _v._climbLayer = LayerMask.GetMask("Climbable");
+                _v._grabLayer = LayerMask.GetMask("Grabable");
+                _v._interactLayer = LayerMask.GetMask("Interactable");
             }
         }
 
@@ -446,12 +85,12 @@ namespace PlayerStM.BaseStates
 
         private void FixedUpdate()
         {
-            _currentSuper.FixedUpdateStates();
+            _v._currentSuper.FixedUpdateStates();
         }
 
         private void Update()
         {
-            _currentSuper.UpdateStates();
+            _v._currentSuper.UpdateStates();
         }
 
         /// <summary>
@@ -459,10 +98,9 @@ namespace PlayerStM.BaseStates
         /// <br></br>
         /// Does not work
         /// </summary>
-        /// <param name="grounded"></param>
         private void CheckGrounded(bool grounded)
         {
-            _isGrounded = grounded;
+            _v._isGrounded = grounded;
         }
 
         /// <summary>
@@ -472,8 +110,8 @@ namespace PlayerStM.BaseStates
         /// </summary>
         private void GetCurrentState()
         {
-            Debug.Log("SuperState " + CurrentSuper);
-            Debug.Log("SubState: " + CurrentSub);
+            Debug.Log("SuperState " + _v.CurrentSuper);
+            Debug.Log("SubState: " + _v.CurrentSub);
         }
 
         private void SetRaycastVectors()
@@ -481,54 +119,54 @@ namespace PlayerStM.BaseStates
             // Cardinal directions are relative to the players rotation
 
             //0
-            _downVectors.Add(Vector3.down);
+            _v._downVectors.Add(Vector3.down);
 
             //1 south
-            _downVectors.Add(Vector3.Lerp
-                (Vector3.down, Vector3.back, _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.back, _v._vectorAngle));
 
             //2 north
-            _downVectors.Add(Vector3.Lerp
-                (Vector3.down, Vector3.forward, _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.forward, _v._vectorAngle));
 
             //3 east
-            _downVectors.Add(Vector3.Lerp
-                (Vector3.down, Vector3.right, _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.right, _v._vectorAngle));
 
             //4 west
-            _downVectors.Add(Vector3.Lerp
-                (Vector3.down, Vector3.left, _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (Vector3.down, Vector3.left, _v._vectorAngle));
 
             //5 north east
-            _downVectors.Add(Vector3.Lerp
-                (_downVectors[2], _downVectors[3], _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (_v._downVectors[2], _v._downVectors[3], _v._vectorAngle));
 
             //6 north west
-            _downVectors.Add(Vector3.Lerp
-                (_downVectors[2], _downVectors[4], _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (_v._downVectors[2], _v._downVectors[4], _v._vectorAngle));
 
             //7 south east
-            _downVectors.Add(Vector3.Lerp
-                (_downVectors[1], _downVectors[3], _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (_v._downVectors[1], _v._downVectors[3], _v._vectorAngle));
 
             //8 south west
-            _downVectors.Add(Vector3.Lerp
-                (_downVectors[1], _downVectors[4], _vectorAngle));
+            _v._downVectors.Add(Vector3.Lerp
+                (_v._downVectors[1], _v._downVectors[4], _v._vectorAngle));
 
             //0 Forward
-            _forwardVector.Add(Vector3.forward);
+            _v._forwardVector.Add(Vector3.forward);
 
             //1 Forward up
-            _forwardVector.Add(Vector3.Lerp
-                (Vector3.forward, Vector3.up, _forwardVAngel));
+            _v._forwardVector.Add(Vector3.Lerp
+                (Vector3.forward, Vector3.up, _v._forwardVAngel));
 
             //2 Forward right
-            _forwardVector.Add(Vector3.Lerp
-                (Vector3.forward, Vector3.right, _forwardVAngel));
+            _v._forwardVector.Add(Vector3.Lerp
+                (Vector3.forward, Vector3.right, _v._forwardVAngel));
 
             //3 Forward left
-            _forwardVector.Add(Vector3.Lerp
-                (Vector3.forward, Vector3.left, _forwardVAngel));
+            _v._forwardVector.Add(Vector3.Lerp
+                (Vector3.forward, Vector3.left, _v._forwardVAngel));
         }
 
         /// <summary>
@@ -538,12 +176,12 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public void ClimbGrabInteract()
         {
-            if (_isGrabing)
+            if (_v._isGrabing)
             {
-                _isGrabing = false;
-                _isPulling = false;
-                _isPushing = false;
-                hit.IsUnityNull();
+                _v._isGrabing = false;
+                _v._isPulling = false;
+                _v._isPushing = false;
+
                 Debug.Log("Restet");
                 BasePlayerState.AnimaitonAffected();
                 return;
@@ -551,63 +189,63 @@ namespace PlayerStM.BaseStates
 
             // The forloop shoots out rays in all direction unitll
             // one hits a object with the correct layer
-            for (int i = 0; i < _forwardVector.Count; i++)
+            for (int i = 0; i < _v._forwardVector.Count; i++)
             {
                 Vector3 tempVector =
-                    Camera.main.transform.TransformDirection(_forwardVector[i]);
+                    Camera.main.transform.TransformDirection(_v._forwardVector[i]);
 
                 Debug.DrawRay(transform.position, tempVector * 1, Color.green, 2);
 
                 //Grab ray
-                if (Physics.Raycast(transform.position, tempVector, out hit,
-                    _grabRayLength, _grabLayer))
+                if (Physics.Raycast(transform.position, tempVector, out _v.hit,
+                    _v._grabRayLength, _v._grabLayer))
                 {
-                    _transformHit = hit.transform;
-                    _rigidbodyGrabed = hit.transform.GetComponent<Rigidbody>();
+                    _v._transformHit = _v.hit.transform;
+                    _v._rigidbodyGrabed = _v.hit.transform.GetComponent<Rigidbody>();
 
-                    if (hitPoint != null)
+                    if (_v.hitPoint != null)
                     {
-                        Destroy(hitPoint);
+                        Destroy(_v.hitPoint);
                     }
 
-                    hitPoint = new GameObject();
-                    hitPoint.name = "PullPoint";
-                    hitPoint.tag = "Move_Object";
-                    hitPoint.transform.position = hit.point;
-                    hitPoint.transform.parent = hit.transform;
-                    _pointHit = hitPoint.transform;
+                    _v.hitPoint = new GameObject();
+                    _v.hitPoint.name = "PullPoint";
+                    _v.hitPoint.tag = "Move_Object";
+                    _v.hitPoint.transform.position = _v.hit.point;
+                    _v.hitPoint.transform.parent = _v.hit.transform;
+                    _v._pointHit = _v.hitPoint.transform;
 
-                    _isPulling = true;
-                    _isGrabing = true;
+                    _v._isPulling = true;
+                    _v._isGrabing = true;
                     BasePlayerState.AnimaitonAffected();
                     break;
                 }
 
                 //Climb ray
-                else if (Physics.Raycast(transform.position, tempVector, out hit,
-                _climbRayLength, _climbLayer))
+                else if (Physics.Raycast(transform.position, tempVector, out _v.hit,
+                _v._climbRayLength, _v._climbLayer))
                 {
-                    _transformHit = hit.transform;
-                    Vector3 hitDistance = (transform.position - hit.transform.position).normalized;
-                    transform.position = hit.point + hitDistance * _hitDistanceModifier;
-                    _isClimbing = true;
+                    _v._transformHit = _v.hit.transform;
+                    Vector3 hitDistance = (transform.position - _v.hit.transform.position).normalized;
+                    transform.position = _v.hit.point + hitDistance * _v._hitDistanceModifier;
+                    _v._isClimbing = true;
                     BasePlayerState.AnimaitonAffected();
                     break;
                 }
 
                 // Interaction Ray
-                else if (Physics.Raycast(transform.position, tempVector, out hit,
-                    _interactRayLength, _interactLayer))
+                else if (Physics.Raycast(transform.position, tempVector, out _v.hit,
+                    _v._interactRayLength, _v._interactLayer))
                 {
                     Debug.Log("Happening");
                     try
                     {
-                        hit.transform.gameObject.GetComponent<InteractObject>()
+                        _v.hit.transform.gameObject.GetComponent<InteractObject>()
                             .Interacted.Invoke();
                     }
                     catch (Exception)
                     {
-                        hit.transform.gameObject.GetComponentInChildren<InteractObject>()
+                        _v.hit.transform.gameObject.GetComponentInChildren<InteractObject>()
                             .Interacted.Invoke();
                     }
                     break;
@@ -622,32 +260,32 @@ namespace PlayerStM.BaseStates
         /// </summary>
         public void GroundedRaycast()
         {
-            for (int i = 0; i < _downVectors.Count; i++)
+            for (int i = 0; i < _v._downVectors.Count; i++)
             {
-                Debug.DrawRay(transform.position, _downVectors[i] * _rayGroundDist,
+                Debug.DrawRay(transform.position, _v._downVectors[i] * _v._rayGroundDist,
                         Color.red, 1);
-                if (Physics.Raycast(transform.position, _downVectors[i],
-                    _rayGroundDist, _groundLayer, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(transform.position, _v._downVectors[i],
+                    _v._rayGroundDist, _v._groundLayer, QueryTriggerInteraction.Collide))
                 {
-                    _isGrounded = true;
+                    _v._isGrounded = true;
                     break;
                 }
-                else if (i == _downVectors.Count - 1)
+                else if (i == _v._downVectors.Count - 1)
                 {
-                    _isGrounded = false;
+                    _v._isGrounded = false;
                 }
             }
         }
 
         public void PlayerDied()
         {
-            PlayerAnimator.SetTrigger("Dead");
+            _v.PlayerAnimator.SetTrigger("Dead");
         }
 
         public void PlayerRespawn()
         {
-            PlayerAnimator.ResetTrigger("Dead");
-            transform.position = _gameMaster.CurrentCheckpointPosition;
+            _v.PlayerAnimator.ResetTrigger("Dead");
+            transform.position = _v._gameMaster.CurrentCheckpointPosition;
         }
     }
 }

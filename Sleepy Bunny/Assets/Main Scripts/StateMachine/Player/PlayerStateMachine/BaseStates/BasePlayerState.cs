@@ -11,9 +11,13 @@ namespace PlayerStM.BaseStates
     /// </summary>
     public abstract class BasePlayerState
     {
-        public BasePlayerState(PlayerStateMachine ctx, StateFactory factory)
+        public BasePlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods,
+            StateFactory factory)
         {
-            this.Ctx = ctx;
+            this.Variables = variables;
+            this.Methods = methods;
             this.Factory = factory;
             InputScript.Moveing += GetMoveCtx;
             AnimaitonAffected += CheckSwitchAnimation;
@@ -34,7 +38,9 @@ namespace PlayerStM.BaseStates
         protected bool IsRootState = false;
 
         // Used to accsess the geters and setters of PlayerStateMachine
-        protected PlayerStateMachine Ctx;
+        protected PlayerVariables Variables;
+
+        protected PlayerStateMachine Methods;
 
         // Gain accsess to all the states for switching or other stuff
         protected StateFactory Factory;
@@ -139,19 +145,19 @@ namespace PlayerStM.BaseStates
 
         public void FixedUpdateStates()
         {
-            Ctx.CurrentSuper.FixedUpdateState();
-            if (Ctx.CurrentSub != null)
+            Variables.CurrentSuper.FixedUpdateState();
+            if (Variables.CurrentSub != null)
             {
-                Ctx.CurrentSub.FixedUpdateState();
+                Variables.CurrentSub.FixedUpdateState();
             }
         }
 
         public void UpdateStates()
         {
-            Ctx.CurrentSub.UpdateState();
-            if (Ctx.CurrentSub != null)
+            Variables.CurrentSub.UpdateState();
+            if (Variables.CurrentSub != null)
             {
-                Ctx.CurrentSub.UpdateState();
+                Variables.CurrentSub.UpdateState();
             }
         }
 
@@ -163,30 +169,30 @@ namespace PlayerStM.BaseStates
 
             if (IsRootState)
             {
-                Ctx.CurrentSuper = nextState;
+                Variables.CurrentSuper = nextState;
             }
-            else if (Ctx.CurrentSub != null)
+            else if (Variables.CurrentSub != null)
             {
-                Ctx.CurrentSuper.SetSubState(nextState);
+                Variables.CurrentSuper.SetSubState(nextState);
             }
         }
 
         protected void SetSuperState(BasePlayerState newSuperState)
         {
-            Ctx.CurrentSuper = newSuperState;
+            Variables.CurrentSuper = newSuperState;
         }
 
         protected void SetSubState(BasePlayerState newSubState)
         {
-            Ctx.CurrentSub = newSubState;
+            Variables.CurrentSub = newSubState;
             SetSuperState(this);
         }
 
         private void GetMoveCtx()
         {
-            _ctxMoveVector = Ctx.TheInput.MoveCtx.ReadValue<Vector2>();
+            _ctxMoveVector = Variables.TheInput.MoveCtx.ReadValue<Vector2>();
 
-            switch (Ctx.CurrentSuper)
+            switch (Variables.CurrentSuper)
             {
                 case SuperClimbingPlayerState:
                     _moveVector
@@ -207,7 +213,7 @@ namespace PlayerStM.BaseStates
 
         internal void MoveCameraDirection()
         {
-            _cameraDirection = Ctx.MainCamera.transform.TransformDirection(_moveVector);
+            _cameraDirection = Variables.MainCamera.transform.TransformDirection(_moveVector);
             _moveDirection = new Vector3(_cameraDirection.x, 0f, _cameraDirection.z);
         }
 
@@ -229,7 +235,7 @@ namespace PlayerStM.BaseStates
             Rigidbody rigidbodyToPull, Transform pullPoint,
             float breakDistance, float pullDistance, float pullForce)
         {
-            Vector3 pullDirection = Ctx.transform.position - transformToPull.position;
+            Vector3 pullDirection = Methods.transform.position - transformToPull.position;
             Vector3 normalizedDirection = pullDirection.normalized;
 
             float distance = Vector3.Magnitude(pullDirection);

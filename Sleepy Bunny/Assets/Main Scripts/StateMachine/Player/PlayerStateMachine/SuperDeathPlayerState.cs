@@ -9,9 +9,11 @@ namespace PlayerStM.SubStates
         /// The constructor inherits all the non-local variables form the
         /// base class though geters and setters
         /// </summary>
-        public SuperDeathPlayerState(PlayerStateMachine ctx,
+        public SuperDeathPlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods,
             StateFactory factory) :
-            base(ctx, factory)
+            base(variables, methods, factory)
         {
             IsRootState = true;
             AnimationFunctionManager.Deathdone += AnimaionDone;
@@ -19,7 +21,7 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsDead) { return; }
+            if (Variables.IsDead) { return; }
             SwitchState(Factory.SuperGrounded());
         }
 
@@ -39,7 +41,7 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            Ctx.PlayerRespawn();
+            Methods.PlayerRespawn();
         }
 
         public override void InitializeSubState()
@@ -54,7 +56,7 @@ namespace PlayerStM.SubStates
         private void AnimaionDone()
         {
             Debug.Log("Ishappening");
-            Ctx.IsDead = false;
+            Variables.IsDead = false;
         }
     }
 }

@@ -29,23 +29,25 @@ namespace PlayerStM.BaseStates
 
     public class StateFactory
     {
-        private PlayerStateMachine _context;
+        private PlayerStateMachine _methods;
+        private PlayerVariables _variables;
 
         private Dictionary<eStates, BasePlayerState> _states = new();
 
-        public StateFactory(PlayerStateMachine currentContext)
+        public StateFactory(PlayerStateMachine currentMethods, PlayerVariables currentVariables)
         {
-            _context = currentContext;
+            _methods = currentMethods;
+            _variables = currentVariables;
 
-            _states[eStates.SubLand] = new SubLandPlayerState(_context, this);
-            _states[eStates.SubMovement] = new SubMovementPlayerState(_context, this);
-            _states[eStates.SubIdle] = new SubIdlePlayerState(_context, this);
-            _states[eStates.SubFalling] = new SubFallingPlayerState(_context, this);
-            _states[eStates.SuperGrab] = new SuperGrabPlayerState(_context, this);
-            _states[eStates.SuperClimb] = new SuperClimbingPlayerState(_context, this);
-            _states[eStates.SuperJump] = new SuperJumpPlayerState(_context, this);
-            _states[eStates.SuperGrounded] = new SuperGroundedPlayerState(_context, this);
-            _states[eStates.SuperDead] = new SuperDeathPlayerState(_context, this);
+            _states[eStates.SubLand] = new SubLandPlayerState(_variables, _methods, this);
+            _states[eStates.SubMovement] = new SubMovementPlayerState(_variables, _methods, this);
+            _states[eStates.SubIdle] = new SubIdlePlayerState(_variables, _methods, this);
+            _states[eStates.SubFalling] = new SubFallingPlayerState(_variables, _methods, this);
+            _states[eStates.SuperGrab] = new SuperGrabPlayerState(_variables, _methods, this);
+            _states[eStates.SuperClimb] = new SuperClimbingPlayerState(_variables, _methods, this);
+            _states[eStates.SuperJump] = new SuperJumpPlayerState(_variables, _methods, this);
+            _states[eStates.SuperGrounded] = new SuperGroundedPlayerState(_variables, _methods, this);
+            _states[eStates.SuperDead] = new SuperDeathPlayerState(_variables, _methods, this);
         }
 
         public BasePlayerState SuperDead()

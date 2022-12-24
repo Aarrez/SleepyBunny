@@ -14,9 +14,11 @@ namespace PlayerStM.SubStates
         /// The constructor inherits all the non-local variables form the
         /// base class though geters and setters
         /// </summary>
-        public TemplatePlayerState(PlayerStateMachine ctx,
-            StateFactory factory) :
-            base(ctx, factory)
+        public TemplatePlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods,
+            StateFactory stateFactory)
+            : base(variables, methods, stateFactory)
         {
         }
 

@@ -12,19 +12,21 @@ namespace PlayerStM.SubStates
     ///
     public class SubMovementPlayerState : BasePlayerState
     {
-        public SubMovementPlayerState(PlayerStateMachine currentContext
-            , StateFactory stateFactory)
-            : base(currentContext, stateFactory)
+        public SubMovementPlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods,
+            StateFactory stateFactory)
+            : base(variables, methods, stateFactory)
         {
         }
 
         public override void CheckSwitchState()
         {
-            if (Ctx.TheInput.MoveCtx.ReadValue<Vector2>() == Vector2.zero)
+            if (Variables.TheInput.MoveCtx.ReadValue<Vector2>() == Vector2.zero)
             {
                 SwitchState(Factory.SubIdle());
             }
-            else if (Ctx.Rb.velocity.y < -1f)
+            else if (Variables.Rb.velocity.y < -1f)
             {
                 SwitchState(Factory.SubFalling());
             }
@@ -32,7 +34,7 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
+            if (Variables.CurrentSuper == Factory.SuperJump()) { return; }
 
             //switch (Ctx.CurrentSuper)
             //{
@@ -53,7 +55,7 @@ namespace PlayerStM.SubStates
             //            (float)_eMoveAnim.Walk);
             //        break;
             //}
-            Ctx.PlayerAnimator.SetInteger("Index",
+            Variables.PlayerAnimator.SetInteger("Index",
                         (int)_eAnim.Walk);
         }
 
@@ -78,11 +80,11 @@ namespace PlayerStM.SubStates
 
         private void PlayerMove()
         {
-            switch (Ctx.CurrentSuper)
+            switch (Variables.CurrentSuper)
             {
                 case SuperClimbingPlayerState:
                     PlayerClimb();
-                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                    Variables.PlayerAnimator.SetFloat("MoveIndex",
                        (float)_eMoveAnim.Climb);
 
                     break;
@@ -90,12 +92,12 @@ namespace PlayerStM.SubStates
                 case SuperGrabPlayerState:
                     InverseRotateToMovment();
                     PullingMovement();
-                    Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                    Variables.PlayerAnimator.SetFloat("MoveIndex",
                     (float)_eMoveAnim.Pull);
                     break;
 
                 case SuperJumpPlayerState:
-                    if (Ctx.AirMovement)
+                    if (Variables.AirMovement)
                     {
                         JumpMovemet();
                     }
@@ -104,16 +106,16 @@ namespace PlayerStM.SubStates
 
                 default:
                     RotateToMovment();
-                    if (Ctx.TheInput.RunningCtx.ReadValueAsButton())
+                    if (Variables.TheInput.RunningCtx.ReadValueAsButton())
                     {
                         RunningMovement();
-                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                        Variables.PlayerAnimator.SetFloat("MoveIndex",
                             (float)_eMoveAnim.Run);
                     }
                     else
                     {
                         GroundedMovment();
-                        Ctx.PlayerAnimator.SetFloat("MoveIndex",
+                        Variables.PlayerAnimator.SetFloat("MoveIndex",
                             (float)_eMoveAnim.Walk);
                     }
 
@@ -123,51 +125,51 @@ namespace PlayerStM.SubStates
 
         private void GroundedMovment()
         {
-            Vector3 Movement = MoveDirection * Ctx.MovmentForce * Time.fixedDeltaTime;
+            Vector3 Movement = MoveDirection * Variables.MovmentForce * Time.fixedDeltaTime;
 
-            Ctx.Rb.velocity = new Vector3(
+            Variables.Rb.velocity = new Vector3(
                 Movement.x,
-                Ctx.Rb.velocity.y,
+                Variables.Rb.velocity.y,
                 Movement.z);
         }
 
         private void RunningMovement()
         {
             Vector3 Movement = MoveDirection *
-                Ctx.MovmentForce * Ctx.RunningModifier * Time.fixedDeltaTime;
+                Variables.MovmentForce * Variables.RunningModifier * Time.fixedDeltaTime;
 
-            Ctx.Rb.velocity = new Vector3(
+            Variables.Rb.velocity = new Vector3(
                 Movement.x,
-                Ctx.Rb.velocity.y,
+                Variables.Rb.velocity.y,
                 Movement.z);
         }
 
         internal void JumpMovemet()
         {
             Vector3 Movement = MoveDirection *
-                (Ctx.MovmentForce * Ctx.JumpMovementMultipler) * Time.fixedDeltaTime;
-            Ctx.Rb.velocity = new Vector3(
+                (Variables.MovmentForce * Variables.JumpMovementMultipler) * Time.fixedDeltaTime;
+            Variables.Rb.velocity = new Vector3(
                 Movement.x,
-                Ctx.Rb.velocity.y,
+                Variables.Rb.velocity.y,
                 Movement.z);
         }
 
         private void PullingMovement()
         {
             Vector3 Movement = MoveDirection *
-                Ctx.PushForce * Time.fixedDeltaTime;
+                Variables.PushForce * Time.fixedDeltaTime;
 
             //Ctx.Rb.AddForce(Movement);
 
-            Ctx.Rb.velocity = new Vector3(
+            Variables.Rb.velocity = new Vector3(
                Movement.x,
-                Ctx.Rb.velocity.y,
+                Variables.Rb.velocity.y,
                 Movement.z);
         }
 
         private void PlayerClimb()
         {
-            Ctx.Rb.velocity = MoveVector * Ctx.ClimbSpeed
+            Variables.Rb.velocity = MoveVector * Variables.ClimbSpeed
                 * Time.fixedDeltaTime;
         }
 
@@ -175,18 +177,18 @@ namespace PlayerStM.SubStates
         {
             if (MoveDirection == Vector3.zero) return;
 
-            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
+            Variables.Rb.rotation = Quaternion.RotateTowards(Variables.Rb.rotation,
              Quaternion.LookRotation(MoveDirection, Vector3.up),
-             Ctx.RotationSpeed);
+             Variables.RotationSpeed);
         }
 
         private void InverseRotateToMovment()
         {
             if (MoveDirection == Vector3.zero) return;
 
-            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
+            Variables.Rb.rotation = Quaternion.RotateTowards(Variables.Rb.rotation,
              Quaternion.LookRotation(-MoveDirection, Vector3.up),
-             Ctx.RotationSpeed);
+             Variables.RotationSpeed);
         }
 
         public override void CheckSwitchAnimation()

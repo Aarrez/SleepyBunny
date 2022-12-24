@@ -14,30 +14,31 @@ namespace PlayerStM.SubStates
 
         public SubFallingPlayerState
             (
-            PlayerStateMachine currentContext
-            , StateFactory stateFactory
-            ) : base(currentContext, stateFactory)
+            PlayerVariables variables,
+            PlayerStateMachine methods,
+            StateFactory factory
+            ) : base(variables, methods, factory)
         {
         }
 
         public override void CheckSwitchState()
         {
-            if (!Ctx.IsGrounded || Ctx.IsClimbing) { return; }
+            if (!Variables.IsGrounded || Variables.IsClimbing) { return; }
 
             SwitchState(Factory.SubIdle());
         }
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.ResetTrigger("Landed");
-            Ctx.PlayerAnimator.SetInteger("Index", (int)_eAnim.Falling);
+            Variables.PlayerAnimator.ResetTrigger("Landed");
+            Variables.PlayerAnimator.SetInteger("Index", (int)_eAnim.Falling);
         }
 
         public override void FixedUpdateState()
         {
             MinFallVelocity();
             CheckSwitchState();
-            Ctx.GroundedRaycast();
+            Methods.GroundedRaycast();
         }
 
         public override void UpdateState()
@@ -46,27 +47,27 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            if (Ctx.CurrentSuper != Factory.SuperClimb())
+            if (Variables.CurrentSuper != Factory.SuperClimb())
             {
-                if (_fallVeloctiy < Ctx.DeadVelocity)
+                if (_fallVeloctiy < Variables.DeadVelocity)
                 {
-                    Ctx.IsDead = true;
-                    Ctx.PlayerDied();
+                    Variables.IsDead = true;
+                    Methods.PlayerDied();
                     _fallVeloctiy = 0;
                     return;
                 }
-                else if (_fallVeloctiy > Ctx.SoftHitVelocity)
+                else if (_fallVeloctiy > Variables.SoftHitVelocity)
                 {
-                    Ctx.PlayerAnimator.SetFloat(
+                    Variables.PlayerAnimator.SetFloat(
                         "LandEffect", (float)_eLandAnim.LandSoft);
                 }
-                else if (_fallVeloctiy < Ctx.SoftHitVelocity)
+                else if (_fallVeloctiy < Variables.SoftHitVelocity)
                 {
-                    Ctx.PlayerAnimator.SetFloat(
+                    Variables.PlayerAnimator.SetFloat(
                         "LandEffect", (float)_eLandAnim.LandHard);
                 }
 
-                Ctx.PlayerAnimator.SetTrigger("Landed");
+                Variables.PlayerAnimator.SetTrigger("Landed");
             }
             _fallVeloctiy = 0;
         }
@@ -77,9 +78,9 @@ namespace PlayerStM.SubStates
 
         private void MinFallVelocity()
         {
-            if (_fallVeloctiy > Ctx.Rb.velocity.y)
+            if (_fallVeloctiy > Variables.Rb.velocity.y)
             {
-                _fallVeloctiy = Ctx.Rb.velocity.y;
+                _fallVeloctiy = Variables.Rb.velocity.y;
             }
         }
 

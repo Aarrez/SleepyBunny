@@ -6,9 +6,11 @@ namespace PlayerStM.SubStates
     {
         //The constructor inherits all the non-local variables form the
         //base class though geters and setters
-        public SubLandPlayerState(PlayerStateMachine ctx,
+        public SubLandPlayerState(
+            PlayerVariables variables, 
+            PlayerStateMachine methods,
             StateFactory factory) :
-            base(ctx, factory)
+            base(variables, methods, factory)
         {
         }
 

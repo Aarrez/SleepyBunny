@@ -10,9 +10,11 @@ namespace PlayerStM.SuperState
     /// </summary>
     public class SuperGroundedPlayerState : BasePlayerState
     {
-        public SuperGroundedPlayerState(PlayerStateMachine currentContext
-            , StateFactory stateFactory)
-            : base(currentContext, stateFactory)
+        public SuperGroundedPlayerState(
+            PlayerVariables variables, 
+            PlayerStateMachine methods, 
+            StateFactory stateFactory)
+            : base(variables, methods, stateFactory)
         {
             IsRootState = true;
             InitializeSubState();
@@ -20,19 +22,19 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsDead)
+            if (Variables.IsDead)
             {
                 SwitchState(Factory.SuperDead());
             }
-            else if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
+            else if (Variables.TheInput.JumpCtx.ReadValueAsButton())
             {
                 SwitchState(Factory.SuperJump());
             }
-            else if (Ctx.IsClimbing)
+            else if (Variables.IsClimbing)
             {
                 SwitchState(Factory.SuperClimb());
             }
-            else if (Ctx.IsGrabing)
+            else if (Variables.IsGrabing)
             {
                 SwitchState(Factory.SuperGrab());
             }
@@ -49,7 +51,7 @@ namespace PlayerStM.SuperState
 
         public override void InitializeSubState()
         {
-            if (Ctx.TheInput.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
+            if (Variables.TheInput.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
             {
                 SetSubState(Factory.SubMovement());
             }

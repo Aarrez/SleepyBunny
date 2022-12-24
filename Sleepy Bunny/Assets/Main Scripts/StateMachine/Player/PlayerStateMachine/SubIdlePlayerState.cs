@@ -9,20 +9,22 @@ namespace PlayerStM.SubStates
     /// </summary>
     public class SubIdlePlayerState : BasePlayerState
     {
-        public SubIdlePlayerState(PlayerStateMachine currentContext
-            , StateFactory stateFactory)
-            : base(currentContext, stateFactory)
+        public SubIdlePlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods
+            , StateFactory factrory)
+            : base(variables, methods, factrory)
         {
         }
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsDead) { return; }
-            if (Ctx.TheInput.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
+            if (Variables.IsDead) { return; }
+            if (Variables.TheInput.MoveCtx.ReadValue<Vector2>() != Vector2.zero)
             {
                 SwitchState(Factory.SubMovement());
             }
-            else if (Ctx.Rb.velocity.y < -1f)
+            else if (Variables.Rb.velocity.y < -1f)
             {
                 SwitchState(Factory.SubFalling());
             }
@@ -30,33 +32,33 @@ namespace PlayerStM.SubStates
 
         public override void EnterState()
         {
-            if (Ctx.CurrentSuper == Factory.SuperJump()) { return; }
-            switch (Ctx.CurrentSuper)
+            if (Variables.CurrentSuper == Factory.SuperJump()) { return; }
+            switch (Variables.CurrentSuper)
             {
                 case SuperClimbingPlayerState:
-                    Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                    Variables.PlayerAnimator.SetFloat("IdleIndex",
                         (float)_eIdleAnim.IdleClimb);
                     break;
 
                 case SuperGrabPlayerState:
-                    if (Ctx.IsPulling)
+                    if (Variables.IsPulling)
                     {
-                        Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                        Variables.PlayerAnimator.SetFloat("IdleIndex",
                             (float)_eIdleAnim.IdlePull);
                     }
-                    else if (Ctx.IsPushing)
+                    else if (Variables.IsPushing)
                     {
-                        Ctx.PlayerAnimator.SetFloat("IdleIndex",
+                        Variables.PlayerAnimator.SetFloat("IdleIndex",
                             (float)_eIdleAnim.IdlePush);
                     }
                     break;
 
                 default:
-                    Ctx.PlayerAnimator.SetFloat("IdleIndex", (float)_eIdleAnim.Idle);
+                    Variables.PlayerAnimator.SetFloat("IdleIndex", (float)_eIdleAnim.Idle);
                     break;
             }
 
-            Ctx.PlayerAnimator.SetInteger("Index",
+            Variables.PlayerAnimator.SetInteger("Index",
                 (int)_eAnim.Idle);
         }
 

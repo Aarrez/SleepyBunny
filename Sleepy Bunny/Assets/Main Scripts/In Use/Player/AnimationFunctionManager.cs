@@ -8,8 +8,6 @@ public class AnimationFunctionManager : MonoBehaviour
     //Used in SuperJumpPlayerState to play sound when jump
     public static Action OnJumpAction;
 
-    public static event Action AnimationJumpEvent;
-
     public static Action Deathdone;
 
     [SerializeField] private EventReference _steps;

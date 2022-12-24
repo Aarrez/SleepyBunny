@@ -10,9 +10,11 @@ namespace PlayerStM.SubStates
     /// </summary>
     public class SuperGrabPlayerState : BasePlayerState
     {
-        public SuperGrabPlayerState(PlayerStateMachine ctx
-            , StateFactory factory)
-            : base(ctx, factory)
+        public SuperGrabPlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods,
+            StateFactory factory)
+            : base(variables, methods, factory)
         {
             InitializeSubState();
             IsRootState = true;
@@ -20,7 +22,7 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (!Ctx.IsGrabing)
+            if (!Variables.IsGrabing)
             {
                 SwitchState(Factory.SuperGrounded());
             }
@@ -33,8 +35,8 @@ namespace PlayerStM.SubStates
 
         public override void FixedUpdateState()
         {
-            MovePulledObject(Ctx.transform, Ctx.TransformHit, Ctx.RigidbodyGrabed,
-            Ctx.PointHit, Ctx.BreakDistance, Ctx.PullDistance, Ctx.PullForce);
+            MovePulledObject(Methods.transform, Variables.TransformHit, Variables.RigidbodyGrabed,
+            Variables.PointHit, Variables.BreakDistance, Variables.PullDistance, Variables.PullForce);
 
             CheckSwitchState();
         }
@@ -45,13 +47,13 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            Ctx.TransformHit = null;
-            Ctx.RigidbodyGrabed = null;
+            Variables.TransformHit = null;
+            Variables.RigidbodyGrabed = null;
         }
 
         public override void InitializeSubState()
         {
-            if (Ctx.TheInput.MoveCtx.ReadValueAsButton())
+            if (Variables.TheInput.MoveCtx.ReadValueAsButton())
             {
                 SetSubState(Factory.SubMovement());
             }

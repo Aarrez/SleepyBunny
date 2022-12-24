@@ -775,7 +775,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1460403967210205802
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -792,7 +792,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &204981382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2066,6 +2066,7 @@ GameObject:
   - component: {fileID: 8359512614524538521}
   - component: {fileID: 3470122205737641228}
   - component: {fileID: 2689577338028352677}
+  - component: {fileID: 6186407967790294929}
   m_Layer: 11
   m_Name: NewModleSleepyBunny
   m_TagString: Player
@@ -2148,42 +2149,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7140de63b5c6f4ebeed6c52e578c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6186407967790294929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701972349885150162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35fd509b490ca5e4e8d9b88725ffb977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _softHitVelocity: -3
   _deadVelocity: -6
-  _gravityModifier: 2
-  _movmentForce: 50
+  _gravityModifier: 0
+  _movmentForce: 1
   _runningModifier: 1.5
-  _airMovement: 1
-  _jumpMovementMultipler: 1
-  _directionalJumpForce: 2
-  _jumpHeight: 3
+  _airMovement: 0
+  _jumpMovementMultipler: 0.5
+  _directionalJumpForce: 0.5
+  _jumpHeight: 10
   _hitDistanceModifier: 0.1
-  _climbSpeed: 10
-  _rotationSpeed: 10
+  _climbSpeed: 5
+  _rotationSpeed: 0
   _rayGroundDist: 0.1
   _vectorAngle: 0.5
   _forwardVAngel: 0.3
-  _useDefaultGroundLayer: 0
+  _useDefaultGroundLayer: 1
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 1481
+    m_Bits: 0
   _useDefaultInteractionsLayers: 1
   _climbLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   _climbRayLength: 0.5
   _grabLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   _grabRayLength: 1
-  _pullForce: 1000
+  _pullForce: 2
   _pushForce: 2
   _interactLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   _interactRayLength: 1
-  _breakDistance: 20
-  _pullDistance: 1
+  _breakDistance: 3
+  _pullDistance: 0.5
 --- !u!1 &9070179661848927906
 GameObject:
   m_ObjectHideFlags: 0

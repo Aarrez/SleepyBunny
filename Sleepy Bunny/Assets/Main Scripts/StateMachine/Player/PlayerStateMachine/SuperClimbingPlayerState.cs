@@ -17,9 +17,11 @@ namespace PlayerStM.SubStates
 
         private RaycastHit _hit;
 
-        public SuperClimbingPlayerState(PlayerStateMachine currentContext
-            , StateFactory stateFactory)
-            : base(currentContext, stateFactory)
+        public SuperClimbingPlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods,
+            StateFactory stateFactory)
+            : base(variables, methods, stateFactory)
         {
             IsRootState = true;
             InitializeSubState();
@@ -27,11 +29,11 @@ namespace PlayerStM.SubStates
 
         public override void CheckSwitchState()
         {
-            if (Ctx.TheInput.JumpCtx.ReadValueAsButton())
+            if (Variables.TheInput.JumpCtx.ReadValueAsButton())
             {
                 SwitchState(Factory.SuperJump());
             }
-            else if (!Ctx.IsClimbing)
+            else if (!Variables.IsClimbing)
             {
                 SwitchState(Factory.SuperGrounded());
             }
@@ -41,9 +43,9 @@ namespace PlayerStM.SubStates
         public override void EnterState()
         {
             Debug.Log("Climbing");
-            Ctx.Rb.useGravity = false;
-            Ctx.Rb.velocity = Vector3.zero;
-            Ctx.PlayerAnimator.SetFloat("IdleIndex",
+            Variables.Rb.useGravity = false;
+            Variables.Rb.velocity = Vector3.zero;
+            Variables.PlayerAnimator.SetFloat("IdleIndex",
                 (float)_eIdleAnim.IdleClimb);
         }
 
@@ -59,8 +61,8 @@ namespace PlayerStM.SubStates
 
         public override void ExitState()
         {
-            Ctx.Rb.useGravity = true;
-            Ctx.IsClimbing = false;
+            Variables.Rb.useGravity = true;
+            Variables.IsClimbing = false;
         }
 
         public override void InitializeSubState()
@@ -69,29 +71,29 @@ namespace PlayerStM.SubStates
 
         private void RotateTwoardsTransform(Transform climbTransform)
         {
-            Quaternion rotateTowards = Quaternion.FromToRotation(Ctx.transform.position,
+            Quaternion rotateTowards = Quaternion.FromToRotation(Methods.transform.position,
                 climbTransform.position);
 
-            Ctx.Rb.rotation = Quaternion.RotateTowards(Ctx.Rb.rotation,
-                rotateTowards, Ctx.RotationSpeed);
+            Variables.Rb.rotation = Quaternion.RotateTowards(Variables.Rb.rotation,
+                rotateTowards, Variables.RotationSpeed);
         }
 
         private void OnEdge()
         {
-            for (int i = 0; i < Ctx.ForwardVector.Count; i++)
+            for (int i = 0; i < Variables.ForwardVector.Count; i++)
             {
-                Debug.DrawRay(Ctx.transform.position,
-                    Ctx.transform.TransformDirection(Ctx.ForwardVector[i]),
+                Debug.DrawRay(Methods.transform.position,
+                   Methods.transform.TransformDirection(Variables.ForwardVector[i]),
                     Color.red, 1);
-                if (Physics.Raycast(Ctx.transform.position,
-                    Ctx.transform.TransformDirection(Ctx.ForwardVector[i]),
-                 Ctx.ClimbRayLength, Ctx.ClimbLayer))
+                if (Physics.Raycast(Methods.transform.position,
+                    Methods.transform.TransformDirection(Variables.ForwardVector[i]),
+                 Variables.ClimbRayLength, Variables.ClimbLayer))
                 {
                     return;
                 }
                 else
                 {
-                    Ctx.IsClimbing = false;
+                    Variables.IsClimbing = false;
                 }
             }
         }

@@ -8,9 +8,11 @@ namespace PlayerStM.SuperState
     /// </summary>
     public class SuperJumpPlayerState : BasePlayerState
     {
-        public SuperJumpPlayerState(PlayerStateMachine currentContext
-            , StateFactory stateFactory)
-            : base(currentContext, stateFactory)
+        public SuperJumpPlayerState(
+            PlayerVariables variables,
+            PlayerStateMachine methods,
+            StateFactory stateFactory)
+            : base(variables, methods, stateFactory)
         {
             IsRootState = true;
             InitializeSubState();
@@ -18,15 +20,15 @@ namespace PlayerStM.SuperState
 
         public override void CheckSwitchState()
         {
-            if (Ctx.IsDead)
+            if (Variables.IsDead)
             {
                 SwitchState(Factory.SuperDead());
             }
-            else if (Ctx.IsGrounded)
+            else if (Variables.IsGrounded)
             {
                 SwitchState(Factory.SuperGrounded());
             }
-            else if (Ctx.IsClimbing)
+            else if (Variables.IsClimbing)
             {
                 SwitchState(Factory.SuperClimb());
             }
@@ -34,9 +36,9 @@ namespace PlayerStM.SuperState
 
         public override void EnterState()
         {
-            Ctx.PlayerAnimator.SetInteger("Index",
+            Variables.PlayerAnimator.SetInteger("Index",
                 (int)_eAnim.Jump);
-            Ctx.IsGrounded = false;
+            Variables.IsGrounded = false;
             Debug.Log("Jumping");
             AddJumpForce();
         }
@@ -52,7 +54,7 @@ namespace PlayerStM.SuperState
 
         public override void FixedUpdateState()
         {
-            Ctx.GroundedRaycast();
+            Methods.GroundedRaycast();
             CheckSwitchState();
         }
 
@@ -61,15 +63,15 @@ namespace PlayerStM.SuperState
         private void AddJumpForce()
         {
             MoveCameraDirection();
-            if (!Ctx.AirMovement)
+            if (!Variables.AirMovement)
             {
-                Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
+                Variables.Rb.velocity = (Vector3.up * Variables.JumpHeight)
                                  + MoveDirection;
             }
             else
             {
-                Ctx.Rb.velocity = (Vector3.up * Ctx.JumpHeight)
-                                + (MoveDirection * Ctx.DirectionalJumpForce);
+                Variables.Rb.velocity = (Vector3.up * Variables.JumpHeight)
+                                + (MoveDirection * Variables.DirectionalJumpForce);
             }
         }
 
