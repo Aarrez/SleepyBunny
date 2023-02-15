@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "ca.andydbc.unity-texture-packer": {
+      "version": "https://github.com/andydbc/unity-texture-packer.git#0.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "775557391b3906906157bc1a0cd2f493a331a36b"
+    },
     "com.unity.burst": {
       "version": "1.8.2",
       "depth": 1,
