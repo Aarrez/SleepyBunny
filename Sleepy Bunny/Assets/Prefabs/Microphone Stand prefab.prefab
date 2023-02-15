@@ -224,9 +224,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0c57f49f8bc4fa44922d5cb25e88cf3, type: 3}
+--- !u!4 &419484932796190794 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4868742233716603216, guid: a0c57f49f8bc4fa44922d5cb25e88cf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 5063013649785596186}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &814930939994246546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5551890822229238920, guid: a0c57f49f8bc4fa44922d5cb25e88cf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 5063013649785596186}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1567275077882511840 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6017763992631388410, guid: a0c57f49f8bc4fa44922d5cb25e88cf3,
     type: 3}
   m_PrefabInstance: {fileID: 5063013649785596186}
   m_PrefabAsset: {fileID: 0}
@@ -282,13 +294,13 @@ AimConstraint:
   m_GameObject: {fileID: 4641478499345256972}
   m_Enabled: 1
   m_Weight: 1
-  m_RotationAtRest: {x: 88.24188, y: 179.00066, z: 179.23326}
-  m_RotationOffset: {x: 0, y: 90.02369, z: -0.000065321656}
+  m_RotationAtRest: {x: 88.2421, y: 179.00012, z: 179.23283}
+  m_RotationOffset: {x: -0.0001229116, y: 0.03067612, z: -0.00011861397}
   m_AimVector: {x: 0, y: 1, z: 0}
-  m_UpVector: {x: 0, y: 0, z: 1}
-  m_WorldUpVector: {x: 0, y: 1, z: 0}
-  m_WorldUpObject: {fileID: 0}
-  m_UpType: 4
+  m_UpVector: {x: 1, y: 0, z: 0}
+  m_WorldUpVector: {x: 1, y: 0, z: 0}
+  m_WorldUpObject: {fileID: 7207962765804769631}
+  m_UpType: 2
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -343,13 +355,13 @@ AimConstraint:
   m_GameObject: {fileID: 5586382528289716684}
   m_Enabled: 1
   m_Weight: 1
-  m_RotationAtRest: {x: 27.193932, y: -1.5210851, z: -0.85889053}
-  m_RotationOffset: {x: -0.00032264538, y: 88.32847, z: -0.0010304715}
+  m_RotationAtRest: {x: 27.193985, y: -1.5210048, z: -0.8589932}
+  m_RotationOffset: {x: -0.00031533052, y: -1.3528503, z: -0.00009486807}
   m_AimVector: {x: 0, y: 1, z: 0}
-  m_UpVector: {x: 0, y: 0, z: 1}
-  m_WorldUpVector: {x: 0, y: 1, z: 0}
-  m_WorldUpObject: {fileID: 0}
-  m_UpType: 4
+  m_UpVector: {x: 1, y: 0, z: 0}
+  m_WorldUpVector: {x: 1, y: 0, z: 0}
+  m_WorldUpObject: {fileID: 8347623487516559969}
+  m_UpType: 2
   m_AffectRotationX: 1
   m_AffectRotationY: 0
   m_AffectRotationZ: 0
@@ -364,7 +376,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5063013649785596186}
   m_PrefabAsset: {fileID: 0}
---- !u!895512359 &6820445596527817284
+--- !u!895512359 &7305590974144856063
 AimConstraint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -373,13 +385,13 @@ AimConstraint:
   m_GameObject: {fileID: 6392724917927430334}
   m_Enabled: 1
   m_Weight: 1
-  m_RotationAtRest: {x: 32.461582, y: 89.57604, z: -0.22756368}
-  m_RotationOffset: {x: -0.009271677, y: 89.642784, z: 0.0017900434}
+  m_RotationAtRest: {x: 32.46165, y: 89.57603, z: -0.22755976}
+  m_RotationOffset: {x: -0.009199821, y: -0.3577351, z: 0.0017960392}
   m_AimVector: {x: 0, y: 1, z: 0}
-  m_UpVector: {x: 0, y: 0, z: 1}
-  m_WorldUpVector: {x: 0, y: 0, z: 2}
-  m_WorldUpObject: {fileID: 0}
-  m_UpType: 4
+  m_UpVector: {x: 1, y: 0, z: 0}
+  m_WorldUpVector: {x: 0, y: 0, z: -1}
+  m_WorldUpObject: {fileID: 419484932796190794}
+  m_UpType: 2
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -409,13 +421,13 @@ AimConstraint:
   m_GameObject: {fileID: 7882331865259003561}
   m_Enabled: 1
   m_Weight: 1
-  m_RotationAtRest: {x: -20.757658, y: 179.0808, z: -179.0814}
-  m_RotationOffset: {x: 0, y: 92.42234, z: 0}
+  m_RotationAtRest: {x: -20.757658, y: 179.08078, z: -179.08139}
+  m_RotationOffset: {x: 0, y: 0.8595945, z: 0}
   m_AimVector: {x: 0, y: 1, z: 0}
-  m_UpVector: {x: 0, y: 0, z: 1}
-  m_WorldUpVector: {x: 0, y: 1, z: 0}
-  m_WorldUpObject: {fileID: 0}
-  m_UpType: 4
+  m_UpVector: {x: 1, y: 0, z: 0}
+  m_WorldUpVector: {x: 1, y: 0, z: 0}
+  m_WorldUpObject: {fileID: 1567275077882511840}
+  m_UpType: 2
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -451,12 +463,12 @@ AimConstraint:
   m_GameObject: {fileID: 8610811212003190010}
   m_Enabled: 1
   m_Weight: 1
-  m_RotationAtRest: {x: -31.491076, y: -6.1264687, z: -176.91316}
-  m_RotationOffset: {x: 0, y: -84.97618, z: 0}
+  m_RotationAtRest: {x: -31.59015, y: -3.286949, z: -178.39873}
+  m_RotationOffset: {x: 0, y: 4.164258, z: 0}
   m_AimVector: {x: 0, y: 1, z: 0}
-  m_UpVector: {x: 0, y: 0, z: 1}
+  m_UpVector: {x: 1, y: 0, z: 0}
   m_WorldUpVector: {x: -1, y: 0, z: 0}
-  m_WorldUpObject: {fileID: 8945942376595621937}
+  m_WorldUpObject: {fileID: 1567275077882511840}
   m_UpType: 2
   m_AffectRotationX: 1
   m_AffectRotationY: 1
@@ -481,12 +493,12 @@ AimConstraint:
   m_GameObject: {fileID: 8762453095195207992}
   m_Enabled: 1
   m_Weight: 1
-  m_RotationAtRest: {x: 15.602766, y: 1.0281538, z: -179.81969}
-  m_RotationOffset: {x: 0.00988203, y: -90.6397, z: 0.0016319106}
+  m_RotationAtRest: {x: 15.60363, y: 0.6505534, z: -179.92131}
+  m_RotationOffset: {x: 0.009834394, y: 179.71803, z: 0.001632635}
   m_AimVector: {x: 0, y: 1, z: 0}
   m_UpVector: {x: 1, y: 0, z: 0}
-  m_WorldUpVector: {x: -1, y: 0, z: 0}
-  m_WorldUpObject: {fileID: 0}
+  m_WorldUpVector: {x: 0, y: 0, z: -1}
+  m_WorldUpObject: {fileID: 419484932796190794}
   m_UpType: 2
   m_AffectRotationX: 1
   m_AffectRotationY: 1
