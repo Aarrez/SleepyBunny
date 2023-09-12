@@ -25,19 +25,19 @@ public class Checkpoints : MonoBehaviour
 
     private void UpdateCheckpoint()
     {
-        GetComponentInChildren<Light>().enabled = true;
-        try
-        {
-            Light[] lights = GetComponentsInChildren<Light>();
-            for (int i = 0; i < lights.Length; i++)
-            {
-                lights[i].enabled = true;
-            }
-        }
-        catch (System.Exception)
-        {
-            GetComponentInChildren<Light>().enabled = true;
-        }
+        // GetComponentInChildren<Light>().enabled = true;
+        // try
+        // {
+        //     Light[] lights = GetComponentsInChildren<Light>();
+        //     for (int i = 0; i < lights.Length; i++)
+        //     {
+        //         lights[i].enabled = true;
+        //     }
+        // }
+        // catch (System.Exception)
+        // {
+        //     GetComponentInChildren<Light>().enabled = true;
+        // }
 
         _gameMaster.CurrentCheckpointPosition = _spawnPoint.position;
 

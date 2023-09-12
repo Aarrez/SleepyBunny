@@ -27,7 +27,7 @@ public class GameMaster : MonoBehaviour
             Destroy(gameObject);
         }
 
-        _playerTransform = FindObjectOfType<PlayerStateMachine>().transform;
+      //  _playerTransform = FindObjectOfType<PlayerStateMachine>().transform;
     }
 
     private void Start()
